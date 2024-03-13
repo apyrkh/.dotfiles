@@ -3,11 +3,6 @@
 # Directory containing dotfiles
 dotfiles_dir="$HOME/.dotfiles"
 
-# List of files to create symlinks for
-files=(
-  ".gitconfig"
-)
-
 # Function to check if a file exists in the repo
 function file_exists() {
   file="$1"
@@ -51,6 +46,12 @@ function create_symlink() {
 
   return 0
 }
+
+# List of files to create symlinks for
+files=(
+  ".gitconfig"
+  ".zshrc"
+)
 
 # Main function
 function main() {
