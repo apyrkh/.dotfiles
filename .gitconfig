@@ -3,6 +3,8 @@
 [include]
   path = ~/.gitconfig_local
 
+[credentials]
+  helper = cache
 [core]
   editor = nvim
   ignorecase = false
