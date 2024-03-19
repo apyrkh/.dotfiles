@@ -31,9 +31,12 @@ EOF
 - `sudo git clone --depth=1 https://github.com/MichaelAquilina/zsh-you-should-use $ZSH_CUSTOM/plugins/you-should-use`
 - `source ~/.zshrc`
 
+## iterm2
+
 - `brew tap homebrew/cask-fonts`
 - `brew install font-jetbrains-mono-nerd-font`
-- settings > profiles > text > font
+- `brew install --cask iterm2`
+- `./bin/iterm.sh`
 
 ## nvm
 

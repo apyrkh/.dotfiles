@@ -73,11 +73,10 @@ ZSH_THEME="half-life"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   chucknorris
-  dotenv
-  gitfast
-  history
-  macos
-  nvm
+  dotenv # .env file when you cd into project root directory.
+  gitfast # completion for git
+  history # command line history
+  nvm # autocompletion + sources nvm
   z
   zsh-autosuggestions
   zsh-syntax-highlighting
@@ -111,5 +110,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
 alias ll='eza -l --group-directories-first --icons'
 alias lla='ll -a'
