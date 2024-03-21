@@ -42,6 +42,10 @@ EOF
 
 - `brew install nvm`
 
+## neovim
+
+- `brew install neovim`
+
 
 ## other tips
 
