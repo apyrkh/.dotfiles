@@ -36,8 +36,13 @@ EOF
 - `brew tap homebrew/cask-fonts`
 - `brew install font-jetbrains-mono-nerd-font`
 - `brew install --cask iterm2`
-- `./bin/iterm.sh`
+- `./bin/iterm2.sh`
 
 ## nvm
 
 - `brew install nvm`
+
+
+## other tips
+
+- `chmod +x FILENAME` - make file executable
