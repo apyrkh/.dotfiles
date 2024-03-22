@@ -1,5 +1,5 @@
 -- A file explorer tree for neovim written in lua
-local set_keymaps = function ()
+local set_keymaps = function()
   local keymap = vim.keymap
 
   keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" })

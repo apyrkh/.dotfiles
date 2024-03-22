@@ -7,6 +7,6 @@ return {
     require("tokyonight").setup({
       style = "moon",
     })
-    vim.cmd[[colorscheme tokyonight]]
+    vim.cmd [[colorscheme tokyonight]]
   end,
 }

@@ -12,10 +12,10 @@ opt.autoindent = true -- copy indent from current line when starting new one
 -- sets how neovim will display certain whitespace in the editor
 opt.list = true
 opt.listchars = {
-    eol = "↲",
-    tab = "» ",
-    space = ".",
-    nbsp = "␣"
+  eol = "↲",
+  tab = "» ",
+  space = ".",
+  nbsp = "␣"
 }
 
 opt.wrap = false -- disable line wrapping
