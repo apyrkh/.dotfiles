@@ -20,7 +20,7 @@ opt.listchars = {
 
 opt.wrap = false -- disable line wrapping
 opt.cursorline = true -- highlight the current cursor line
-opt.scrolloff = 10 -- minimal number of screen lines to keep above and below the cursor.
+opt.scrolloff = 5 -- minimal number of screen lines to keep above and below the cursor.
 
 opt.ignorecase = true -- ignore case when searching
 opt.smartcase = true -- if you include mixed case in your search, assumes you want case-sensitive
