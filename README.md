@@ -45,7 +45,7 @@ EOF
 ## neovim
 
 - `brew install neovim`
-
+- `brew install ripgrep`
 
 ## other tips
 

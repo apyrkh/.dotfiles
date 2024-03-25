@@ -1,9 +1,9 @@
 local get_keymaps = function()
   return {
-    init_selection = "<C-w>",
-    node_incremental = "<C-w>",
-    scope_incremental = "<C-w>",
-    node_decremental = "<C-S-w>"
+    init_selection = "<C-]>",
+    node_incremental = "<C-]>",
+    scope_incremental = "<C-]>",
+    node_decremental = "<C-[>"
   }
 end
 
