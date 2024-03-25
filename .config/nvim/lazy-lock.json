@@ -1,4 +1,5 @@
 {
+  "dressing.nvim": { "branch": "master", "commit": "18e5beb3845f085b6a33c24112b37988f3f93c06" },
   "lazy.nvim": { "branch": "main", "commit": "08954f723bf2d442ea020551e3acc956f4dc6dc7" },
   "nvim-tree.lua": { "branch": "master", "commit": "e20966ae558524f8d6f93dc37f5d2a8605f893e2" },
   "nvim-treesitter": { "branch": "master", "commit": "aa31b8d4ccaa05e1ab30120e103f72adbd2837bc" },
