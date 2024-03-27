@@ -6,6 +6,7 @@ return {
   config = function()
     require("tokyonight").setup({
       style = "moon",
+      light_style = "day",
     })
     vim.cmd [[colorscheme tokyonight]]
   end,
