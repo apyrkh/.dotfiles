@@ -1,9 +1,14 @@
 -- A file explorer tree for neovim written in lua
 local set_keymaps = function()
   local keymap = vim.keymap
+  local api = require "nvim-tree.api"
+  local select_opened_file = function()
+    api.tree.open({ find_file = true })
+  end
 
-  keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
-  keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" })
+  keymap.set("n", "<leader>ee", api.tree.toggle, { desc = "Toggle file explorer" })
+  keymap.set("n", "<leader>er", api.tree.reload, { desc = "Refresh file explorer" })
+  keymap.set("n", "<leader>eo", select_opened_file, { desc = "Select opened file" })
 end
 
 return {

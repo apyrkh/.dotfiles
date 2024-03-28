@@ -4,10 +4,12 @@ opt.number = true -- shows absolute line number
 opt.relativenumber = true -- show relative line numbers
 
 opt.signcolumn = "yes" -- show sign column so that text doesn't shift
+opt.wrap = false -- disable line wrapping
 opt.expandtab = true -- expand tab to spaces
 opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
 opt.shiftwidth = 2 -- 2 spaces for indent width
 opt.autoindent = true -- copy indent from current line when starting new one
+opt.scrolloff = 5 -- minimal number of screen lines to keep above and below the cursor.
 
 -- sets how neovim will display certain whitespace in the editor
 opt.list = true
@@ -18,10 +20,8 @@ opt.listchars = {
   nbsp = "␣"
 }
 
-opt.wrap = false -- disable line wrapping
 opt.cursorline = true -- highlight the current cursor line
-opt.scrolloff = 5 -- minimal number of screen lines to keep above and below the cursor.
-
+opt.hlsearch = true
 opt.ignorecase = true -- ignore case when searching
 opt.smartcase = true -- if you include mixed case in your search, assumes you want case-sensitive
 

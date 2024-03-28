@@ -3,7 +3,7 @@ local get_keymaps = function()
     init_selection = "<C-]>",
     node_incremental = "<C-]>",
     scope_incremental = "<C-]>",
-    node_decremental = "<C-[>"
+    node_decremental = false,
   }
 end
 
@@ -32,6 +32,7 @@ return {
         "diff",
         "json",
         "vim",
+        "vimdoc",
         "yaml",
 
         "html",
