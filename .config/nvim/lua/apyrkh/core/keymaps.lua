@@ -14,3 +14,7 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move line UP" })
 keymap.set("n", "N", "Nzzzv", { desc = "Go to PREV match + center screen + unfold" })
 keymap.set("n", "n", "nzzzv", { desc = "Go to NEXT match + center screen + unfold" })
 keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+
+-- plugin: cellular-automaton.nvim
+keymap.set("n", "<leader>qq", "<cmd>CellularAutomaton make_it_rain<CR>")
+
