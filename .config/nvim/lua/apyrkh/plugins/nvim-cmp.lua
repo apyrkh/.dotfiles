@@ -79,6 +79,27 @@ return {
             end
           end
         }),
+        ["<C-e>"] = cmp.mapping({
+          i = function(fallback)
+            if not cmp.scroll_docs(4) then
+              fallback()
+            end
+          end
+        }),
+        ["<C-y>"] = cmp.mapping({
+          i = function(fallback)
+            if not cmp.scroll_docs(-4) then
+              fallback()
+            end
+          end
+        }),
+        ["<C-c>"] = cmp.mapping({
+          i = function(fallback)
+            if not cmp.abort() then
+              fallback()
+            end
+          end
+        }),
       },
 
       -- sources for autocompletion
