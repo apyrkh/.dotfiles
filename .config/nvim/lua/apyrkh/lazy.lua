@@ -12,7 +12,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup(
-  { import = "apyrkh.plugins" },
+  {
+    { import = "apyrkh.plugins" },
+    { import = "apyrkh.plugins.lsp" },
+  },
   {
     -- TODO: I don't know why a colorscheme is needed here, because it works without it
     install = {

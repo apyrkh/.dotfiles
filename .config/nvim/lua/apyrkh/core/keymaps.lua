@@ -25,7 +25,7 @@ keymap.set("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Go 1/2 Page Up", remap = true })
 keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Go 1/2 Page Down", remap = true })
 
--- Move Lines
+-- Move lines
 keymap.set("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move Down" })
 keymap.set("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move Up" })
 keymap.set("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move Down" })
@@ -48,11 +48,17 @@ keymap.set("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search
 -- Clear search with <esc>
 keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and Clear hlsearch" })
 
+-- Diagnostic
+keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc =  "Pevious Diagnostic" })
+keymap.set("n", "]d", vim.diagnostic.goto_next, { desc =  "Next Diagnostic" })
+keymap.set("n", "<leader>uD", "<cmd>Telescope diagnostics bufnr=0<CR>", { desc =  "Show Buffer Diagnostics" })
+keymap.set("n", "<leader>dd", vim.diagnostic.open_float, { desc =  "Show Line Diagnostics" })
+
 -- Quickfix
 keymap.set("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
 keymap.set("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 
--- Highlights Under Cursor
+-- Show all the items at a given buffer position.
 keymap.set("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 
 -- FUN
