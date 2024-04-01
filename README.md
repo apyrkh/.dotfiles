@@ -10,6 +10,7 @@
 ## git
 
 - `brew install git`
+- `brew install nvm`
 
 Setup: `.gitconfig_local`
 ```shell
@@ -38,11 +39,14 @@ EOF
 - `brew install --cask iterm2`
 - `./bin/iterm2.sh`
 
-## nvm
-
-- `brew install nvm`
-
 ## neovim
+
+Neovim config is inspired by:
+- LazyVim
+  - https://github.com/LazyVim/LazyVim
+- Josean Martinez
+  - https://youtu.be/NL8D8EkphUw
+  - https://youtu.be/ybUE4D80XSk
 
 - `brew install neovim`
 - `brew install ripgrep`
