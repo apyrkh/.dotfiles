@@ -46,7 +46,6 @@ Neovim config is inspired by:
   - https://github.com/LazyVim/LazyVim
 - Josean Martinez
   - https://youtu.be/NL8D8EkphUw
-  - https://youtu.be/ybUE4D80XSk
 
 - `brew install neovim`
 - `brew install ripgrep`
