@@ -12,7 +12,7 @@ return {
     local keymap = vim.keymap -- for conciseness
 
     local opts = { noremap = true, silent = true }
-    local on_attach = function(client, bufnr)
+    local on_attach = function(_, bufnr)
       opts.buffer = bufnr
 
       opts.desc = "[g]o to [d]efinition (LSP)"
@@ -96,11 +96,6 @@ return {
       init_options = {
         camelCase = "dashes",
       },
-    })
-
-    lspconfig["css_variables"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
     })
 
     lspconfig["emmet_ls"].setup({

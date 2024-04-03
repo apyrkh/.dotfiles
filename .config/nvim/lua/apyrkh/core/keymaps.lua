@@ -49,10 +49,10 @@ keymap.set("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search
 keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and Clear hlsearch" })
 
 -- Diagnostic
-keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc =  "Pevious Diagnostic" })
-keymap.set("n", "]d", vim.diagnostic.goto_next, { desc =  "Next Diagnostic" })
-keymap.set("n", "<leader>uD", "<cmd>Telescope diagnostics bufnr=0<CR>", { desc =  "Show Buffer Diagnostics" })
-keymap.set("n", "<leader>dd", vim.diagnostic.open_float, { desc =  "Show Line Diagnostics" })
+keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Pevious Diagnostic" })
+keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next Diagnostic" })
+keymap.set("n", "<leader>uD", "<cmd>Telescope diagnostics bufnr=0<CR>", { desc = "Show Buffer Diagnostics" })
+keymap.set("n", "<leader>ud", vim.diagnostic.open_float, { desc = "Show Line Diagnostics" })
 
 -- Quickfix
 keymap.set("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })

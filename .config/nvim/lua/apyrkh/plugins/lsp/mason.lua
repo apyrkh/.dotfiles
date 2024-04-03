@@ -31,7 +31,7 @@ return {
         "html",
         "cssls",
         "cssmodules_ls",
-        "css_variables_ls",
+        --"css_variables",
         "emmet_ls",
 
         "biome",
