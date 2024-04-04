@@ -67,6 +67,16 @@ keymap.set("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 -- Show all the items at a given buffer position.
 keymap.set("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 
+function ToggleBackground()
+    local current_bg = vim.api.nvim_get_option("background")
+    if current_bg == "light" then
+          vim.api.nvim_set_option("background", "dark")
+    else
+        vim.api.nvim_set_option("background", "light")
+    end
+end
+keymap.set("n", "<leader>ut", "<cmd>lua ToggleBackground()<CR>", { desc = "Toggle Theme", noremap = true })
+
 -- FUN
 -- plugin: cellular-automaton.nvim
 keymap.set("n", "<leader>qq", "<cmd>CellularAutomaton make_it_rain<CR>", { desc = "Make it rain" })
