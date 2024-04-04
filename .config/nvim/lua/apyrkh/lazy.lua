@@ -17,10 +17,6 @@ require("lazy").setup(
     { import = "apyrkh.plugins.lsp" },
   },
   {
-    -- TODO: I don't know why a colorscheme is needed here, because it works without it
-    install = {
-      colorscheme = { "tokyonight" },
-    },
     checker = {
       enabled = true,
       notify = false,

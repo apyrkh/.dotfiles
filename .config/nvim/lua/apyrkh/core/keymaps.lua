@@ -37,7 +37,13 @@ keymap.set("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move Up" })
 keymap.set("v", "<", "<gv", { desc = "Decrease Indent" })
 keymap.set("v", ">", ">gv", { desc = "Increase Indent" })
 
--- Improved search search
+-- Substitute plugin
+keymap.set("n", "s", function () require('substitute').operator() end, { desc = "Substitute with motion" })
+keymap.set("n", "ss", function() require('substitute').line() end, { desc = "Substitute line" })
+keymap.set("n", "S", function() require('substitute').eol() end, { desc = "Substitute to end of line" })
+keymap.set("x", "s", function() require('substitute').visual() end, { desc = "Substitute in visual mode" })
+
+-- Improved search
 -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
 keymap.set("n", "n", "'Nn'[v:searchforward].'zzzv'", { expr = true, desc = "Next Search Result" })
 keymap.set("x", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result" })
