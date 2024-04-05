@@ -25,7 +25,7 @@ local set_keymaps = function()
   end
 
   keymap.set('n', '<leader>fd', project_files, { desc = 'Fuzzy search git files (or project files)' })
-  keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Fuzzy search git files (or project files)' })
+  keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Fuzzy search project files' })
   keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Searches for the string' })
   keymap.set('n', '<leader>fr', builtin.resume, { desc = 'List results of the previous picker' })
   keymap.set('n', '<leader>fs', builtin.spell_suggest, { desc = 'Lists spelling suggestions' })
