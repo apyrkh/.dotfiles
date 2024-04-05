@@ -66,8 +66,8 @@ keymap.set("n", "<leader>h4", "<cmd>lua HarpoonOpenFile(4)<CR>", { desc = "Harpo
 keymap.set("n", "<leader>h5", "<cmd>lua HarpoonOpenFile(5)<CR>", { desc = "Harpoon to File 5" })
 
 -- Diagnostic
-keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Pevious Diagnostic" })
-keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next Diagnostic" })
+keymap.set("n", "[d", "<cmd>lua DiagnosticGoPrevAndCenterCursor()<CR>", { desc = "Pevious Diagnostic" })
+keymap.set("n", "]d", "<cmd>lua DiagnosticAGoNextandCenterCursor()<CR>", { desc = "Next Diagnostic" })
 keymap.set("n", "<leader>uD", "<cmd>Telescope diagnostics bufnr=0<CR>", { desc = "Show Buffer Diagnostics" })
 keymap.set("n", "<leader>ud", vim.diagnostic.open_float, { desc = "Show Line Diagnostics" })
 
@@ -97,6 +97,15 @@ function HarpoonNextFile()
 end
 function HarpoonOpenFile(i)
   require('harpoon'):list():select(i)
+end
+
+function DiagnosticGoPrevAndCenterCursor()
+    vim.diagnostic.goto_prev()
+    vim.cmd('normal! zz')
+end
+function DiagnosticAGoNextandCenterCursor()
+    vim.diagnostic.goto_next()
+    vim.cmd('normal! zz')
 end
 
 function ToggleBackground()
