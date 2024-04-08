@@ -48,8 +48,8 @@ keymap.set("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search
 keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Clear Result Highlighting" })
 
 -- Go Prev/Next
-keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev Diagnostic" })
-keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next Diagnostic" })
+keymap.set("n", "[d", "<cmd>lua DiagnosticGoPrevAndCenterCursor()<CR>", { desc = "Pevious Diagnostic" })
+keymap.set("n", "]d", "<cmd>lua DiagnosticAGoNextandCenterCursor()<CR>", { desc = "Next Diagnostic" })
 keymap.set("n", "[g", "<cmd>lua require('gitsigns').nav_hunk('prev')<CR>", { desc = "Prev Hunk" })
 keymap.set("n", "]g", "<cmd>lua require('gitsigns').nav_hunk('next')<CR>", { desc = "Next Hunk" })
 keymap.set("n", "[h", "<cmd>lua HarpoonPrevFile()<CR>", { desc = "Prev Harpoon File" })
@@ -91,6 +91,15 @@ keymap.set("n", "<leader>qq", "<cmd>CellularAutomaton make_it_rain<CR>", { desc 
 
 
 -- ===== FUNCTIONS =====
+function DiagnosticGoPrevAndCenterCursor()
+  vim.diagnostic.goto_prev()
+  vim.cmd('normal! zz')
+end
+function DiagnosticAGoNextandCenterCursor()
+  vim.diagnostic.goto_next()
+  vim.cmd('normal! zz')
+end
+
 function HarpoonFile()
   require('harpoon'):list():add()
 end
