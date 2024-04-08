@@ -2,8 +2,8 @@ local get_keymaps = function()
   return {
     init_selection = "<C-]>",
     node_incremental = "<C-]>",
-    scope_incremental = "<C-]>",
-    node_decremental = false,
+    scope_incremental = false,
+    node_decremental = "<BS>",
   }
 end
 

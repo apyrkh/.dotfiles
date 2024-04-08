@@ -54,6 +54,8 @@ keymap.set("n", "[g", "<cmd>lua require('gitsigns').nav_hunk('prev')<CR>", { des
 keymap.set("n", "]g", "<cmd>lua require('gitsigns').nav_hunk('next')<CR>", { desc = "Next Hunk" })
 keymap.set("n", "[h", "<cmd>lua HarpoonPrevFile()<CR>", { desc = "Prev Harpoon File" })
 keymap.set("n", "]h", "<cmd>lua HarpoonNextFile()<CR>", { desc = "Next Harpoon File" })
+keymap.set("n", "[p", "<Plug>(YankyPreviousEntry)")
+keymap.set("n", "]p", "<Plug>(YankyNextEntry)")
 keymap.set("n", "[q", vim.cmd.cprev, { desc = "Prev Quickfix" })
 keymap.set("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 
@@ -77,6 +79,11 @@ keymap.set("n", "<leader>2", "<cmd>lua HarpoonOpenFile(2)<CR>", { desc = "Harpoo
 keymap.set("n", "<leader>3", "<cmd>lua HarpoonOpenFile(3)<CR>", { desc = "Harpoon to File 3" })
 keymap.set("n", "<leader>4", "<cmd>lua HarpoonOpenFile(4)<CR>", { desc = "Harpoon to File 4" })
 keymap.set("n", "<leader>5", "<cmd>lua HarpoonOpenFile(5)<CR>", { desc = "Harpoon to File 5" })
+
+-- Yanky
+vim.keymap.set({"n","x"}, "P", "<Plug>(YankyPutBefore)", { desc = "Put Before" })
+vim.keymap.set({"n","x"}, "p", "<Plug>(YankyPutAfter)", { desc = "Put After" })
+vim.keymap.set("n", "<leader>p", "<cmd>YankyRingHistory<CR>", { desc = "Open Yank History" })
 
 -- Substitute plugin
 keymap.set("n", "s", function () require('substitute').operator() end, { desc = "Substitute with motion" })
