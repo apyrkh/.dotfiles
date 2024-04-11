@@ -79,17 +79,30 @@ keymap.set("n", "<leader>2", "<cmd>lua HarpoonOpenFile(2)<CR>", { desc = "Harpoo
 keymap.set("n", "<leader>3", "<cmd>lua HarpoonOpenFile(3)<CR>", { desc = "Harpoon to File 3" })
 keymap.set("n", "<leader>4", "<cmd>lua HarpoonOpenFile(4)<CR>", { desc = "Harpoon to File 4" })
 keymap.set("n", "<leader>5", "<cmd>lua HarpoonOpenFile(5)<CR>", { desc = "Harpoon to File 5" })
+keymap.set("n", "<leader>6", "<cmd>lua HarpoonOpenFile(6)<CR>", { desc = "Harpoon to File 6" })
+keymap.set("n", "<leader>7", "<cmd>lua HarpoonOpenFile(7)<CR>", { desc = "Harpoon to File 7" })
+keymap.set("n", "<leader>8", "<cmd>lua HarpoonOpenFile(8)<CR>", { desc = "Harpoon to File 8" })
+keymap.set("n", "<leader>9", "<cmd>lua HarpoonOpenFile(9)<CR>", { desc = "Harpoon to File 9" })
+keymap.set("n", "<leader>0", "<cmd>lua HarpoonOpenFile(0)<CR>", { desc = "Harpoon to File 0" })
+
+-- Substitute
+keymap.set("n", "s", function () require('substitute').operator() end, { desc = "Substitute with motion" })
+keymap.set("n", "ss", function() require('substitute').line() end, { desc = "Substitute line" })
+keymap.set("n", "S", function() require('substitute').eol() end, { desc = "Substitute to end of line" })
+keymap.set("x", "s", function() require('substitute').visual() end, { desc = "Substitute in visual mode" })
+
+-- Telescope
+keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Search for Project Files" })
+keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { desc = "Live Search for Grep Results" })
+keymap.set("n", "<leader>fr", "<cmd>Telescope resume<CR>", { desc = "Open the Previous Picker" })
+keymap.set("n", "<leader>fs", "<cmd>Telescope spell_suggest<CR>", { desc = "Lists Spelling Suggestions" })
+keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "Lists Available Help Tags" })
+keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<CR>", { desc = "Open todos in Telescope" })
 
 -- Yanky
 vim.keymap.set({"n","x"}, "P", "<Plug>(YankyPutBefore)", { desc = "Put Before" })
 vim.keymap.set({"n","x"}, "p", "<Plug>(YankyPutAfter)", { desc = "Put After" })
 vim.keymap.set("n", "<leader>p", "<cmd>YankyRingHistory<CR>", { desc = "Open Yank History" })
-
--- Substitute plugin
-keymap.set("n", "s", function () require('substitute').operator() end, { desc = "Substitute with motion" })
-keymap.set("n", "ss", function() require('substitute').line() end, { desc = "Substitute line" })
-keymap.set("n", "S", function() require('substitute').eol() end, { desc = "Substitute to end of line" })
-keymap.set("x", "s", function() require('substitute').visual() end, { desc = "Substitute in visual mode" })
 
 
 -- ===== UI stuff =====
@@ -100,11 +113,9 @@ keymap.set("n", "<leader>qq", "<cmd>CellularAutomaton make_it_rain<CR>", { desc 
 -- ===== FUNCTIONS =====
 function DiagnosticGoPrevAndCenterCursor()
   vim.diagnostic.goto_prev()
-  vim.cmd('normal! zz')
 end
 function DiagnosticAGoNextandCenterCursor()
   vim.diagnostic.goto_next()
-  vim.cmd('normal! zz')
 end
 
 function HarpoonFile()

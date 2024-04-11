@@ -48,6 +48,8 @@ Neovim config is inspired by:
   - https://youtu.be/NL8D8EkphUw
 
 - `brew install neovim`
+
+Telescope requirements:
 - `brew install ripgrep`
 
 ## other tips

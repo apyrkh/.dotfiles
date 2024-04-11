@@ -9,29 +9,6 @@ local get_mappings = function()
   }
 end
 
-local set_keymaps = function()
-  local keymap = vim.keymap
-  local builtin = require('telescope.builtin')
-
-  local telescopeConfig = require("telescope.config")
-  local vimgrep_arguments = telescopeConfig.values.vimgrep_arguments;
-
-  -- https://github.com/nvim-telescope/telescope.nvim/wiki/Configuration-Recipes#falling-back-to-find_files-if-git_files-cant-find-a-git-directory
-  local project_files = function()
-    local ok = pcall(builtin.git_files, vimgrep_arguments);
-    if not ok then
-      builtin.find_files(vimgrep_arguments)
-    end
-  end
-
-  keymap.set('n', '<leader>fd', project_files, { desc = 'Fuzzy search git files (or project files)' })
-  keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Fuzzy search project files' })
-  keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Searches for the string' })
-  keymap.set('n', '<leader>fr', builtin.resume, { desc = 'List results of the previous picker' })
-  keymap.set('n', '<leader>fs', builtin.spell_suggest, { desc = 'Lists spelling suggestions' })
-  keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Lists available help tags' })
-end
-
 -- REQUIRES: brew install ripgrep
 return {
   "nvim-telescope/telescope.nvim",
@@ -78,7 +55,5 @@ return {
     })
 
     telescope.load_extension("fzf")
-
-    set_keymaps()
   end
 }
