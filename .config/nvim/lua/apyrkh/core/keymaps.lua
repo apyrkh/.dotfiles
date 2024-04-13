@@ -48,8 +48,8 @@ keymap.set("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search
 keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Clear Result Highlighting" })
 
 -- Go Prev/Next
-keymap.set("n", "[d", "<cmd>lua DiagnosticGoPrevAndCenterCursor()<CR>", { desc = "Pevious Diagnostic" })
-keymap.set("n", "]d", "<cmd>lua DiagnosticAGoNextandCenterCursor()<CR>", { desc = "Next Diagnostic" })
+keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { desc = "Pevious Diagnostic" })
+keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", { desc = "Next Diagnostic" })
 keymap.set("n", "[g", "<cmd>lua require('gitsigns').nav_hunk('prev')<CR>", { desc = "Prev Hunk" })
 keymap.set("n", "]g", "<cmd>lua require('gitsigns').nav_hunk('next')<CR>", { desc = "Next Hunk" })
 keymap.set("n", "[h", "<cmd>lua HarpoonPrevFile()<CR>", { desc = "Prev Harpoon File" })
@@ -60,8 +60,8 @@ keymap.set("n", "[q", vim.cmd.cprev, { desc = "Prev Quickfix" })
 keymap.set("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 
 -- Diagnostic
-keymap.set("n", "<leader>uD", "<cmd>Telescope diagnostics bufnr=0<CR>", { desc = "Show Buffer Diagnostics" })
-keymap.set("n", "<leader>ud", vim.diagnostic.open_float, { desc = "Show Line Diagnostics" })
+keymap.set("n", "<leader>dD", "<cmd>Telescope diagnostics bufnr=0<CR>", { desc = "Show Buffer Diagnostics" })
+keymap.set("n", "<leader>dd", vim.diagnostic.open_float, { desc = "Show Line Diagnostics" })
 
 -- Gitsigns
 keymap.set("n", "<leader>gb", "<cmd>lua require('gitsigns').blame_line()<CR>", { desc = "Blame Line" })
@@ -85,6 +85,50 @@ keymap.set("n", "<leader>8", "<cmd>lua HarpoonOpenFile(8)<CR>", { desc = "Harpoo
 keymap.set("n", "<leader>9", "<cmd>lua HarpoonOpenFile(9)<CR>", { desc = "Harpoon to File 9" })
 keymap.set("n", "<leader>0", "<cmd>lua HarpoonOpenFile(0)<CR>", { desc = "Harpoon to File 0" })
 
+-- LSP
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local opts = { buffer = ev.buf, noremap = true, silent = true }
+
+    opts.desc = "Go to Definition (LSP)"
+    keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
+    -- keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+
+    opts.desc = "Go to Type Definition (LSP)"
+    keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
+    -- keymap.set('n', 'gt', vim.lsp.buf.type_definition, opts)
+
+    opts.desc = "Go to Implementation (LSP)"
+    keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
+    -- keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+
+    opts.desc = "Go to References (LSP)"
+    keymap.set("n", "gr", "<cmd>Telescope lsp_references show_line=false<CR>", opts)
+    -- keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+
+    opts.desc = "Displays Hover Information"
+    keymap.set('n', '<leader>dk', vim.lsp.buf.hover, opts)
+
+    opts.desc = "Displays Signature Information"
+    keymap.set('n', '<leader>dl', vim.lsp.buf.signature_help, opts)
+
+    opts.desc = "Show available actions"
+    keymap.set({ "n", "v" }, "<leader>da", vim.lsp.buf.code_action, opts)
+
+    opts.desc = "Smart Rename"
+    keymap.set('n', '<leader>dr', vim.lsp.buf.rename, opts)
+
+    opts.desc = "Format Code"
+    keymap.set('n', '<leader>df', function()
+      vim.lsp.buf.format { async = true }
+    end, opts)
+  end,
+})
+
+keymap.set("n", "<leader>dqq", ":LspRestart<CR>", { desc = "Restart LSP" }) -- mapping to restart lsp if necessary
+
 -- Substitute
 keymap.set("n", "s", function () require('substitute').operator() end, { desc = "Substitute with motion" })
 keymap.set("n", "ss", function() require('substitute').line() end, { desc = "Substitute line" })
@@ -100,9 +144,9 @@ keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "Lists Av
 keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<CR>", { desc = "Open todos in Telescope" })
 
 -- Yanky
-vim.keymap.set({"n","x"}, "P", "<Plug>(YankyPutBefore)", { desc = "Put Before" })
-vim.keymap.set({"n","x"}, "p", "<Plug>(YankyPutAfter)", { desc = "Put After" })
-vim.keymap.set("n", "<leader>p", "<cmd>YankyRingHistory<CR>", { desc = "Open Yank History" })
+keymap.set({"n","x"}, "P", "<Plug>(YankyPutBefore)", { desc = "Put Before" })
+keymap.set({"n","x"}, "p", "<Plug>(YankyPutAfter)", { desc = "Put After" })
+keymap.set("n", "<leader>p", "<cmd>YankyRingHistory<CR>", { desc = "Open Yank History" })
 
 
 -- ===== UI stuff =====
@@ -111,13 +155,6 @@ keymap.set("n", "<leader>qq", "<cmd>CellularAutomaton make_it_rain<CR>", { desc 
 
 
 -- ===== FUNCTIONS =====
-function DiagnosticGoPrevAndCenterCursor()
-  vim.diagnostic.goto_prev()
-end
-function DiagnosticAGoNextandCenterCursor()
-  vim.diagnostic.goto_next()
-end
-
 function HarpoonFile()
   require('harpoon'):list():add()
 end
