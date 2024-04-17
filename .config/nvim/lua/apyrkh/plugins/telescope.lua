@@ -14,13 +14,9 @@ return {
   "nvim-telescope/telescope.nvim",
   branch = "0.1.x",
   dependencies = {
-    -- lua functions for telescope
     "nvim-lua/plenary.nvim",
-
     -- improve telescope sorting performance
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-
-    -- dev icons for telescope
     "nvim-tree/nvim-web-devicons",
   },
   config = function()

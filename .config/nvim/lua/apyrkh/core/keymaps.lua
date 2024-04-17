@@ -63,6 +63,11 @@ keymap.set("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 keymap.set("n", "<leader>dD", "<cmd>Telescope diagnostics bufnr=0<CR>", { desc = "Show Buffer Diagnostics" })
 keymap.set("n", "<leader>dd", vim.diagnostic.open_float, { desc = "Show Line Diagnostics" })
 
+-- Nvim Tree
+keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle File Explorer" })
+keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh File Explorer" })
+keymap.set("n", "<leader>eo", "<cmd>NvimTreeFindFile<CR>", { desc = "Select Opened File" })
+
 -- Gitsigns
 keymap.set("n", "<leader>gb", "<cmd>lua require('gitsigns').blame_line()<CR>", { desc = "Blame Line" })
 keymap.set("n", "<leader>gs", "<cmd>lua require('gitsigns').stage_hunk()<CR>", { desc = "Stage Hunk" })
@@ -70,6 +75,7 @@ keymap.set("n", "<leader>gS", "<cmd>lua require('gitsigns').undo_stage_hunk()<CR
 keymap.set("n", "<leader>gr", "<cmd>lua require('gitsigns').reset_hunk()<CR>", { desc = "Reset Hunk" })
 keymap.set("n", "<leader>gp", "<cmd>lua require('gitsigns').preview_hunk()<CR>", { desc = "Preview Hunk" })
 keymap.set("n", "<leader>gd", "<cmd>lua require('gitsigns').diffthis('~1')<CR>", { desc = "Diff Hunk" })
+keymap.set("n", "<leader>gg", "<cmd>Neogit<CR>", { desc = "Open Neogit" })
 
 -- Harpoon
 keymap.set("n", "<leader>ha", "<cmd>lua HarpoonFile()<CR>", { desc = "Harpoon File" })
@@ -138,6 +144,7 @@ keymap.set("x", "s", function() require('substitute').visual() end, { desc = "Su
 -- Telescope
 keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Search for Project Files" })
 keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { desc = "Live Search for Grep Results" })
+keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<CR>", { desc = "Search String under Cursor" })
 keymap.set("n", "<leader>fr", "<cmd>Telescope resume<CR>", { desc = "Open the Previous Picker" })
 keymap.set("n", "<leader>fs", "<cmd>Telescope spell_suggest<CR>", { desc = "Lists Spelling Suggestions" })
 keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "Lists Available Help Tags" })
