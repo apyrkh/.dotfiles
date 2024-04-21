@@ -9,5 +9,16 @@ return {
     -- "ibhagwan/fzf-lua",              -- optional
   },
   opts = {
+    graph_style = "unicode",
+    remember_settings = false,
+    signs = {
+      -- { CLOSED, OPENED }
+      hunk = { "", "" },
+      item = { "", "" },
+      section = { "", "" },
+    },
+    integrations = {
+      telescope = false,
+    },
   },
 }
