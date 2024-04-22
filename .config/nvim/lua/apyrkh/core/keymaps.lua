@@ -67,6 +67,8 @@ keymap.set("n", "<leader>dd", vim.diagnostic.open_float, { desc = "Show Line Dia
 keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle File Explorer" })
 keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh File Explorer" })
 keymap.set("n", "<leader>eo", "<cmd>NvimTreeFindFile<CR>", { desc = "Select Opened File" })
+keymap.set("n", "<leader>ed", "<cmd>Oil<CR>", { desc = "Open Parent Directory" })
+keymap.set("n", "<leader>ef", "<cmd>Oil --float<CR>", { desc = "Open Parent Directory (floating)" })
 
 -- Gitsigns
 keymap.set("n", "<leader>gb", "<cmd>lua require('gitsigns').blame_line()<CR>", { desc = "Blame Line" })
