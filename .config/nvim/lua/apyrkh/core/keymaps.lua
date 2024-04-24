@@ -72,6 +72,7 @@ keymap.set("n", "<leader>ef", "<cmd>Oil --float<CR>", { desc = "Open Parent Dire
 
 -- Gitsigns
 keymap.set("n", "<leader>gb", "<cmd>lua require('gitsigns').blame_line()<CR>", { desc = "Blame Line" })
+keymap.set("n", "<leader>gB", "<cmd>BlameToggle<CR>", { desc = "Blame File" })
 keymap.set("n", "<leader>gs", "<cmd>lua require('gitsigns').stage_hunk()<CR>", { desc = "Stage Hunk" })
 keymap.set("n", "<leader>gS", "<cmd>lua require('gitsigns').undo_stage_hunk()<CR>", { desc = "Unstage Hunk" })
 keymap.set("n", "<leader>gr", "<cmd>lua require('gitsigns').reset_hunk()<CR>", { desc = "Reset Hunk" })
