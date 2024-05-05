@@ -59,6 +59,12 @@ keymap.set("n", "]p", "<Plug>(YankyNextEntry)")
 keymap.set("n", "[q", vim.cmd.cprev, { desc = "Prev Quickfix" })
 keymap.set("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 
+-- Auto-session
+keymap.set("n", "<leader>ww", "<cmd>SessionSave<CR>", { desc = "Save Session for CWD" })
+keymap.set("n", "<leader>wr", "<cmd>SessionRestore<CR>", { desc = "Restore Session for CWD" })
+keymap.set("n", "<leader>wo", "<cmd>Autosession search<CR>", { desc = "List Saved Sessions" })
+keymap.set("n", "<leader>wd", "<cmd>Autosession delete<CR>", { desc = "Delete Saved Sessions" })
+
 -- Diagnostic
 keymap.set("n", "<leader>dD", "<cmd>Telescope diagnostics bufnr=0<CR>", { desc = "Show Buffer Diagnostics" })
 keymap.set("n", "<leader>dd", vim.diagnostic.open_float, { desc = "Show Line Diagnostics" })
@@ -150,6 +156,7 @@ keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { desc = "Live Sea
 keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<CR>", { desc = "Search String under Cursor" })
 keymap.set("n", "<leader>fr", "<cmd>Telescope resume<CR>", { desc = "Open the Previous Picker" })
 keymap.set("n", "<leader>fs", "<cmd>Telescope spell_suggest<CR>", { desc = "Lists Spelling Suggestions" })
+keymap.set("n", "<leader>fk", "<cmd>Telescope keymaps<CR>", { desc = "Lists Keymaps" })
 keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "Lists Available Help Tags" })
 keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<CR>", { desc = "Open todos in Telescope" })
 
