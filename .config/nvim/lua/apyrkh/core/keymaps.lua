@@ -28,10 +28,10 @@ keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Go 1/2 Page Down", remap = true })
 -- Move lines
 -- keymap.set("n", "<S-j>", "<cmd>m .+1<cr>==", { desc = "Move Down" })
 -- keymap.set("n", "<S-k>", "<cmd>m .-2<cr>==", { desc = "Move Up" })
+-- keymap.set("i", "<S-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move Down" })
+-- keymap.set("i", "<S-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move Up" })
 keymap.set("v", "<S-j>", ":m '>+1<cr>gv=gv", { desc = "Move Down" })
 keymap.set("v", "<S-k>", ":m '<-2<cr>gv=gv", { desc = "Move Up" })
---keymap.set("i", "<S-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move Down" })
---keymap.set("i", "<S-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move Up" })
 
 -- Indent
 keymap.set("v", "<", "<gv", { desc = "Decrease Indent" })
@@ -48,8 +48,6 @@ keymap.set("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search
 keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Clear Result Highlighting" })
 
 -- Go Prev/Next
-keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { desc = "Pevious Diagnostic" })
-keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", { desc = "Next Diagnostic" })
 keymap.set("n", "[g", "<cmd>lua require('gitsigns').nav_hunk('prev')<CR>", { desc = "Prev Hunk" })
 keymap.set("n", "]g", "<cmd>lua require('gitsigns').nav_hunk('next')<CR>", { desc = "Next Hunk" })
 keymap.set("n", "[h", "<cmd>lua HarpoonPrevFile()<CR>", { desc = "Prev Harpoon File" })
@@ -123,9 +121,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     keymap.set("n", "gr", "<cmd>Telescope lsp_references show_line=false<CR>", opts)
     -- keymap.set('n', 'gr', vim.lsp.buf.references, opts)
 
-    opts.desc = "Displays Hover Information"
-    keymap.set('n', '<leader>dk', vim.lsp.buf.hover, opts)
-
     opts.desc = "Displays Signature Information"
     keymap.set('n', '<leader>dl', vim.lsp.buf.signature_help, opts)
 
@@ -190,10 +185,10 @@ function HarpoonOpenFile(i)
 end
 
 function ToggleBackground()
-  local current_bg = vim.api.nvim_get_option("background")
+  local current_bg = vim.api.nvim_get_option_value("background", {})
   if current_bg == "light" then
-    vim.api.nvim_set_option("background", "dark")
+    vim.api.nvim_set_option_value("background", "dark", {})
   else
-    vim.api.nvim_set_option("background", "light")
+    vim.api.nvim_set_option_value("background", "light", {})
   end
 end
