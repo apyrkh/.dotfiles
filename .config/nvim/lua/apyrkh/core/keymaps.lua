@@ -65,10 +65,6 @@ keymap.set("n", "<leader>wr", "<cmd>SessionRestore<CR>", { desc = "Restore Sessi
 keymap.set("n", "<leader>wo", "<cmd>Autosession search<CR>", { desc = "List Saved Sessions" })
 keymap.set("n", "<leader>wd", "<cmd>Autosession delete<CR>", { desc = "Delete Saved Sessions" })
 
--- Diagnostic
-keymap.set("n", "<leader>dD", "<cmd>Telescope diagnostics bufnr=0<CR>", { desc = "Show Buffer Diagnostics" })
-keymap.set("n", "<leader>dd", vim.diagnostic.open_float, { desc = "Show Line Diagnostics" })
-
 -- Nvim Tree
 keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle File Explorer" })
 keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh File Explorer" })
@@ -156,6 +152,17 @@ keymap.set("n", "<leader>fs", "<cmd>Telescope spell_suggest<CR>", { desc = "List
 keymap.set("n", "<leader>fk", "<cmd>Telescope keymaps<CR>", { desc = "Lists Keymaps" })
 keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "Lists Available Help Tags" })
 keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<CR>", { desc = "Open todos in Telescope" })
+
+-- Diagnostic
+-- keymap.set("n", "<leader>dD", "<cmd>Telescope diagnostics bufnr=0<CR>", { desc = "Show Buffer Diagnostics" })
+-- keymap.set("n", "<leader>dd", vim.diagnostic.open_float, { desc = "Show Line Diagnostics" })
+-- Trouble
+keymap.set("n", "<leader>dD", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
+keymap.set("n", "<leader>dd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer Diagnostics (Trouble)" })
+keymap.set("n", "<leader>ds", "<cmd>Trouble symbols toggle focus=false<cr>", { desc = "Symbols (Trouble)" })
+keymap.set("n", "<leader>dl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", { desc = "LSP Definitions / references / ... (Trouble)" })
+keymap.set("n", "<leader>dL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location List (Trouble)" })
+keymap.set("n", "<leader>dQ", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix List (Trouble)" })
 
 -- Yanky
 keymap.set({"n","x"}, "P", "<Plug>(YankyPutBefore)", { desc = "Put Before" })
