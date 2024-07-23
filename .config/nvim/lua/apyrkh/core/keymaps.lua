@@ -56,6 +56,8 @@ keymap.set("n", "[p", "<Plug>(YankyPreviousEntry)")
 keymap.set("n", "]p", "<Plug>(YankyNextEntry)")
 keymap.set("n", "[q", vim.cmd.cprev, { desc = "Prev Quickfix" })
 keymap.set("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
+keymap.set("n", "[[", "<cmd>lua require('illuminate').goto_prev_reference('wrapscan')<CR>", { desc = "Prev Reference" })
+keymap.set("n", "]]", "<cmd>lua require('illuminate').goto_next_reference('wrapscan')<CR>", { desc = "Next Reference" })
 
 -- Auto-session
 keymap.set("n", "<leader>ww", "<cmd>SessionSave<CR>", { desc = "Save Session for CWD" })

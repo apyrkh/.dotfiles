@@ -49,8 +49,9 @@ Neovim config is inspired by:
 
 - `brew install neovim`
 
-Telescope requirements:
-- `brew install ripgrep`
+Dependecies:
+- `brew install luarocks`
+- `brew install ripgrep` (telescope)
 
 ## other tips
 
