@@ -23,7 +23,7 @@ return {
     },
     view_options = {
       show_hidden = true,
-      is_always_hidden = function (name)
+      is_always_hidden = function(name)
         local hidden_names = {
           ".DS_Store"
         }

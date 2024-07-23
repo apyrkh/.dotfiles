@@ -53,6 +53,9 @@ Dependecies:
 - `brew install luarocks`
 - `brew install ripgrep` (telescope)
 
+Plugins:
+- https://dotfyle.com
+
 ## other tips
 
 - `chmod +x FILENAME` - make file executable
