@@ -5,6 +5,7 @@ return {
     "nvim-telescope/telescope.nvim",
     "hrsh7th/cmp-nvim-lsp",
     { "antosha417/nvim-lsp-file-operations", config = true },
+    "b0o/schemastore.nvim",
   },
   config = function()
     local lspconfig = require("lspconfig")
@@ -39,15 +40,15 @@ return {
       },
     })
 
-    --lspconfig["jsonls"].setup({
-    --  capabilities = capabilities,
-    --  on_attach = on_attach,
-    --  settings = {
-    --    json = {
-    --      schemas = require('schemastore').json.schemas(),
-    --    },
-    --  },
-    --})
+    lspconfig["jsonls"].setup({
+      capabilities = capabilities,
+      settings = {
+        json = {
+          schemas = require('schemastore').json.schemas(),
+          validate = { enable = true },
+        },
+      },
+    })
 
     lspconfig["html"].setup({
       capabilities = capabilities,
@@ -71,8 +72,8 @@ return {
         "typescriptreact",
         "javascriptreact",
         "css",
-        --"less", 
-        --"sass", 
+        --"less",
+        --"sass",
         "scss",
       },
     })

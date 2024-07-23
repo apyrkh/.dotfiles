@@ -138,7 +138,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 keymap.set("n", "<leader>dqq", ":LspRestart<CR>", { desc = "Restart LSP" }) -- mapping to restart lsp if necessary
 
 -- Substitute
-keymap.set("n", "s", function () require('substitute').operator() end, { desc = "Substitute with motion" })
+keymap.set("n", "s", function() require('substitute').operator() end, { desc = "Substitute with motion" })
 keymap.set("n", "ss", function() require('substitute').line() end, { desc = "Substitute line" })
 keymap.set("n", "S", function() require('substitute').eol() end, { desc = "Substitute to end of line" })
 keymap.set("x", "s", function() require('substitute').visual() end, { desc = "Substitute in visual mode" })
@@ -158,15 +158,17 @@ keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<CR>", { desc = "Open todos in 
 -- keymap.set("n", "<leader>dd", vim.diagnostic.open_float, { desc = "Show Line Diagnostics" })
 -- Trouble
 keymap.set("n", "<leader>dD", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
-keymap.set("n", "<leader>dd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer Diagnostics (Trouble)" })
-keymap.set("n", "<leader>ds", "<cmd>Trouble symbols toggle focus=false<cr>", { desc = "Symbols (Trouble)" })
-keymap.set("n", "<leader>dl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", { desc = "LSP Definitions / references / ... (Trouble)" })
-keymap.set("n", "<leader>dL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location List (Trouble)" })
-keymap.set("n", "<leader>dQ", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix List (Trouble)" })
+keymap.set("n", "<leader>dd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+  { desc = "Buffer Diagnostics (Trouble)" })
+keymap.set("n", "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>", { desc = "Symbols (Trouble)" })
+keymap.set("n", "<leader>xl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+  { desc = "LSP Definitions / references / ... (Trouble)" })
+keymap.set("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location List (Trouble)" })
+keymap.set("n", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix List (Trouble)" })
 
 -- Yanky
-keymap.set({"n","x"}, "P", "<Plug>(YankyPutBefore)", { desc = "Put Before" })
-keymap.set({"n","x"}, "p", "<Plug>(YankyPutAfter)", { desc = "Put After" })
+keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", { desc = "Put Before" })
+keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)", { desc = "Put After" })
 keymap.set("n", "<leader>p", "<cmd>YankyRingHistory<CR>", { desc = "Open Yank History" })
 
 
@@ -179,16 +181,20 @@ keymap.set("n", "<leader>qq", "<cmd>CellularAutomaton make_it_rain<CR>", { desc 
 function HarpoonFile()
   require('harpoon'):list():add()
 end
+
 function HarpoonQuickMenu()
   local harpoon = require('harpoon')
   harpoon.ui:toggle_quick_menu(harpoon:list())
 end
+
 function HarpoonPrevFile()
   require('harpoon'):list():prev()
 end
+
 function HarpoonNextFile()
   require('harpoon'):list():next()
 end
+
 function HarpoonOpenFile(i)
   require('harpoon'):list():select(i)
 end
