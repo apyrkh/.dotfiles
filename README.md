@@ -50,6 +50,7 @@ Neovim config is inspired by:
 - `brew install neovim`
 
 Dependecies:
+- `brew install font-jetbrains-mono-nerd-font`
 - `brew install luarocks`
 - `brew install ripgrep` (telescope)
 
