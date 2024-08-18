@@ -21,6 +21,10 @@ cat <<EOF >> ~/.gitconfig_local
 EOF
 ```
 
+## wezterm
+
+- `brew install --cask wezterm`
+
 ## oh my zsh
 
 - `brew install eza` // a modern, maintained replacement for ls
