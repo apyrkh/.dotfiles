@@ -25,7 +25,7 @@ EOF
 
 - `brew install --cask wezterm`
 
-## oh my zsh
+## zsh
 
 - `brew install eza` // a modern, maintained replacement for ls
 - `brew install fortune` // for chucknorris plugin
@@ -35,13 +35,6 @@ EOF
 - `sudo git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting`
 - `sudo git clone --depth=1 https://github.com/MichaelAquilina/zsh-you-should-use $ZSH_CUSTOM/plugins/you-should-use`
 - `source ~/.zshrc`
-
-## iterm2
-
-- `brew tap homebrew/cask-fonts`
-- `brew install font-jetbrains-mono-nerd-font`
-- `brew install --cask iterm2`
-- `./bin/iterm2.sh`
 
 ## neovim
 
