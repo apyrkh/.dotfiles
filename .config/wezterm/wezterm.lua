@@ -4,10 +4,11 @@ local wezterm = require "wezterm"
 -- Use the config_builder which will help provide clearer error messages
 local config = wezterm.config_builder()
 
-config.color_scheme = "Tokyo Night Moon"
+config.default_prog = { "/bin/zsh" }
+
+-- config.color_scheme = "Tokyo Night Moon"
 config.font = wezterm.font("JetBrainsMono Nerd Font")
 config.font_size = 13
-config.line_height = 1.2
 
 -- config.tab_bar_at_bottom = true
 config.hide_tab_bar_if_only_one_tab = false
