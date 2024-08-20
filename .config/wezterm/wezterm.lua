@@ -4,7 +4,7 @@ local wezterm = require "wezterm"
 -- Use the config_builder which will help provide clearer error messages
 local config = wezterm.config_builder()
 
-config.default_prog = { "/bin/zsh" }
+config.default_prog = { "/bin/zsh", "-l" }
 
 -- config.color_scheme = "Tokyo Night Moon"
 config.font = wezterm.font("JetBrainsMono Nerd Font")
@@ -72,7 +72,7 @@ config.keys = {
   },
   {
     mods = "LEADER",
-    key = "|",
+    key = "=",
     action = wezterm.action.SplitHorizontal { domain = "CurrentPaneDomain" }
   },
   {
