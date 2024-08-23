@@ -65,6 +65,10 @@ return {
       },
     })
 
+    lspconfig["css_variables"].setup({
+      capabilities = capabilities,
+    })
+
     lspconfig["emmet_ls"].setup({
       capabilities = capabilities,
       filetypes = {

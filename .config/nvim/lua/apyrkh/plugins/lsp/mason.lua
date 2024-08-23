@@ -24,14 +24,14 @@ return {
         "lua_ls",
 
         --"markdown_oxide",
-        --"jsonls",
+        "jsonls",
         --"vimls",
         --"yamlls",
 
         "html",
         "cssls",
         "cssmodules_ls",
-        --"css_variables",
+        "css_variables",
         "emmet_ls",
 
         "biome",
