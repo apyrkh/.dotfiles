@@ -51,6 +51,10 @@ Dependecies:
 - `brew install luarocks`
 - `brew install ripgrep` (telescope)
 
+Commands:
+- `:Lazy` - lazy.nvim menu
+- `:Mason` - mason.nvim menu
+
 Plugins:
 - https://dotfyle.com
 
