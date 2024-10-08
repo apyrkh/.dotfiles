@@ -7,9 +7,9 @@ local config = wezterm.config_builder()
 config.default_prog = { "/bin/zsh", "-l" }
 
 -- config.color_scheme = "Tokyo Night Moon"
+-- config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" } -- no ligatures
 config.font = wezterm.font("JetBrainsMonoNL Nerd Font Mono") -- NL means no ligatures ===
 config.font_size = 13
--- config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" } -- no ligatures
 
 -- config.tab_bar_at_bottom = true
 config.hide_tab_bar_if_only_one_tab = false
@@ -23,12 +23,6 @@ config.window_padding = {
   bottom = 0,
 }
 
-
-local mux = wezterm.mux
-wezterm.on("gui-startup", function()
-  local _tab, _pane, window = mux.spawn_window {}
-  window:gui_window():maximize()
-end)
 
 wezterm.on("update-right-status", function(window, _)
   local text = ""
@@ -48,9 +42,23 @@ wezterm.on("update-right-status", function(window, _)
   })
 end)
 
+local is_maximized = false
+local toggle_size = wezterm.action_callback(function(window, pane)
+  if is_maximized then
+    window:restore()
+  else
+    window:maximize()
+  end
+  is_maximized = not is_maximized
+end)
 
 config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 2000 }
 config.keys = {
+  {
+    mods = "LEADER",
+    key = "m",
+    action = toggle_size,
+  },
   {
     mods = "LEADER",
     key = "c",
