@@ -42,14 +42,12 @@ wezterm.on("update-right-status", function(window, _)
   })
 end)
 
-local is_maximized = false
-local toggle_size = wezterm.action_callback(function(window, pane)
-  if is_maximized then
-    window:restore()
-  else
-    window:maximize()
-  end
-  is_maximized = not is_maximized
+local window_maximize = wezterm.action_callback(function(window)
+  window:maximize()
+end)
+
+local window_restore = wezterm.action_callback(function(window)
+  window:restore()
 end)
 
 config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 2000 }
@@ -57,7 +55,12 @@ config.keys = {
   {
     mods = "LEADER",
     key = "m",
-    action = toggle_size,
+    action = window_maximize,
+  },
+  {
+    mods = "LEADER",
+    key = "n",
+    action = window_restore,
   },
   {
     mods = "LEADER",
@@ -68,16 +71,6 @@ config.keys = {
     mods = "LEADER",
     key = "x",
     action = wezterm.action.CloseCurrentPane { confirm = true }
-  },
-  {
-    mods = "LEADER",
-    key = "b",
-    action = wezterm.action.ActivateTabRelative(-1)
-  },
-  {
-    mods = "LEADER",
-    key = "n",
-    action = wezterm.action.ActivateTabRelative(1)
   },
   {
     mods = "LEADER",
