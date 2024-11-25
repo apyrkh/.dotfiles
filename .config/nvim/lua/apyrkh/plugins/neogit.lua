@@ -11,9 +11,9 @@ return {
   opts = {
     graph_style = "unicode",
     remember_settings = false,
-    -- commit_editor = {
-    --   kind = "vsplit",
-    -- },
+    commit_editor = {
+      kind = "vsplit",
+    },
     signs = {
       -- { CLOSED, OPENED }
       hunk = { "", "" },
@@ -21,6 +21,7 @@ return {
       section = { "", "" },
     },
     integrations = {
+      diffview = true,
       telescope = false,
     },
   },
