@@ -1,2 +1,3 @@
-require("apyrkh.core")
+require("apyrkh.settings")
 require("apyrkh.lazy")
+require("apyrkh.keymaps")
