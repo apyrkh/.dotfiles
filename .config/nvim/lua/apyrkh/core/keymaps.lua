@@ -48,8 +48,8 @@ keymap.set("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search
 keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Clear Result Highlighting" })
 
 -- Go Prev/Next
-keymap.set("n", "[g", "<cmd>lua require('gitsigns').nav_hunk('prev')<CR>", { desc = "Prev Hunk" })
-keymap.set("n", "]g", "<cmd>lua require('gitsigns').nav_hunk('next')<CR>", { desc = "Next Hunk" })
+keymap.set("n", "[g", "<cmd>lua require('gitsigns').nav_hunk('prev', { target = 'all' })<CR>", { desc = "Prev Hunk" })
+keymap.set("n", "]g", "<cmd>lua require('gitsigns').nav_hunk('next', { target = 'all' })<CR>", { desc = "Next Hunk" })
 keymap.set("n", "[h", "<cmd>lua HarpoonPrevFile()<CR>", { desc = "Prev Harpoon File" })
 keymap.set("n", "]h", "<cmd>lua HarpoonNextFile()<CR>", { desc = "Next Harpoon File" })
 keymap.set("n", "[p", "<Plug>(YankyPreviousEntry)")
@@ -66,11 +66,19 @@ keymap.set("n", "<leader>wo", "<cmd>Autosession search<CR>", { desc = "List Save
 keymap.set("n", "<leader>wd", "<cmd>Autosession delete<CR>", { desc = "Delete Saved Sessions" })
 
 -- Nvim Tree
+-- hotkey: R
+-- keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh File Explorer" })
 keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle File Explorer" })
-keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh File Explorer" })
 keymap.set("n", "<leader>eo", "<cmd>NvimTreeFindFile<CR>", { desc = "Select Opened File" })
-keymap.set("n", "<leader>ed", "<cmd>Oil<CR>", { desc = "Open Parent Directory" })
-keymap.set("n", "<leader>ef", "<cmd>Oil --float<CR>", { desc = "Open Parent Directory (floating)" })
+keymap.set("n", "<leader>edd", "<cmd>Oil<CR>", { desc = "Open Parent Directory" })
+keymap.set("n", "<leader>edf", "<cmd>Oil --float<CR>", { desc = "Open Parent Directory (floating)" })
+keymap.set("n", "<leader>ef", function()
+  local telescope_builtin = require("telescope.builtin")
+  local api = require("nvim-tree.api")
+  local node = api.tree.get_node_under_cursor()
+  local cwd = node and node.absolute_path or vim.loop.cwd()
+  telescope_builtin.find_files({ cwd = cwd })
+end, { desc = "Search files in nvim-tree directory or project" })
 
 -- Gitsigns
 keymap.set("n", "<leader>gb", "<cmd>lua require('gitsigns').blame_line()<CR>", { desc = "Blame Line" })
@@ -149,9 +157,11 @@ keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { desc = "Live Sea
 keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<CR>", { desc = "Search String under Cursor" })
 keymap.set("n", "<leader>fr", "<cmd>Telescope resume<CR>", { desc = "Open the Previous Picker" })
 keymap.set("n", "<leader>fs", "<cmd>Telescope spell_suggest<CR>", { desc = "Lists Spelling Suggestions" })
+keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<CR>", { desc = "Open todos in Telescope" })
+keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "Lists Buffers" })
 keymap.set("n", "<leader>fk", "<cmd>Telescope keymaps<CR>", { desc = "Lists Keymaps" })
 keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "Lists Available Help Tags" })
-keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<CR>", { desc = "Open todos in Telescope" })
+
 
 -- Diagnostic
 -- keymap.set("n", "<leader>dD", "<cmd>Telescope diagnostics bufnr=0<CR>", { desc = "Show Buffer Diagnostics" })

@@ -1,5 +1,4 @@
--- A lua plugin for Neovim 0.5 that displays a popup with possible keybindings
--- of the command you started typing.
+-- A lua plugin for that displays possible keybindings
 return {
   "folke/which-key.nvim",
   event = "VeryLazy",
@@ -7,9 +6,15 @@ return {
     vim.o.timeout = true
     vim.o.timeoutlen = 500
   end,
+  keys = {
+    {
+      "<leader>?",
+      function()
+        require("which-key").show({ global = false })
+      end,
+      desc = "Buffer Local Keymaps (which-key)",
+    },
+  },
   opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
   }
 }
