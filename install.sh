@@ -5,6 +5,7 @@ files=(
   ".config/nvim"
   ".config/wezterm"
   ".gitconfig"
+  ".vimrc"
   ".zshrc"
 )
 
