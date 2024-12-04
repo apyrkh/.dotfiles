@@ -1,3 +1,6 @@
+local nvim_tree_api = require("nvim-tree.api")
+local telescope_builtin = require("telescope.builtin")
+
 local keymap = vim.keymap
 
 -- Resize window using <Shift> arrow keys
@@ -61,19 +64,40 @@ keymap.set("n", "<leader>wo", "<cmd>Autosession search<CR>", { desc = "List Save
 keymap.set("n", "<leader>wd", "<cmd>Autosession delete<CR>", { desc = "Delete Saved Sessions" })
 
 -- Nvim Tree
--- hotkey: R
--- keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh File Explorer" })
+local function get_nvim_tree_cwd()
+  local node = nvim_tree_api.tree.get_node_under_cursor()
+
+  if not node then
+    print("No node selected in nvim-tree")
+    return nil
+  end
+
+  if node.type == "directory" then
+    return node.absolute_path
+  elseif node.type == "file" then
+    return vim.fn.fnamemodify(node.absolute_path, ":h")
+  else
+    print("Selected node is not valid for search")
+    return nil
+  end
+end
+
 keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle File Explorer" })
 keymap.set("n", "<leader>eo", "<cmd>NvimTreeFindFile<CR>", { desc = "Select Opened File" })
 keymap.set("n", "<leader>edd", "<cmd>Oil<CR>", { desc = "Open Parent Directory" })
 keymap.set("n", "<leader>edf", "<cmd>Oil --float<CR>", { desc = "Open Parent Directory (floating)" })
 keymap.set("n", "<leader>ef", function()
-  local telescope_builtin = require("telescope.builtin")
-  local api = require("nvim-tree.api")
-  local node = api.tree.get_node_under_cursor()
-  local cwd = node and node.absolute_path or vim.loop.cwd()
-  telescope_builtin.find_files({ cwd = cwd })
+  local cwd = get_nvim_tree_cwd()
+  if cwd then
+    telescope_builtin.find_files({ cwd = cwd })
+  end
 end, { desc = "Search files in nvim-tree directory or project" })
+keymap.set("n", "<leader>eg", function()
+  local cwd = get_nvim_tree_cwd()
+  if cwd then
+    telescope_builtin.live_grep({ cwd = cwd })
+  end
+end, { desc = "Live grep in nvim-tree directory or project" })
 
 -- Gitsigns
 keymap.set("n", "<leader>gb", "<cmd>lua require('gitsigns').blame_line()<CR>", { desc = "Blame Line" })
@@ -138,8 +162,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-keymap.set("n", "<leader>dqq", ":LspRestart<CR>", { desc = "Restart LSP" }) -- mapping to restart lsp if necessary
-
 -- Substitute
 keymap.set("n", "s", function() require('substitute').operator() end, { desc = "Substitute with motion" })
 keymap.set("n", "ss", function() require('substitute').line() end, { desc = "Substitute line" })
@@ -163,13 +185,12 @@ keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "Lists Av
 -- keymap.set("n", "<leader>dd", vim.diagnostic.open_float, { desc = "Show Line Diagnostics" })
 -- Trouble
 keymap.set("n", "<leader>dD", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
-keymap.set("n", "<leader>dd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-  { desc = "Buffer Diagnostics (Trouble)" })
+keymap.set("n", "<leader>dd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer Diagnostics (Trouble)" })
 keymap.set("n", "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>", { desc = "Symbols (Trouble)" })
-keymap.set("n", "<leader>xl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-  { desc = "LSP Definitions / references / ... (Trouble)" })
+keymap.set("n", "<leader>xl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", { desc = "LSP Definitions / references / ... (Trouble)" })
 keymap.set("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location List (Trouble)" })
 keymap.set("n", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix List (Trouble)" })
+keymap.set("n", "<leader>dqq", ":LspRestart<CR>", { desc = "Restart LSP" })
 
 -- Yanky
 keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)", { desc = "Put Before" })
