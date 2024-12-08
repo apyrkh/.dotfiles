@@ -6,6 +6,14 @@ local substitute = require('substitute')
 local telescope_builtin = require("telescope.builtin")
 local wk = require("which-key")
 
+-- Tab Management
+wk.add({
+  mode = "n",
+  { "<leader>t",  group = "Tab" },
+  { "<leader>tn", "<cmd>tabnew<CR>",        desc = "Open New Tab" },
+  { "<leader>tc", "<cmd>tabclose<CR>",        desc = "Close Tab" },
+})
+
 -- Window Management
 wk.add({
   mode = "n",
@@ -125,8 +133,8 @@ wk.add({
 wk.add({
   mode = "n",
   { "<leader>g",  group = "Git" },
-  { "<leader>gb", function() require("gitsigns").blame_line() end,      desc = "Blame Line" },
-  { "<leader>gB", function() vim.cmd("BlameToggle") end,                desc = "Blame File" },
+  { "<leader>gb", function() vim.cmd("BlameToggle virtual") end,        desc = "Blame File (Virtual)" },
+  { "<leader>gB", function() vim.cmd("BlameToggle") end,                desc = "Blame File (Window)" },
   { "<leader>gs", function() require("gitsigns").stage_hunk() end,      desc = "Stage Hunk" },
   { "<leader>gu", function() require("gitsigns").undo_stage_hunk() end, desc = "Unstage Hunk" },
   { "<leader>gx", function() require("gitsigns").reset_hunk() end,      desc = "Reset Hunk" },
@@ -240,7 +248,7 @@ wk.add({
 -- Auto-Session
 wk.add({
   mode = "n",
-  { "<leader>w",  group = "Session" },
+  { "<leader>w",  group = "Sessions" },
   { "<leader>ww", "<cmd>SessionSave<CR>",        desc = "Save Session for CWD" },
   { "<leader>wr", "<cmd>SessionRestore<CR>",     desc = "Restore Session for CWD" },
   { "<leader>wo", "<cmd>Autosession search<CR>", desc = "List Saved Sessions" },
