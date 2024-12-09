@@ -1,4 +1,5 @@
 -- A clean, dark Neovim theme written in Lua
+-- #ui #theme
 return {
   "folke/tokyonight.nvim",
   lazy = false,

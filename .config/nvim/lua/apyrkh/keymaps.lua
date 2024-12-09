@@ -10,8 +10,8 @@ local wk = require("which-key")
 wk.add({
   mode = "n",
   { "<leader>t",  group = "Tab" },
-  { "<leader>tn", "<cmd>tabnew<CR>",        desc = "Open New Tab" },
-  { "<leader>tc", "<cmd>tabclose<CR>",        desc = "Close Tab" },
+  { "<leader>tn", "<cmd>tabnew<CR>",   desc = "Open New Tab" },
+  { "<leader>tc", "<cmd>tabclose<CR>", desc = "Close Tab" },
 })
 
 -- Window Management

@@ -22,8 +22,9 @@ require("lazy").setup(
     { import = "apyrkh.plugins" },
     { import = "apyrkh.plugins.lsp" },
     { import = "apyrkh.plugins.code" },
-    { import = "apyrkh.plugins.vcs" },
+    { import = "apyrkh.plugins.file" },
     { import = "apyrkh.plugins.ui" },
+    { import = "apyrkh.plugins.vcs" },
   },
   {
     -- Enable plugin update checker

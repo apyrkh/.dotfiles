@@ -5,8 +5,8 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   main = "ibl",
   opts = {
-    indent = { char = "┊" },
-    scope = { enabled = true }, -- Highlight current context
+    -- indent = { char = "┊" },
+    indent = { char = "⋮" },
     exclude = { -- Disable in certain file types
       filetypes = { "help", "terminal", "dashboard" },
     },

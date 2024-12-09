@@ -1,4 +1,5 @@
--- A file explorer tree for neovim written in lua
+-- A fast and feature-rich file explorer for Neovim written in Lua
+-- #file-explorer
 return {
   "nvim-tree/nvim-tree.lua",
   dependencies = {

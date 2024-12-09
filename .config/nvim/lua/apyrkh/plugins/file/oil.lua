@@ -1,3 +1,5 @@
+-- A modern and minimalistic file explorer for editing files and directories directly in Neovim
+-- #file-explorer
 return {
   "stevearc/oil.nvim",
   opts = {
@@ -25,16 +27,10 @@ return {
       show_hidden = true,
       is_always_hidden = function(name)
         local hidden_names = {
-          ".DS_Store"
+          ".DS_Store",
         }
-
-        for _, hidden_name in ipairs(hidden_names) do
-          if hidden_name == name then
-            return true
-          end
-        end
-        return false
-      end
+        return vim.tbl_contains(hidden_names, name)
+      end,
     },
   },
   -- Optional dependencies
