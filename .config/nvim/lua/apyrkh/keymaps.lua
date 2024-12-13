@@ -1,6 +1,6 @@
-local gitsigns = require('gitsigns');
+local gitsigns = require('gitsigns')
 local harpoon = require('harpoon')
-local illuminate = require('illuminate');
+local illuminate = require('illuminate')
 local nvim_tree_api = require("nvim-tree.api")
 local substitute = require('substitute')
 local telescope_builtin = require("telescope.builtin")
@@ -10,8 +10,10 @@ local wk = require("which-key")
 wk.add({
   mode = "n",
   { "<leader>t",  group = "Tab" },
-  { "<leader>tn", "<cmd>tabnew<CR>",   desc = "Open New Tab" },
-  { "<leader>tc", "<cmd>tabclose<CR>", desc = "Close Tab" },
+  { "<leader>tn", "<cmd>tabnew<CR>",      desc = "Open New Tab" },
+  { "<leader>tq", "<cmd>tabclose<CR>",    desc = "Close Tab" },
+  { "<leader>t[", "<cmd>tabprevious<CR>", desc = "Go to Prev Tab" },
+  { "<leader>t]", "<cmd>tabnext<CR>",     desc = "Go to Next Tab" },
 })
 
 -- Window Management
@@ -225,24 +227,22 @@ wk.add({
   { "<leader>fc", "<cmd>Telescope grep_string<CR>",   desc = "Search Text Under Cursor" },
   { "<leader>fr", "<cmd>Telescope resume<CR>",        desc = "Resume Search" },
   { "<leader>fs", "<cmd>Telescope spell_suggest<CR>", desc = "Search Spelling Suggestions" },
-  { "<leader>ft", "<cmd>TodoTelescope<CR>",           desc = "Search TODOs" },
   { "<leader>fb", "<cmd>Telescope buffers<CR>",       desc = "Search Buffers" },
   { "<leader>fk", "<cmd>Telescope keymaps<CR>",       desc = "Search Keymaps" },
   { "<leader>fh", "<cmd>Telescope help_tags<CR>",     desc = "Search Help Tags" },
+  { "<leader>ft", "<cmd>TodoTelescope<CR>",           desc = "Search TODOs" },
 })
 
 -- Diagnostic
 wk.add({
   mode = "n",
-  { "<leader>d",  group = "Diagnostics" },
-  { "<leader>dD", "<cmd>Trouble diagnostics toggle<cr>",                        desc = "Open All Diagnostics (Trouble)" },
-  { "<leader>dd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",           desc = "Open Current Diagnostics (Trouble)" },
-
   { "<leader>x",  group = "Trouble" },
-  { "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>",                desc = "Open Document Symbols (Trouble)" },
-  { "<leader>xl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "Open References (Trouble)" },
-  { "<leader>xL", "<cmd>Trouble loclist toggle<cr>",                            desc = "Open Location List (Trouble)" },
-  { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>",                             desc = "Open Quickfix List (Trouble)" },
+  { "<leader>xx", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",           desc = "Toggle File Diagnostics (Trouble)" },
+  { "<leader>xX", "<cmd>Trouble diagnostics toggle<cr>",                        desc = "Toggle All Diagnostics (Trouble)" },
+  { "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>",                desc = "Toggle Document Symbols (Trouble)" },
+  { "<leader>xl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "Toggle References (Trouble)" },
+  { "<leader>xL", "<cmd>Trouble loclist toggle<cr>",                            desc = "Toggle Location List (Trouble)" },
+  { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>",                             desc = "TogglQuickfix List (Trouble)" },
 })
 
 -- Auto-Session
