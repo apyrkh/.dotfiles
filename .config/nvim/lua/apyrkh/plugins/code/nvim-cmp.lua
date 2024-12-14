@@ -8,10 +8,11 @@ end
 
 return {
   "hrsh7th/nvim-cmp",
-  event = "InsertEnter",
+  event = { "InsertEnter", "CmdlineEnter" },
   dependencies = {
-    "hrsh7th/cmp-buffer", -- source for text in buffer
-    "hrsh7th/cmp-path",   -- source for file system paths
+    "hrsh7th/cmp-buffer",  -- source for text in buffer
+    "hrsh7th/cmp-cmdline", -- source for vim's cmdline
+    "hrsh7th/cmp-path",    -- source for file system paths
     {
       "L3MON4D3/LuaSnip",
       version = "v2.*",
@@ -43,18 +44,19 @@ return {
       },
 
       mapping = {
+        -- @TODO: this is not needed as it provoke enter key
         -- complete selection
-        ["<CR>"] = cmp.mapping({
-          i = function(fallback)
-            if cmp.visible() and cmp.get_active_entry() then
-              cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-            else
-              fallback()
-            end
-          end,
-          s = cmp.mapping.confirm({ select = true }),
-          c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-        }),
+        -- ["<CR>"] = cmp.mapping({
+        --   i = function(fallback)
+        --     if cmp.visible() and cmp.get_active_entry() then
+        --       cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+        --     else
+        --       fallback()
+        --     end
+        --   end,
+        --   s = cmp.mapping.confirm({ select = true }),
+        --   c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+        -- }),
         -- go next
         -- if there is only one possible completion, it will be completed immediately
         ["<Tab>"] = cmp.mapping({
@@ -119,7 +121,6 @@ return {
           { name = "luasnip" }, -- snippets
           { name = "buffer" },  -- text within current buffer
           { name = "path" },    -- file system paths
-          { name = "cmdline" },
         }
       ),
 
@@ -134,17 +135,16 @@ return {
     -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline({ "/", "?" }, {
       mapping = cmp.mapping.preset.cmdline(),
-      sources = {
+      sources = cmp.config.sources({
         { name = "buffer" }
-      }
+      }),
     })
 
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline(":", {
       mapping = cmp.mapping.preset.cmdline(),
       sources = cmp.config.sources({
-        { name = "path" }
-      }, {
+        { name = "path" },
         { name = "cmdline" }
       }),
       matching = { disallow_symbol_nonprefix_matching = false }
