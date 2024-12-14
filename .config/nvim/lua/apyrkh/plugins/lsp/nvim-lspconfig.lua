@@ -23,6 +23,12 @@ return {
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
 
+    lspconfig["bashls"].setup({
+      capabilities = capabilities,
+      cmd = { "bash-language-server", "start" },
+      filetypes = { "sh", "bash" },
+    })
+
     lspconfig["lua_ls"].setup({
       capabilities = capabilities,
       settings = { -- custom settings for lua

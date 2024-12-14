@@ -10,19 +10,21 @@ files=(
 )
 
 echo "=== Installing dotfiles ==="
+echo ""
 
 for file in "${files[@]}"; do
-  echo "Creating symlink '$HOME/$file' ..."
+  echo "Creating symlink '$HOME/$file':"
 
   if [ -e "$HOME/$file" ]; then
-    echo "    removing existing files"
+    echo "... removing existing"
     rm -rf "$HOME/$file"
   fi
 
-  echo "    creating symlink"
+  echo "... creating new"
   ln -s "$dotfiles_dir/$file" "$HOME/$file"
 
-  echo "    done"
+  echo "Created!"
+  echo ""
 done
 
 echo "=== Dotfiles installed successfully! ==="
