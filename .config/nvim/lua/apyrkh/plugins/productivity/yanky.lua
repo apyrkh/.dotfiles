@@ -2,7 +2,7 @@
 -- #clipboard #yank
 return {
   "gbprod/yanky.nvim",
-  config = function ()
+  config = function()
     require("yanky").setup({
       picker = {
         telescope = {

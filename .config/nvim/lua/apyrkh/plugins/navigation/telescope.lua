@@ -1,14 +1,5 @@
-local get_mappings = function()
-  local actions = require("telescope.actions")
-
-  return {
-    i = {
-      ["<C-k>"] = actions.move_selection_previous,
-      ["<C-j>"] = actions.move_selection_next,
-    }
-  }
-end
-
+-- Telescope for fuzzy file finding, search, and navigation
+-- #navigation #search #telescope
 return {
   "nvim-telescope/telescope.nvim",
   branch = "0.1.x",
@@ -20,10 +11,16 @@ return {
   },
   config = function()
     local telescope = require("telescope")
+    local actions = require("telescope.actions")
 
     telescope.setup({
       defaults = {
-        mappings = get_mappings(),
+        mappings = {
+          i = {
+            ["<C-k>"] = actions.move_selection_previous,
+            ["<C-j>"] = actions.move_selection_next,
+          }
+        },
         vimgrep_arguments = vim.list_extend(
           require("telescope.config").values.vimgrep_arguments,
           { "--hidden", "--glob", "!**/.git/*" }

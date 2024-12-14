@@ -1,5 +1,5 @@
 -- Autocompletion plugin for Neovim with flexible configuration, snippet integration, and LSP support
--- #lsp #autocompletion #snippets
+-- #code #autocompletion #snippets
 local has_words_before = function()
   unpack = unpack or table.unpack
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -113,14 +113,15 @@ return {
         }),
       },
 
-      sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "luasnip" }, -- snippets
-        { name = "buffer" },  -- text within current buffer
-        { name = "path" },    -- file system paths
-      }, {
-        name = "buffer"
-      }),
+      sources = cmp.config.sources(
+        {
+          { name = "nvim_lsp" },
+          { name = "luasnip" }, -- snippets
+          { name = "buffer" },  -- text within current buffer
+          { name = "path" },    -- file system paths
+          { name = "cmdline" },
+        }
+      ),
 
       formatting = {
         format = lspkind.cmp_format({
@@ -131,20 +132,20 @@ return {
     })
 
     -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-    cmp.setup.cmdline({ '/', '?' }, {
+    cmp.setup.cmdline({ "/", "?" }, {
       mapping = cmp.mapping.preset.cmdline(),
       sources = {
-        { name = 'buffer' }
+        { name = "buffer" }
       }
     })
 
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-    cmp.setup.cmdline(':', {
+    cmp.setup.cmdline(":", {
       mapping = cmp.mapping.preset.cmdline(),
       sources = cmp.config.sources({
-        { name = 'path' }
+        { name = "path" }
       }, {
-        { name = 'cmdline' }
+        { name = "cmdline" }
       }),
       matching = { disallow_symbol_nonprefix_matching = false }
     })

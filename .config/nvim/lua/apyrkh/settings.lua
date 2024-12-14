@@ -9,7 +9,7 @@ vim.opt.autoread = true
 -- vim.api.nvim_create_autocmd("TextYankPost", {
 --   pattern = "*",
 --   callback = function()
---     vim.highlight.on_yank({ higroup = 'IncSearch', timeout = 500 })
+--     vim.highlight.on_yank({ higroup = "IncSearch", timeout = 500 })
 --   end
 -- })
 
@@ -54,7 +54,7 @@ vim.opt.splitbelow = true -- split horizontal window to the bottom
 
 -- Spelling
 vim.opt.spell = true
-vim.opt.spelllang = 'en_us,en'
+vim.opt.spelllang = "en_us,en"
 
 -- Swapfile
 vim.opt.swapfile = false

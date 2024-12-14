@@ -19,10 +19,11 @@ vim.opt.rtp:prepend(lazypath)
 -- Set up lazy.nvim with plugin categories
 require("lazy").setup(
   {
-    { import = "apyrkh.plugins" },
-    { import = "apyrkh.plugins.lsp" },
     { import = "apyrkh.plugins.code" },
     { import = "apyrkh.plugins.file" },
+    { import = "apyrkh.plugins.lsp" },
+    { import = "apyrkh.plugins.navigation" },
+    { import = "apyrkh.plugins.productivity" },
     { import = "apyrkh.plugins.ui" },
     { import = "apyrkh.plugins.vcs" },
   },

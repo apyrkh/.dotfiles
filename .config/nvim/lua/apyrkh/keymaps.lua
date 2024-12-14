@@ -1,8 +1,8 @@
-local gitsigns = require('gitsigns')
-local harpoon = require('harpoon')
-local illuminate = require('illuminate')
+local gitsigns = require("gitsigns")
+local harpoon = require("harpoon")
+local illuminate = require("illuminate")
 local nvim_tree_api = require("nvim-tree.api")
-local substitute = require('substitute')
+local substitute = require("substitute")
 local telescope_builtin = require("telescope.builtin")
 local wk = require("which-key")
 
@@ -43,16 +43,16 @@ wk.add({
   { "]",  group = "Go Next" },
   { "[b", "<cmd>bprevious<cr>",                                         desc = "Prev Buffer" },
   { "]b", "<cmd>bnext<cr>",                                             desc = "Next Buffer" },
-  { "[g", function() gitsigns.nav_hunk('prev', { target = 'all' }) end, desc = "Prev Hunk" },
-  { "]g", function() gitsigns.nav_hunk('next', { target = 'all' }) end, desc = "Next Hunk" },
+  { "[g", function() gitsigns.nav_hunk("prev", { target = "all" }) end, desc = "Prev Hunk" },
+  { "]g", function() gitsigns.nav_hunk("next", { target = "all" }) end, desc = "Next Hunk" },
   { "[h", function() harpoon:list():prev() end,                         desc = "Prev Harpoon File" },
   { "]h", function() harpoon:list():next() end,                         desc = "Next Harpoon File" },
   { "[p", "<Plug>(YankyPreviousEntry)",                                 desc = "Prev Yanky Entry" },
   { "]p", "<Plug>(YankyNextEntry)",                                     desc = "Next Yanky Entry" },
   { "[q", vim.cmd.cprev,                                                desc = "Prev Quickfix" },
   { "]q", vim.cmd.cnext,                                                desc = "Next Quickfix" },
-  { "[[", function() illuminate.goto_prev_reference('wrapscan') end,    desc = "Prev Reference" },
-  { "]]", function() illuminate.goto_next_reference('wrapscan') end,    desc = "Next Reference" },
+  { "[[", function() illuminate.goto_prev_reference("wrapscan") end,    desc = "Prev Reference" },
+  { "]]", function() illuminate.goto_next_reference("wrapscan") end,    desc = "Next Reference" },
 })
 
 -- Line Movement and Indentation
@@ -141,7 +141,7 @@ wk.add({
   { "<leader>gu", function() require("gitsigns").undo_stage_hunk() end, desc = "Unstage Hunk" },
   { "<leader>gx", function() require("gitsigns").reset_hunk() end,      desc = "Reset Hunk" },
   { "<leader>gp", function() require("gitsigns").preview_hunk() end,    desc = "Preview Hunk" },
-  { "<leader>gd", function() require("gitsigns").diffthis('~1') end,    desc = "Diff Hunk" },
+  { "<leader>gd", function() require("gitsigns").diffthis("~1") end,    desc = "Diff Hunk" },
   { "<leader>gg", function() vim.cmd("Neogit") end,                     desc = "Open Neogit" },
 })
 
@@ -184,8 +184,8 @@ wk.add({
   { "gi",          "<cmd>Telescope lsp_implementations<CR>",            opts, desc = "Go to Implementation (LSP)" },
   { "gr",          "<cmd>Telescope lsp_references show_line=false<CR>", opts, desc = "Go to References (LSP)" },
 })
--- vim.api.nvim_create_autocmd('LspAttach', {
---   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+-- vim.api.nvim_create_autocmd("LspAttach", {
+--   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 --   callback = function(ev)
 --     -- bindings go here
 --   end,

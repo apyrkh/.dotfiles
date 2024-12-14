@@ -1,5 +1,5 @@
 -- A modern and minimalistic file explorer for editing files and directories directly in Neovim
--- #file-explorer
+-- #file #explorer
 return {
   "stevearc/oil.nvim",
   opts = {

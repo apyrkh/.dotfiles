@@ -34,14 +34,14 @@ local get_swap = function()
   return {
     enable = true,
     swap_previous = {
-      ["<leader>pm"] = { query = "@function.outer", desc = "Swap function with previous" },
-      ["<leader>pa"] = { query = "@parameter.inner", desc = "Swap argument with prev" },
-      ["<leader>p="] = { query = "@assignment.outer", desc = "Swap object property with prev" },
+      ["<leader>spm"] = { query = "@function.outer", desc = "Swap function with previous" },
+      ["<leader>spa"] = { query = "@parameter.inner", desc = "Swap argument with prev" },
+      ["<leader>sp="] = { query = "@assignment.outer", desc = "Swap object property with prev" },
     },
     swap_next = {
-      ["<leader>nm"] = { query = "@function.outer", desc = "Swap function with next" },
-      ["<leader>na"] = { query = "@parameter.inner", desc = "Swap argument with next" },
-      ["<leader>n="] = { query = "@assignment.outer", desc = "Swap object property with next" },
+      ["<leader>snm"] = { query = "@function.outer", desc = "Swap function with next" },
+      ["<leader>sna"] = { query = "@parameter.inner", desc = "Swap argument with next" },
+      ["<leader>sn="] = { query = "@assignment.outer", desc = "Swap object property with next" },
     },
   }
 end
