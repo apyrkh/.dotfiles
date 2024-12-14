@@ -1,5 +1,5 @@
 -- Manages and automates saving/restoring Neovim sessions for a seamless workflow
--- #session_management #automation #workflow
+-- #productivity #session #management
 return {
   "rmagatti/auto-session",
   config = function()

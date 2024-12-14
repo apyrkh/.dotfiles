@@ -1,95 +1,85 @@
-local get_select = function()
-  return {
-    enable = true,
-    lookahead = true,
-    keymaps = {
-      -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects/blob/master/queries/ecma/textobjects.scm
-      ["am"] = { query = "@function.outer", desc = "Select outer part of a method/function definition" },
-      ["im"] = { query = "@function.inner", desc = "Select inner part of a method/function definition" },
-
-      ["ac"] = { query = "@class.outer", desc = "Select outer part of a class" },
-      ["ic"] = { query = "@class.inner", desc = "Select inner part of a class" },
-
-      ["al"] = { query = "@loop.outer", desc = "Select outer part of a loop" },
-      ["il"] = { query = "@loop.inner", desc = "Select inner part of a loop" },
-
-      ["ai"] = { query = "@conditional.outer", desc = "Select outer part of a conditional" },
-      ["ii"] = { query = "@conditional.inner", desc = "Select inner part of a conditional" },
-
-      ["af"] = { query = "@call.outer", desc = "Select outer part of a function call" },
-      ["if"] = { query = "@call.inner", desc = "Select inner part of a function call" },
-
-      ["aa"] = { query = "@parameter.outer", desc = "Select outer part of a argument" },
-      ["ia"] = { query = "@parameter.inner", desc = "Select inner part of a argument" },
-
-      ["a="] = { query = "@assignment.outer", desc = "Select outer part of an assignment" },
-      ["i="] = { query = "@assignment.inner", desc = "Select inner part of an assignment" },
-      ["=l"] = { query = "@assignment.lhs", desc = "Select left hand side of an assignment" },
-      ["=r"] = { query = "@assignment.rhs", desc = "Select right hand side of an assignment" },
-    }
-  }
-end
-
-local get_swap = function()
-  return {
-    enable = true,
-    swap_previous = {
-      ["<leader>spm"] = { query = "@function.outer", desc = "Swap function with previous" },
-      ["<leader>spa"] = { query = "@parameter.inner", desc = "Swap argument with prev" },
-      ["<leader>sp="] = { query = "@assignment.outer", desc = "Swap object property with prev" },
-    },
-    swap_next = {
-      ["<leader>snm"] = { query = "@function.outer", desc = "Swap function with next" },
-      ["<leader>sna"] = { query = "@parameter.inner", desc = "Swap argument with next" },
-      ["<leader>sn="] = { query = "@assignment.outer", desc = "Swap object property with next" },
-    },
-  }
-end
-
-local get_move = function()
-  return {
-    enable = true,
-    set_jumps = true, -- whether to set jumps in the jumplist
-    goto_previous_start = {
-      ["[f"] = { query = "@call.outer", desc = "Prev function call start" },
-      ["[m"] = { query = "@function.outer", desc = "Prev method/function def start" },
-      ["[c"] = { query = "@class.outer", desc = "Prev class start" },
-      ["[i"] = { query = "@conditional.outer", desc = "Prev conditional start" },
-      ["[l"] = { query = "@loop.outer", desc = "Prev loop start" },
-    },
-    goto_previous_end = {
-      ["[F"] = { query = "@call.outer", desc = "Prev function call end" },
-      ["[M"] = { query = "@function.outer", desc = "Prev method/function def end" },
-      ["[C"] = { query = "@class.outer", desc = "Prev class end" },
-      ["[I"] = { query = "@conditional.outer", desc = "Prev conditional end" },
-      ["[L"] = { query = "@loop.outer", desc = "Prev loop end" },
-    },
-    goto_next_start = {
-      ["]f"] = { query = "@call.outer", desc = "Next function call start" },
-      ["]m"] = { query = "@function.outer", desc = "Next method/function def start" },
-      ["]c"] = { query = "@class.outer", desc = "Next class start" },
-      ["]i"] = { query = "@conditional.outer", desc = "Next conditional start" },
-      ["]l"] = { query = "@loop.outer", desc = "Next loop start" },
-    },
-    goto_next_end = {
-      ["]F"] = { query = "@call.outer", desc = "Next function call end" },
-      ["]M"] = { query = "@function.outer", desc = "Next method/function def end" },
-      ["]C"] = { query = "@class.outer", desc = "Next class end" },
-      ["]I"] = { query = "@conditional.outer", desc = "Next conditional end" },
-      ["]L"] = { query = "@loop.outer", desc = "Next loop end" },
-    },
-  }
-end
-
+-- Provides advanced text object navigation, swapping, and selection for treesitter
+-- #code #navigation #productivity
 return {
   "nvim-treesitter/nvim-treesitter-textobjects",
   lazy = true,
   config = function()
     require("nvim-treesitter.configs").setup({
       textobjects = {
-        select = get_select(),
-        swap = get_swap(),
-        move = get_move()
+        select = {
+          enable = true,
+          lookahead = true,
+          keymaps = {
+            -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects/blob/master/queries/ecma/textobjects.scm
+            ["am"] = { query = "@function.outer", desc = "Select outer part of a method/function definition" },
+            ["im"] = { query = "@function.inner", desc = "Select inner part of a method/function definition" },
+
+            ["ac"] = { query = "@class.outer", desc = "Select outer part of a class" },
+            ["ic"] = { query = "@class.inner", desc = "Select inner part of a class" },
+
+            ["al"] = { query = "@loop.outer", desc = "Select outer part of a loop" },
+            ["il"] = { query = "@loop.inner", desc = "Select inner part of a loop" },
+
+            ["ai"] = { query = "@conditional.outer", desc = "Select outer part of a conditional" },
+            ["ii"] = { query = "@conditional.inner", desc = "Select inner part of a conditional" },
+
+            ["af"] = { query = "@call.outer", desc = "Select outer part of a function call" },
+            ["if"] = { query = "@call.inner", desc = "Select inner part of a function call" },
+
+            ["aa"] = { query = "@parameter.outer", desc = "Select outer part of a argument" },
+            ["ia"] = { query = "@parameter.inner", desc = "Select inner part of a argument" },
+
+            ["a="] = { query = "@assignment.outer", desc = "Select outer part of an assignment" },
+            ["i="] = { query = "@assignment.inner", desc = "Select inner part of an assignment" },
+            ["=l"] = { query = "@assignment.lhs", desc = "Select left hand side of an assignment" },
+            ["=r"] = { query = "@assignment.rhs", desc = "Select right hand side of an assignment" },
+          }
+        },
+        swap = {
+          enable = true,
+          swap_previous = {
+            ["<leader>spm"] = { query = "@function.outer", desc = "Swap function with previous" },
+            ["<leader>spa"] = { query = "@parameter.inner", desc = "Swap argument with prev" },
+            ["<leader>sp="] = { query = "@assignment.outer", desc = "Swap object property with prev" },
+          },
+          swap_next = {
+            ["<leader>snm"] = { query = "@function.outer", desc = "Swap function with next" },
+            ["<leader>sna"] = { query = "@parameter.inner", desc = "Swap argument with next" },
+            ["<leader>sn="] = { query = "@assignment.outer", desc = "Swap object property with next" },
+          },
+        },
+        move = {
+          enable = true,
+          set_jumps = true, -- whether to set jumps in the jumplist
+          goto_previous_start = {
+            ["[f"] = { query = "@call.outer", desc = "Prev function call start" },
+            ["[m"] = { query = "@function.outer", desc = "Prev method/function def start" },
+            ["[c"] = { query = "@class.outer", desc = "Prev class start" },
+            ["[i"] = { query = "@conditional.outer", desc = "Prev conditional start" },
+            ["[l"] = { query = "@loop.outer", desc = "Prev loop start" },
+          },
+          goto_previous_end = {
+            ["[F"] = { query = "@call.outer", desc = "Prev function call end" },
+            ["[M"] = { query = "@function.outer", desc = "Prev method/function def end" },
+            ["[C"] = { query = "@class.outer", desc = "Prev class end" },
+            ["[I"] = { query = "@conditional.outer", desc = "Prev conditional end" },
+            ["[L"] = { query = "@loop.outer", desc = "Prev loop end" },
+          },
+          goto_next_start = {
+            ["]f"] = { query = "@call.outer", desc = "Next function call start" },
+            ["]m"] = { query = "@function.outer", desc = "Next method/function def start" },
+            ["]c"] = { query = "@class.outer", desc = "Next class start" },
+            ["]i"] = { query = "@conditional.outer", desc = "Next conditional start" },
+            ["]l"] = { query = "@loop.outer", desc = "Next loop start" },
+          },
+          goto_next_end = {
+            ["]F"] = { query = "@call.outer", desc = "Next function call end" },
+            ["]M"] = { query = "@function.outer", desc = "Next method/function def end" },
+            ["]C"] = { query = "@class.outer", desc = "Next class end" },
+            ["]I"] = { query = "@conditional.outer", desc = "Next conditional end" },
+            ["]L"] = { query = "@loop.outer", desc = "Next loop end" },
+          },
+        }
       }
     })
 

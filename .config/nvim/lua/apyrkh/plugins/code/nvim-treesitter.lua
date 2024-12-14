@@ -1,12 +1,5 @@
-local get_keymaps = function()
-  return {
-    init_selection = "<C-]>",
-    node_incremental = "<C-]>",
-    scope_incremental = false,
-    node_decremental = "<BS>",
-  }
-end
-
+-- Provides syntax highlighting, indentation, and incremental selection with Treesitter
+-- #code #syntax #highlight
 return {
   "nvim-treesitter/nvim-treesitter",
   build = ":TSUpdate",
@@ -45,7 +38,12 @@ return {
       },
       incremental_selection = {
         enable = true,
-        keymaps = get_keymaps(),
+        keymaps = {
+          init_selection = "<C-]>",
+          node_incremental = "<C-]>",
+          scope_incremental = false,
+          node_decremental = "<BS>",
+        },
       }
     })
   end

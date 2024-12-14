@@ -1,5 +1,5 @@
 -- Enhances yank/paste functionality with a history ring and Telescope integration
--- #clipboard #yank
+-- #productivity #clipboard #yank
 return {
   "gbprod/yanky.nvim",
   config = function()

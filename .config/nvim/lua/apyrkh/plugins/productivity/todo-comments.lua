@@ -1,5 +1,5 @@
 -- Highlight, list, and search todo comments across the codebase
--- #todo-comments #search #productivity
+-- #productivity #todo #comments
 -- FIX:
 -- TODO:
 -- HACK:

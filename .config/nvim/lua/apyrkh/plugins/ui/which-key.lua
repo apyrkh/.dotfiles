@@ -1,4 +1,5 @@
--- A lua plugin for that displays possible keybindings
+-- Display keybindings in a popup for faster learning and usage
+-- #ui #keymaps
 return {
   "folke/which-key.nvim",
   event = "VeryLazy",
@@ -16,5 +17,12 @@ return {
     },
   },
   opts = {
+    plugins = {
+      -- hotkey: z=
+      spelling = { enabled = true },
+    },
+    win = {
+      border = "rounded",
+    },
   }
 }
