@@ -1,3 +1,5 @@
+-- Configuration for LSP servers using nvim-lspconfig
+-- #lsp #lspconfig
 return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },

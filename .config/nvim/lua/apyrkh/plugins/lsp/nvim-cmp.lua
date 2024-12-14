@@ -1,3 +1,5 @@
+-- Autocompletion plugin for Neovim with flexible configuration, snippet integration, and LSP support
+-- #lsp #autocompletion #snippets
 local has_words_before = function()
   unpack = unpack or table.unpack
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -9,15 +11,15 @@ return {
   event = "InsertEnter",
   dependencies = {
     "hrsh7th/cmp-buffer", -- source for text in buffer
-    "hrsh7th/cmp-path", -- source for file system paths
+    "hrsh7th/cmp-path",   -- source for file system paths
     {
       "L3MON4D3/LuaSnip",
       version = "v2.*",
       build = "make install_jsregexp",
     },
-    "saadparwaiz1/cmp_luasnip", -- source for luasnip
+    "saadparwaiz1/cmp_luasnip",     -- source for luasnip
     "rafamadriz/friendly-snippets", -- useful snippets
-    "onsails/lspkind.nvim", -- vscode-like pictograms for neovim lsp completion items
+    "onsails/lspkind.nvim",         -- vscode-like pictograms for neovim lsp completion items
   },
   config = function()
     local cmp = require("cmp")
@@ -28,9 +30,11 @@ return {
     require("luasnip.loaders.from_vscode").lazy_load()
 
     cmp.setup({
-      completion = {
-        completeopt = "menu,menuone,preview,noselect",
-      },
+      -- @TODO: probably this block can be removed, keep it for some time
+      -- completion = {
+      --   completeopt = "menu,menuone,preview,noselect",
+      -- },
+
       -- configure how nvim-cmp interacts with snippet engine
       snippet = {
         expand = function(args)
@@ -51,8 +55,8 @@ return {
           s = cmp.mapping.confirm({ select = true }),
           c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
         }),
+        -- go next
         -- if there is only one possible completion, it will be completed immediately
-        -- if there are many completions, it will go next
         ["<Tab>"] = cmp.mapping({
           i = function(fallback)
             if cmp.visible() then
@@ -112,8 +116,10 @@ return {
       sources = cmp.config.sources({
         { name = "nvim_lsp" },
         { name = "luasnip" }, -- snippets
-        { name = "buffer" }, -- text within current buffer
-        { name = "path" }, -- file system paths
+        { name = "buffer" },  -- text within current buffer
+        { name = "path" },    -- file system paths
+      }, {
+        name = "buffer"
       }),
 
       formatting = {
@@ -122,6 +128,25 @@ return {
           ellipsis_char = "...",
         }),
       },
+    })
+
+    -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+    cmp.setup.cmdline({ '/', '?' }, {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = {
+        { name = 'buffer' }
+      }
+    })
+
+    -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+    cmp.setup.cmdline(':', {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = cmp.config.sources({
+        { name = 'path' }
+      }, {
+        { name = 'cmdline' }
+      }),
+      matching = { disallow_symbol_nonprefix_matching = false }
     })
   end
 }

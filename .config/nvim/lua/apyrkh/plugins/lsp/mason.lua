@@ -1,3 +1,5 @@
+-- Manages LSP installations for Neovim through Mason and Mason-Lspconfig
+-- #lsp #installer
 return {
   "williamboman/mason.nvim",
   dependencies = {
