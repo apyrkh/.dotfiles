@@ -73,7 +73,7 @@ return {
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item({ behavior = cmp.ConfirmBehavior.Replace })
-          elseif has_words_before then
+          elseif has_words_before() then
             cmp.complete()
           else
             fallback()
@@ -84,7 +84,7 @@ return {
         ["<S-Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item({ behavior = cmp.ConfirmBehavior.Replace })
-          elseif has_words_before then
+          elseif has_words_before() then
             cmp.complete()
           else
             fallback()
