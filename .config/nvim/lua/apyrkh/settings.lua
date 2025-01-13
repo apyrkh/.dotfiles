@@ -19,10 +19,11 @@ vim.opt.relativenumber = true -- show relative line numbers
 
 -- Scrolling and tabs
 vim.opt.scrolloff = 5 -- minimal number of screen lines to keep above and below the cursor
-vim.opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
-vim.opt.shiftwidth = 2 -- 2 spaces for indent width
 vim.opt.expandtab = true -- expand tab to spaces
+vim.opt.shiftwidth = 2 -- 2 spaces for indent width
+vim.opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
 vim.opt.autoindent = true -- copy indent from current line when starting new one
+vim.opt.smartindent = true
 vim.opt.wrap = false -- disable line wrapping
 
 -- UI settings

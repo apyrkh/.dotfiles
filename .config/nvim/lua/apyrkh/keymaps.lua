@@ -220,17 +220,23 @@ wk.add({
 
 -- Telescope
 wk.add({
-  mode = "n",
-  { "<leader>f",  group = "Search (Telescope)" },
-  { "<leader>ff", "<cmd>Telescope find_files<CR>",    desc = "Search Files" },
-  { "<leader>fg", "<cmd>Telescope live_grep<CR>",     desc = "Search Text" },
-  { "<leader>fc", "<cmd>Telescope grep_string<CR>",   desc = "Search Text Under Cursor" },
-  { "<leader>fr", "<cmd>Telescope resume<CR>",        desc = "Resume Search" },
-  { "<leader>fs", "<cmd>Telescope spell_suggest<CR>", desc = "Search Spelling Suggestions" },
-  { "<leader>fb", "<cmd>Telescope buffers<CR>",       desc = "Search Buffers" },
-  { "<leader>fk", "<cmd>Telescope keymaps<CR>",       desc = "Search Keymaps" },
-  { "<leader>fh", "<cmd>Telescope help_tags<CR>",     desc = "Search Help Tags" },
-  { "<leader>ft", "<cmd>TodoTelescope<CR>",           desc = "Search TODOs" },
+  {
+    mode = "n",
+    { "<leader>f",  group = "Search (Telescope)" },
+    { "<leader>ff", "<cmd>Telescope find_files<CR>",    desc = "Search Files" },
+    { "<leader>fg", "<cmd>Telescope live_grep<CR>",     desc = "Search Text" },
+    { "<leader>fc", "<cmd>Telescope grep_string<CR>",   desc = "Search Text Under Cursor" },
+    { "<leader>fr", "<cmd>Telescope resume<CR>",        desc = "Resume Search" },
+    { "<leader>fs", "<cmd>Telescope spell_suggest<CR>", desc = "Search Spelling Suggestions" },
+    { "<leader>fb", "<cmd>Telescope buffers<CR>",       desc = "Search Buffers" },
+    { "<leader>fk", "<cmd>Telescope keymaps<CR>",       desc = "Search Keymaps" },
+    { "<leader>fh", "<cmd>Telescope help_tags<CR>",     desc = "Search Help Tags" },
+    { "<leader>ft", "<cmd>TodoTelescope<CR>",           desc = "Search TODOs" },
+  },
+  {
+    mode = "v",
+    { "<leader>fg", "yf<ESC>:Telescope live_grep default_text=<c-r>0<CR>", opts, desc = "Search Text" },
+  }
 })
 
 -- Diagnostic
