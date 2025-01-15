@@ -118,7 +118,8 @@ brew install neovim
 ```bash
 brew install font-jetbrains-mono-nerd-font   # For fonts
 brew install luarocks                        # For Lua libraries
-brew install ripgrep                         # For telescope (searching)
+brew install fd                              # For telescope (search files)
+brew install ripgrep                         # For telescope (search file content)
 ```
 
 ### Neovim Commands

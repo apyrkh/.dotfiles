@@ -1,5 +1,7 @@
 -- Manages and automates saving/restoring Neovim sessions for a seamless workflow
 -- #productivity #session #management
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+
 return {
   "rmagatti/auto-session",
   config = function()

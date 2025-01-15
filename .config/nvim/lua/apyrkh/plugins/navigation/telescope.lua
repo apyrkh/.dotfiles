@@ -21,19 +21,14 @@ return {
             ["<C-j>"] = actions.move_selection_next,
           }
         },
-        vimgrep_arguments = vim.list_extend(
-          require("telescope.config").values.vimgrep_arguments,
-          {
-            "--hidden",
-            "--glob", "!**/.git/*",
-            "--color=never",
-            "--no-heading",
-            "--with-filename",
-            "--line-number",
-            "--column",
-            "--smart-case"
-          }
-        ),
+        find_command = {
+          "fd",
+          ".",
+          "--type", "f",
+          "--follow",
+          "--hidden",
+          "--exclude", ".git",
+        },
       },
       pickers = {
         buffers = {
@@ -47,16 +42,6 @@ return {
         },
         extentions = {
           fzf = {},
-        },
-        find_files = {
-          -- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
-          find_command = {
-            "rg",
-            "--files",
-            "--hidden",
-            "--glob", "!**/.git/*",
-            "--color=never",
-          },
         },
         spell_suggest = {
           theme = "cursor"
