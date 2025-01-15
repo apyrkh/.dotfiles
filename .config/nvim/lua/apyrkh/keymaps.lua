@@ -4,6 +4,7 @@ local illuminate = require("illuminate")
 local nvim_tree_api = require("nvim-tree.api")
 local substitute = require("substitute")
 local telescope_builtin = require("telescope.builtin")
+local telescope_multigrep = require("apyrkh.keymaps.multigrep")
 local wk = require("which-key")
 
 -- Tab Management
@@ -224,7 +225,7 @@ wk.add({
     mode = "n",
     { "<leader>f",  group = "Search (Telescope)" },
     { "<leader>ff", "<cmd>Telescope find_files<CR>",    desc = "Search Files" },
-    { "<leader>fg", "<cmd>Telescope live_grep<CR>",     desc = "Search Text" },
+    { "<leader>fg", telescope_multigrep,                desc = "Search Text" },
     { "<leader>fc", "<cmd>Telescope grep_string<CR>",   desc = "Search Text Under Cursor" },
     { "<leader>fr", "<cmd>Telescope resume<CR>",        desc = "Resume Search" },
     { "<leader>fs", "<cmd>Telescope spell_suggest<CR>", desc = "Search Spelling Suggestions" },
