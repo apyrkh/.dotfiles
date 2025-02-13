@@ -21,14 +21,6 @@ return {
             ["<C-j>"] = actions.move_selection_next,
           }
         },
-        find_command = {
-          "fd",
-          ".",
-          "--type", "f",
-          "--follow",
-          "--hidden",
-          "--exclude", ".git",
-        },
       },
       pickers = {
         buffers = {
@@ -42,6 +34,9 @@ return {
         },
         extentions = {
           fzf = {},
+        },
+        find_files = {
+          find_command = { "fd", "--type", "f", "--follow", "--hidden", "--exclude", ".git" }
         },
         spell_suggest = {
           theme = "cursor"
