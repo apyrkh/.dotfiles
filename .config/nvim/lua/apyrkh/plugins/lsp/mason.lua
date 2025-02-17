@@ -25,6 +25,8 @@ return {
         "bashls",
         "lua_ls",
 
+        "biome",
+
         --"markdown_oxide",
         "jsonls",
         --"vimls",
@@ -36,8 +38,9 @@ return {
         "css_variables",
         "emmet_ls",
 
-        "biome",
         "ts_ls",
+
+        "prismals",
       },
       -- auto-install configured servers (with lspconfig)
       automatic_installation = true, -- not the same as ensure_installed

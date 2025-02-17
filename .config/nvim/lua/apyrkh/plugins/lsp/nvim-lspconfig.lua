@@ -48,6 +48,10 @@ return {
       },
     })
 
+    lspconfig["biome"].setup({
+      capabilities = capabilities,
+    })
+
     lspconfig["jsonls"].setup({
       capabilities = capabilities,
       settings = {
@@ -90,11 +94,18 @@ return {
       },
     })
 
-    lspconfig["biome"].setup({
+    lspconfig["ts_ls"].setup({
       capabilities = capabilities,
+      settings = {
+        tsserver = {
+          preferences = {
+            quotePreference = "single",
+          },
+        },
+      },
     })
 
-    lspconfig["ts_ls"].setup({
+    lspconfig["prismals"].setup({
       capabilities = capabilities,
     })
   end,
