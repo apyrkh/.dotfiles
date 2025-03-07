@@ -1,11 +1,11 @@
--- Extend and create a/i textobjects
+-- Fast and feature-rich surround actions
 -- #code #text-editing #productivity
 return {
-  "echasnovski/mini.ai",
+  "echasnovski/mini.surround",
   version = false,
   event = { "BufReadPre", "BufNewFile" },
   config = function()
-    local mini = require('mini.ai')
+    local mini = require('mini.surround')
 
     mini.setup({
 

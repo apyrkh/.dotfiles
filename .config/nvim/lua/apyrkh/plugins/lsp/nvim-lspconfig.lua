@@ -25,8 +25,6 @@ return {
 
     lspconfig["bashls"].setup({
       capabilities = capabilities,
-      cmd = { "bash-language-server", "start" },
-      filetypes = { "sh", "bash" },
     })
 
     lspconfig["lua_ls"].setup({

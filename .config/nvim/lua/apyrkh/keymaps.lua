@@ -192,7 +192,13 @@ wk.add({
 --   end,
 -- })
 
--- Substitute
+-- Substitute/Surround
+-- Surround
+  -- "sa", desc = "add"
+  -- "sd", desc = "delete"
+  -- "sr", desc = "replace"
+  -- "sf", desc = "find"
+  -- "sh", desc = "highlight"
 wk.add({
   {
     mode = "n",
