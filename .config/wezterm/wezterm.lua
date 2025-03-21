@@ -30,7 +30,7 @@ wezterm.on("update-right-status", function(window, _)
   local LEFT_ARROW_FOREGROUND = { Foreground = { Color = "#1e2030" } }
 
   if window:leader_is_active() then
-    text = " " .. utf8.char(0x1f30a) -- ocean wave
+    text = " " .. utf8.char(0x26A1) -- lightning
     LEFT_ARROW = utf8.char(0xe0b2)
   end
 
