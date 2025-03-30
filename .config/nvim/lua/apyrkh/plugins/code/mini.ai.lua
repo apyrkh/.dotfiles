@@ -5,7 +5,7 @@ return {
   version = false,
   event = { "BufReadPre", "BufNewFile" },
   config = function()
-    local mini = require('mini.ai')
+    local mini = require("mini.ai")
 
     mini.setup({
 

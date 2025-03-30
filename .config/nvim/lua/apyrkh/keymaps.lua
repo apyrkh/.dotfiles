@@ -42,18 +42,12 @@ wk.add({
   mode = "n",
   { "[",  group = "Go Prev" },
   { "]",  group = "Go Next" },
-  { "[b", "<cmd>bprevious<cr>",                                         desc = "Prev Buffer" },
-  { "]b", "<cmd>bnext<cr>",                                             desc = "Next Buffer" },
   { "[g", function() gitsigns.nav_hunk("prev", { target = "all" }) end, desc = "Prev Hunk" },
   { "]g", function() gitsigns.nav_hunk("next", { target = "all" }) end, desc = "Next Hunk" },
   { "[h", function() harpoon:list():prev() end,                         desc = "Prev Harpoon File" },
   { "]h", function() harpoon:list():next() end,                         desc = "Next Harpoon File" },
   { "[p", "<Plug>(YankyPreviousEntry)",                                 desc = "Prev Yanky Entry" },
   { "]p", "<Plug>(YankyNextEntry)",                                     desc = "Next Yanky Entry" },
-  { "[q", vim.cmd.cprev,                                                desc = "Prev Quickfix" },
-  { "]q", vim.cmd.cnext,                                                desc = "Next Quickfix" },
-  { "[[", function() illuminate.goto_prev_reference("wrapscan") end,    desc = "Prev Reference" },
-  { "]]", function() illuminate.goto_next_reference("wrapscan") end,    desc = "Next Reference" },
 })
 
 -- Line Movement and Indentation
@@ -136,14 +130,14 @@ wk.add({
 wk.add({
   mode = "n",
   { "<leader>g",  group = "Git" },
-  { "<leader>gb", function() vim.cmd("BlameToggle virtual") end,        desc = "Blame File (Virtual)" },
-  { "<leader>gB", function() vim.cmd("BlameToggle") end,                desc = "Blame File (Window)" },
-  { "<leader>gs", function() require("gitsigns").stage_hunk() end,      desc = "Stage Hunk" },
-  { "<leader>gu", function() require("gitsigns").undo_stage_hunk() end, desc = "Unstage Hunk" },
-  { "<leader>gx", function() require("gitsigns").reset_hunk() end,      desc = "Reset Hunk" },
-  { "<leader>gp", function() require("gitsigns").preview_hunk() end,    desc = "Preview Hunk" },
-  { "<leader>gd", function() require("gitsigns").diffthis("~1") end,    desc = "Diff Hunk" },
-  { "<leader>gg", function() vim.cmd("Neogit") end,                     desc = "Open Neogit" },
+  { "<leader>gb", function() vim.cmd("BlameToggle virtual") end, desc = "Blame File (Virtual)" },
+  { "<leader>gB", function() vim.cmd("BlameToggle") end,         desc = "Blame File (Window)" },
+  { "<leader>gs", function() gitsigns.stage_hunk() end,          desc = "Stage Hunk" },
+  { "<leader>gu", function() gitsigns.undo_stage_hunk() end,     desc = "Unstage Hunk" },
+  { "<leader>gx", function() gitsigns.reset_hunk() end,          desc = "Reset Hunk" },
+  { "<leader>gp", function() gitsigns.preview_hunk() end,        desc = "Preview Hunk" },
+  { "<leader>gd", function() gitsigns.diffthis("~1") end,        desc = "Diff Hunk" },
+  { "<leader>gg", function() vim.cmd("Neogit") end,              desc = "Open Neogit" },
 })
 
 -- Harpoon
@@ -175,22 +169,13 @@ local opts = { noremap = true, silent = true }
 wk.add({
   mode = "n",
   { "<leader>d",   desc = "LSP" },
-  { "<leader>dl",  vim.lsp.buf.signature_help,                          opts, desc = "Displays Signature Information" },
-  { "<leader>da",  vim.lsp.buf.code_action,                             opts, desc = "Show available actions" },
-  { "<leader>dr",  vim.lsp.buf.rename,                                  opts, desc = "Smart Rename" },
-  { "<leader>df",  function() vim.lsp.buf.format { async = true } end,  opts, desc = "Format Code" },
-  { "<leader>dqq", ":LspRestart<CR>",                                   opts, desc = "Restart LSP" },
-  { "gd",          "<cmd>Telescope lsp_definitions<CR>",                opts, desc = "Go to Definition (LSP)" },
-  { "gt",          "<cmd>Telescope lsp_type_definitions<CR>",           opts, desc = "Go to Type Definition (LSP)" },
-  { "gi",          "<cmd>Telescope lsp_implementations<CR>",            opts, desc = "Go to Implementation (LSP)" },
-  { "gr",          "<cmd>Telescope lsp_references show_line=false<CR>", opts, desc = "Go to References (LSP)" },
+  { "<leader>df",  function() vim.lsp.buf.format { async = true } end,        opts, desc = "Format Code" },
+  { "<leader>dd",  "<cmd>Telescope lsp_definitions<CR>",                      opts, desc = "Go to Definition (LSP)" },
+  { "<leader>dt",  "<cmd>Telescope lsp_type_definitions<CR>",                 opts, desc = "Go to Type Definition (LSP)" },
+  { "<leader>d[",  function() illuminate.goto_prev_reference("wrapscan") end, opts, desc = "Prev Reference" },
+  { "<leader>d]",  function() illuminate.goto_next_reference("wrapscan") end, opts, desc = "Next Reference" },
+  { "<leader>dqq", ":LspRestart<CR>",                                         opts, desc = "Restart LSP" },
 })
--- vim.api.nvim_create_autocmd("LspAttach", {
---   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
---   callback = function(ev)
---     -- bindings go here
---   end,
--- })
 
 -- Substitute/Surround
 -- Surround
@@ -255,7 +240,7 @@ wk.add({
   { "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>",                desc = "Toggle Document Symbols (Trouble)" },
   { "<leader>xl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "Toggle References (Trouble)" },
   { "<leader>xL", "<cmd>Trouble loclist toggle<cr>",                            desc = "Toggle Location List (Trouble)" },
-  { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>",                             desc = "TogglQuickfix List (Trouble)" },
+  { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>",                             desc = "Toggle Quickfix List (Trouble)" },
 })
 
 -- Auto-Session
