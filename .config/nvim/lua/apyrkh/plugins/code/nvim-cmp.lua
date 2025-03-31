@@ -10,9 +10,15 @@ return {
   "hrsh7th/nvim-cmp",
   event = { "InsertEnter", "CmdlineEnter" },
   dependencies = {
-    "hrsh7th/cmp-buffer",  -- source for text in buffer
-    "hrsh7th/cmp-cmdline", -- source for vim's cmdline
-    "hrsh7th/cmp-path",    -- source for file system paths
+    "neovim/nvim-lspconfig",
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-buffer",   -- source for text in buffer
+    "hrsh7th/cmp-path",     -- source for file system paths
+    "hrsh7th/cmp-cmdline",  -- source for vim's cmdline
+    "hrsh7th/nvim-cmp",
+    "onsails/lspkind.nvim", -- vscode-like pictograms for neovim lsp completion items
+
+    -- luasnip users
     {
       "L3MON4D3/LuaSnip",
       version = "v2.*",
@@ -20,7 +26,6 @@ return {
     },
     "saadparwaiz1/cmp_luasnip",     -- source for luasnip
     "rafamadriz/friendly-snippets", -- useful snippets
-    "onsails/lspkind.nvim",         -- vscode-like pictograms for neovim lsp completion items
   },
   config = function()
     local cmp = require("cmp")
@@ -137,5 +142,11 @@ return {
       }),
       matching = { disallow_symbol_nonprefix_matching = false }
     })
+
+    -- local cmp_nvim_lsp = require("cmp_nvim_lsp")
+    -- local capabilities = cmp_nvim_lsp.default_capabilities()
+    -- vim.lsp.config("*", {
+    --   capabilities = capabilities,
+    -- })
   end
 }

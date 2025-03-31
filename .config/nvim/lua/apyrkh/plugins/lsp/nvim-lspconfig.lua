@@ -5,16 +5,11 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     "nvim-telescope/telescope.nvim",
-    "hrsh7th/cmp-nvim-lsp",
     { "antosha417/nvim-lsp-file-operations", config = true },
     "b0o/schemastore.nvim",
   },
   config = function()
     local lspconfig = require("lspconfig")
-    local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
-    -- used to enable autocompletion (assign to every lsp server config)
-    local capabilities = cmp_nvim_lsp.default_capabilities()
 
     -- Change the Diagnostic symbols in the sign column (gutter)
     local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
@@ -23,12 +18,9 @@ return {
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
 
-    lspconfig["bashls"].setup({
-      capabilities = capabilities,
-    })
+    lspconfig["bashls"].setup({})
 
     lspconfig["lua_ls"].setup({
-      capabilities = capabilities,
       settings = { -- custom settings for lua
         Lua = {
           -- make the language server recognize "vim" global
@@ -46,12 +38,9 @@ return {
       },
     })
 
-    lspconfig["biome"].setup({
-      capabilities = capabilities,
-    })
+    lspconfig["biome"].setup({})
 
     lspconfig["jsonls"].setup({
-      capabilities = capabilities,
       settings = {
         json = {
           schemas = require("schemastore").json.schemas(),
@@ -60,27 +49,19 @@ return {
       },
     })
 
-    lspconfig["html"].setup({
-      capabilities = capabilities,
-    })
+    lspconfig["html"].setup({})
 
-    lspconfig["cssls"].setup({
-      capabilities = capabilities,
-    })
+    lspconfig["cssls"].setup({})
 
     lspconfig["cssmodules_ls"].setup({
-      capabilities = capabilities,
       init_options = {
         camelCase = "dashes",
       },
     })
 
-    lspconfig["css_variables"].setup({
-      capabilities = capabilities,
-    })
+    lspconfig["css_variables"].setup({})
 
     lspconfig["emmet_ls"].setup({
-      capabilities = capabilities,
       filetypes = {
         "html",
         "typescriptreact",
@@ -93,7 +74,6 @@ return {
     })
 
     lspconfig["ts_ls"].setup({
-      capabilities = capabilities,
       settings = {
         tsserver = {
           preferences = {
@@ -103,25 +83,23 @@ return {
       },
     })
 
-    lspconfig["prismals"].setup({
-      capabilities = capabilities,
-    })
+    lspconfig["prismals"].setup({})
 
-    vim.api.nvim_create_autocmd('LspAttach', {
-      callback = function(args)
-        vim.api.nvim_create_autocmd('BufWritePre', {
-          buffer = args.buf,
-          callback = function()
-            vim.lsp.buf.format({
-              bufnr = args.buf,
-              filter = function(client) return client.name == "biome" end,
-            })
-          end
-        })
-      end
-    })
+    -- vim.api.nvim_create_autocmd("LspAttach", {
+    --   callback = function(args)
+    --     vim.api.nvim_create_autocmd("BufWritePre", {
+    --       buffer = args.buf,
+    --       callback = function()
+    --         vim.lsp.buf.format({
+    --           bufnr = args.buf,
+    --           filter = function(client) return client.name == "biome" end,
+    --         })
+    --       end
+    --     })
+    --   end
+    -- })
 
-    -- vim.api.nvim_create_autocmd('LspAttach', {
+    -- vim.api.nvim_create_autocmd("LspAttach", {
     --   callback = function(args)
     --     -- Unset 'omnifunc'
     --     vim.bo[args.buf].omnifunc = nil
@@ -129,8 +107,8 @@ return {
     --     local client = vim.lsp.get_client_by_id(args.data.client_id)
     --     if not client then return end
     --
-    --     if client:supports_method('textDocument/formatting') then
-    --       vim.api.nvim_create_autocmd('BufWritePre', {
+    --     if client:supports_method("textDocument/formatting") then
+    --       vim.api.nvim_create_autocmd("BufWritePre", {
     --         buffer = args.buf,
     --         callback = function()
     --           vim.lsp.buf.format({
