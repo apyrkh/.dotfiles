@@ -1,85 +1,64 @@
 # .dotfiles
 
-## Dotfiles
+## Overview
+
+This repository contains my personal dotfiles for setting up a development environment.
+
+## Clone and Install
 
 > [!IMPORTANT]
-> Make sure you have installed brew, zsh, wezterm, nvm, neovim
-
-### Install Dotfiles
+> Make sure you have installed `git`.
 
 ```bash
 git clone https://github.com/apyrkh/.dotfiles ~/.dotfiles
+
+cd ~/.dotfiles
+cat install.sh  # Review the script before running
+
 ./install.sh
 ```
 
-## Brew
-
-### Install Brew
+## Install Brew
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
+- `brew bundle` - installs packages from Brewfile
 
-## Zsh
+Useful commands:
 
-### Install Zsh
+- `brew bundle check --verbose` - checks dependencies
+- `brew bundle dump` - generates Brewfile
 
-```bash
-brew install zsh
-```
 
-### Install Oh My Zsh
+## Zsh & Oh My Zsh
 
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-# zsh zsh-autosuggestions
+# Install plugins
 sudo git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-# zsh-syntax-highlighting
 sudo git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-# zsh-you-should-use
 sudo git clone --depth=1 https://github.com/MichaelAquilina/zsh-you-should-use $ZSH_CUSTOM/plugins/you-should-use
 
-# eza - modern replacement for ls
-brew install eza
-# fortune - generating random quotes (used by the chucknorris plugin)
-brew install fortune
-# cowsay - a fun plugin to make your terminal output look like a talking cow
-brew install cowsay
-
-# reload .zshrc to apply changes
+# Apply changes
 source ~/.zshrc
 
-# make zsh your default shell
+# Set Zsh as the default shell
 chsh -s $(which zsh)
 ```
 
-## Wezterm
+## Git Setup
 
-### Install Wezterm
-
-```bash
-brew install --cask wezterm
-```
-
-
-## Git
-
-### Install Git
-
-```bash
-brew install git
-```
-
-### Add SSH-keys
+### Add SSH keys
 
 ```bash
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 ssh-add ~/.ssh/id_rsa
 ```
 
-### Setup Git User
+### Configure Git User
 
 ```bash
 cat <<EOF >> ~/.gitconfig_local
@@ -89,45 +68,20 @@ cat <<EOF >> ~/.gitconfig_local
 EOF
 ```
 
-
-## NVM
-
-### Install NVM
-
-```bash
-brew install nvm
-```
-
-### Install LTS Node
+## Install Node (LTS)
 
 ```bash
 nvm install --lts
+nvm alias default lts
 ```
 
+## Tips
 
-## Neovim
-
-### Install Neovim
-
-```bash
-brew install neovim
-```
-
-### Install Neovim Dependencies
-
-```bash
-brew install font-jetbrains-mono-nerd-font   # For fonts
-brew install luarocks                        # For Lua libraries
-brew install fd                              # For telescope (search files)
-brew install ripgrep                         # For telescope (search file content)
-```
-
-### Neovim Commands
+### Neovim Shortcuts
 
 - `:Lazy` - Open the Lazy.nvim plugin menu
 - `:Mason` - Open the Mason.nvim plugin menu
 
-
-## Other Tips
+### Misc
 
 - `chmod +x FILENAME` - make file executable

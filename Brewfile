@@ -29,6 +29,7 @@ cask "google-chrome"
 cask "google-drive"
 cask "opera"
 
+cask "android-file-transfer"
 cask "appcleaner"
 cask "chatgpt"
 cask "keepassxc"
