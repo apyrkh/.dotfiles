@@ -7,6 +7,11 @@ return {
   opts = {
     -- indent = { char = "┊" },
     indent = { char = "⋮" },
+    scope = {
+      show_start = false,
+      show_end = false,
+      show_exact_scope = false,
+    },
     exclude = { -- Disable in certain file types
       filetypes = { "help", "terminal", "dashboard" },
     },
