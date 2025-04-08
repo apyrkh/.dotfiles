@@ -1,39 +1,16 @@
+-- Configuration for LSP servers using nvim-lspconfig
+-- #lsp #lspconfig
 return {
-  'neovim/nvim-lspconfig',
+  "neovim/nvim-lspconfig",
+  event = { "BufReadPre", "BufNewFile" },
   dependencies = {
-    'saghen/blink.cmp',
+    "nvim-telescope/telescope.nvim",
     { "antosha417/nvim-lsp-file-operations", config = true },
     "b0o/schemastore.nvim",
   },
-
-  -- example using `opts` for defining servers
-  -- opts = {
-  --   servers = {
-  --     lua_ls = {}
-  --   }
-  -- },
-  -- config = function(_, opts)
-  --   local lspconfig = require('lspconfig')
-  --   for server, config in pairs(opts.servers) do
-  --     -- passing config.capabilities to blink.cmp merges with the capabilities in your
-  --     -- `opts[server].capabilities, if you've defined it
-  --     config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
-  --     lspconfig[server].setup(config)
-  --   end
-  -- end
-
-  -- example calling setup directly for each LSP
   config = function()
-    local lspconfig = require('lspconfig')
+    local lspconfig = require("lspconfig")
 
-    local original_capabilities = vim.lsp.protocol.make_client_capabilities()
-    local capabilities = require('blink.cmp').get_lsp_capabilities(original_capabilities)
-
-    vim.lsp.config('*', {
-      capabilities = capabilities,
-    })
-
-    -- lspconfig['lua_ls'].setup({ capabilities = capabilities })
     -- Change the Diagnostic symbols in the sign column (gutter)
     local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
     for type, icon in pairs(signs) do
@@ -107,5 +84,41 @@ return {
     })
 
     lspconfig["prismals"].setup({})
-  end
+
+    -- vim.api.nvim_create_autocmd("LspAttach", {
+    --   callback = function(args)
+    --     vim.api.nvim_create_autocmd("BufWritePre", {
+    --       buffer = args.buf,
+    --       callback = function()
+    --         vim.lsp.buf.format({
+    --           bufnr = args.buf,
+    --           filter = function(client) return client.name == "biome" end,
+    --         })
+    --       end
+    --     })
+    --   end
+    -- })
+
+    -- vim.api.nvim_create_autocmd("LspAttach", {
+    --   callback = function(args)
+    --     -- Unset 'omnifunc'
+    --     vim.bo[args.buf].omnifunc = nil
+    --
+    --     local client = vim.lsp.get_client_by_id(args.data.client_id)
+    --     if not client then return end
+    --
+    --     if client:supports_method("textDocument/formatting") then
+    --       vim.api.nvim_create_autocmd("BufWritePre", {
+    --         buffer = args.buf,
+    --         callback = function()
+    --           vim.lsp.buf.format({
+    --             id = client.id,
+    --             bufnr = args.buf,
+    --           })
+    --         end
+    --       })
+    --     end
+    --   end,
+    -- })
+  end,
 }

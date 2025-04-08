@@ -49,6 +49,8 @@ vim.opt.listchars = {
   space = ".",
   nbsp = "␣"
 }
+-- TODO: use this, remove everywhere else to avoid double borders
+-- vim.opt.winborder = 'single' -- double, rounded, solid, shadow
 
 -- Search settings
 vim.opt.hlsearch = true

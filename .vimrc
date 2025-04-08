@@ -27,6 +27,7 @@ set cursorline           " highlight the current cursor line
 set signcolumn=yes       " show sign column so that text doesn't shift
 set list                 " sets how Vim will display certain whitespace in the editor
 set listchars=eol:↲,tab:»\ ,space:.,nbsp:␣
+set winborder=single     " double, rounded, solid, shadow
 
 colorscheme desert
 
