@@ -22,6 +22,28 @@ return {
         vim.notify("Copilot setup", vim.log.levels.INFO)
       end, { desc = "Setup Copilot" })
 
+      vim.keymap.set("n", "<leader>cp", function()
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          local name = vim.api.nvim_buf_get_name(buf)
+          if name:match("^copilot:///panel/") then
+            vim.api.nvim_win_close(win, true)
+            return
+          end
+        end
+
+        vim.cmd("Copilot panel")
+        vim.notify("Copilot panel", vim.log.levels.INFO)
+
+        -- local win_before = vim.api.nvim_get_current_win()
+        -- vim.defer_fn(function()
+        --   local win_after = vim.api.nvim_get_current_win()
+        --   if win_after ~= win_before then
+        --     vim.cmd("wincmd L") -- move left (H, J, K, L + R, X)
+        --   end
+        -- end, 20)
+      end, { desc = "Open Copilot Panel" })
+
       vim.keymap.set("n", "<leader>cq", function()
         vim.cmd("Copilot signout")
         vim.notify("Copilot signout", vim.log.levels.INFO)
