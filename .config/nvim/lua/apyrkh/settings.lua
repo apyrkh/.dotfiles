@@ -18,6 +18,26 @@ vim.diagnostic.config({
 --   end
 -- })
 
+-- Hide copilot on suggestion
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'BlinkCmpMenuOpen',
+  callback = function()
+    if vim.g.copilot_enabled == 1 then
+      vim.fn['copilot#Dismiss']()
+      vim.cmd("Copilot disable")
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'BlinkCmpMenuClose',
+  callback = function()
+    if vim.g.copilot_enabled == 1 then
+      vim.cmd("Copilot enable")
+      vim.fn['copilot#Suggest']()
+    end
+  end,
+})
 
 -- Auto-reload files when modified externally
 -- https://unix.stackexchange.com/a/383044
