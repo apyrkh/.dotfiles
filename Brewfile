@@ -19,6 +19,9 @@ cask "font-jetbrains-mono-nerd-font"
 brew "luarocks"
 brew "ripgrep"
 
+brew "gnu-time"
+brew "tree"
+
 brew "git"
 brew "nvm"
 

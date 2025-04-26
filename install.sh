@@ -4,6 +4,7 @@ dotfiles_dir="$HOME/.dotfiles"
 files=(
   ".config/nvim"
   ".config/wezterm"
+  ".config/zsh"
   ".gitconfig"
   ".vimrc"
   ".zshrc"
