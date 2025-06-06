@@ -17,8 +17,8 @@ config.use_fancy_tab_bar = false
 
 config.window_decorations = "RESIZE"
 config.window_padding = {
-  left = 10,
-  right = 10,
+  left = 5,
+  right = 5,
   top = 0,
   bottom = 0,
 }
@@ -132,6 +132,11 @@ config.keys = {
     key = "UpArrow",
     action = wezterm.action.AdjustPaneSize { "Up", 5 }
   },
+
+  -- Make Option-Left equivalent to Alt-b which many line editors interpret as backward-word
+  -- { key = "LeftArrow", mods = "OPT", action = wezterm.action { SendString = "\x1bb" } },
+  -- Make Option-Right equivalent to Alt-f; forward-word
+  -- { key = "RightArrow", mods = "OPT", action = wezterm.action { SendString = "\x1bf" } },
 }
 
 for i = 1, 9 do
