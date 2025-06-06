@@ -3,9 +3,9 @@ vim.g.mapleader = " "
 
 vim.diagnostic.config({
   -- virtual_text = true,
-  -- virtual_text = { current_line = true },
+  virtual_text = { current_line = true },
   -- virtual_lines = true,
-  virtual_lines = { current_line = true },
+  -- virtual_lines = { current_line = true },
   float = { border = "rounded" },
 })
 

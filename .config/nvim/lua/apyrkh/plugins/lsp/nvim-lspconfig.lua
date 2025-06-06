@@ -106,6 +106,6 @@ return {
       },
     })
 
-    lspconfig["prismals"].setup({})
+    lspconfig["graphql"].setup({})
   end
 }
