@@ -1,15 +1,15 @@
-# Set locale environment variables for consistent language settings
+# === LOCALE ===
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-# Path to your oh-my-zsh installation
+# === OH MY ZSH CORE ===
 export ZSH="$HOME/.oh-my-zsh"
 
-# Theme configuration, see https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+# Themes https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="half-life" # current
 # ZSH_THEME="robbyrussell" # default
 
-# Plugin configuration
+# === PLUGINS ===
 # Manually installed plugins in $ZSH_CUSTOM/plugins:
 # - zsh-autosuggestions
 # - zsh-syntax-highlighting
@@ -28,19 +28,22 @@ plugins=(
 
 # Load Oh My Zsh
 source $ZSH/oh-my-zsh.sh
+zstyle ":omz:update" mode auto
+zstyle ":omz:update" frequency 7
 
-# User configuration
-export EDITOR='nvim'
-DISABLE_UNTRACKED_FILES_DIRTY="true"
-zstyle ':omz:update' mode auto
-zstyle ':omz:update' frequency 7
+# === USER CONFIGURATION ===
+export EDITOR="nvim"
+DISABLE_UNTRACKED_FILES_DIRTY="true" # speed up prompt by ignoring untracked files in Git status
 
-# jsvu binaries
-export PATH="${HOME}/.jsvu/bin:${PATH}"
+# === ALIASES ===
+alias ll="eza -l --group-directories-first --icons"
+alias lla="ll -a"
 
-# Aliases
-alias ll='eza -l --group-directories-first --icons'
-alias lla='ll -a'
+# === CUSTOM SCRIPTS ===
+export PATH="${HOME}/.jsvu/bin:${PATH}" # jsvu binaries
+source ~/.config/zsh/scripts/timed.zsh  # time wrapper with formatted output (timed)
 
-# Custom time wrapper with formatted output
-source ~/.config/zsh/scripts/timed.zsh
+# === LOCAL OVERRIDES ===
+if [ -f "$HOME/.zshrc.local" ]; then
+    source "$HOME/.zshrc.local"
+fi
