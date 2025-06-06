@@ -51,9 +51,9 @@ cask "paintbrush"
 cask "upscayl"
 
 # === databases ===
-tap "mongodb/brew"
-brew "mongodb/brew/mongodb-community"
-#cask "mongodb-compass"
+# tap "mongodb/brew"
+# brew "mongodb/brew/mongodb-community"
+# cask "mongodb-compass"
 
 brew "postgresql@16", restart_service: :changed
 

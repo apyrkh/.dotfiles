@@ -35,6 +35,9 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 zstyle ':omz:update' mode auto
 zstyle ':omz:update' frequency 7
 
+# jsvu binaries
+export PATH="${HOME}/.jsvu/bin:${PATH}"
+
 # Aliases
 alias ll='eza -l --group-directories-first --icons'
 alias lla='ll -a'
