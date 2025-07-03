@@ -1,7 +1,7 @@
 return {
-  'neovim/nvim-lspconfig',
+  "neovim/nvim-lspconfig",
   dependencies = {
-    'saghen/blink.cmp',
+    "saghen/blink.cmp",
     { "antosha417/nvim-lsp-file-operations", config = true },
     "b0o/schemastore.nvim",
   },
@@ -13,27 +13,17 @@ return {
   --   }
   -- },
   -- config = function(_, opts)
-  --   local lspconfig = require('lspconfig')
+  --   local lspconfig = require("lspconfig")
   --   for server, config in pairs(opts.servers) do
   --     -- passing config.capabilities to blink.cmp merges with the capabilities in your
-  --     -- `opts[server].capabilities, if you've defined it
-  --     config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+  --     -- `opts[server].capabilities, if you"ve defined it
+  --     config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
   --     lspconfig[server].setup(config)
   --   end
   -- end
 
   -- example calling setup directly for each LSP
   config = function()
-    local lspconfig = require('lspconfig')
-
-    local original_capabilities = vim.lsp.protocol.make_client_capabilities()
-    local capabilities = require('blink.cmp').get_lsp_capabilities(original_capabilities)
-
-    vim.lsp.config('*', {
-      capabilities = capabilities,
-    })
-
-    -- lspconfig['lua_ls'].setup({ capabilities = capabilities })
     -- Change the Diagnostic symbols in the sign column (gutter)
     local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
     for type, icon in pairs(signs) do
@@ -41,9 +31,17 @@ return {
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
 
-    lspconfig["bashls"].setup({})
+    -- Setup LSP servers
+    local original_capabilities = vim.lsp.protocol.make_client_capabilities()
+    local capabilities = require("blink.cmp").get_lsp_capabilities(original_capabilities)
 
-    lspconfig["lua_ls"].setup({
+    vim.lsp.config("*", {
+      capabilities = capabilities,
+    })
+
+    vim.lsp.config("bashls", {})
+
+    vim.lsp.config("lua_ls", {
       settings = { -- custom settings for lua
         Lua = {
           -- make the language server recognize "vim" global
@@ -61,9 +59,9 @@ return {
       },
     })
 
-    lspconfig["biome"].setup({})
+    vim.lsp.config("biome", {})
 
-    lspconfig["jsonls"].setup({
+    vim.lsp.config("jsonls", {
       settings = {
         json = {
           schemas = require("schemastore").json.schemas(),
@@ -72,19 +70,19 @@ return {
       },
     })
 
-    lspconfig["html"].setup({})
+    vim.lsp.config("html", {})
 
-    lspconfig["cssls"].setup({})
+    vim.lsp.config("cssls", {})
 
-    lspconfig["cssmodules_ls"].setup({
+    vim.lsp.config("cssmodules_ls", {
       init_options = {
         camelCase = "dashes",
       },
     })
 
-    lspconfig["css_variables"].setup({})
+    vim.lsp.config("css_variables", {})
 
-    lspconfig["emmet_ls"].setup({
+    vim.lsp.config("emmet_ls", {
       filetypes = {
         "html",
         "typescriptreact",
@@ -96,7 +94,7 @@ return {
       },
     })
 
-    lspconfig["ts_ls"].setup({
+    vim.lsp.config("ts_ls", {
       settings = {
         tsserver = {
           preferences = {
@@ -106,6 +104,6 @@ return {
       },
     })
 
-    lspconfig["graphql"].setup({})
+    vim.lsp.config("graphql", {})
   end
 }

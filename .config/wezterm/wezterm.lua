@@ -64,22 +64,22 @@ config.keys = {
   },
   {
     mods = "LEADER",
-    key = "m",
+    key = "M",
     action = window_maximize,
   },
   {
     mods = "LEADER",
-    key = "n",
+    key = "m",
     action = window_restore,
   },
   {
     mods = "LEADER",
-    key = "c",
+    key = "n",
     action = wezterm.action.SpawnTab "CurrentPaneDomain",
   },
   {
     mods = "LEADER",
-    key = "x",
+    key = "q",
     action = wezterm.action.CloseCurrentPane { confirm = true }
   },
   {

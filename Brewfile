@@ -49,6 +49,7 @@ cask "adobe-acrobat-reader"
 cask "iina"
 cask "paintbrush"
 cask "upscayl"
+# brew "blackhole-2ch" # macOS virtual audio loopback driver
 
 # === databases ===
 # tap "mongodb/brew"

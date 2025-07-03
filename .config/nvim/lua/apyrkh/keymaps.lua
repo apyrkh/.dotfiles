@@ -238,9 +238,9 @@ wk.add({
   { "<leader>xx", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",           desc = "Toggle File Diagnostics (Trouble)" },
   { "<leader>xX", "<cmd>Trouble diagnostics toggle<cr>",                        desc = "Toggle All Diagnostics (Trouble)" },
   { "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>",                desc = "Toggle Document Symbols (Trouble)" },
-  { "<leader>xl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "Toggle References (Trouble)" },
-  { "<leader>xL", "<cmd>Trouble loclist toggle<cr>",                            desc = "Toggle Location List (Trouble)" },
-  { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>",                             desc = "Toggle Quickfix List (Trouble)" },
+  { "<leader>xr", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "Toggle References (Trouble)" },
+  { "<leader>xl", "<cmd>Trouble loclist toggle<cr>",                            desc = "Toggle Location List (Trouble)" },
+  { "<leader>xq", "<cmd>Trouble qflist toggle<cr>",                             desc = "Toggle Quickfix List (Trouble)" },
 })
 
 -- Auto-Session
