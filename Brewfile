@@ -21,6 +21,7 @@ brew "ripgrep"
 
 brew "gnu-time"
 brew "tree"
+brew "fx" # json viewer and processor, https://fx.wtf
 
 brew "git"
 brew "nvm"
@@ -41,6 +42,7 @@ cask "logi-options+"
 cask "notion"
 
 #cask "slack"
+cask "discord"
 cask "telegram"
 cask "whatsapp"
 cask "zoom"

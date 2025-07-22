@@ -24,13 +24,39 @@ cat install.sh  # Review the script before running
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-- `brew bundle` - installs packages from Brewfile
+<details>
+    <summary>Brew Cheat Sheet</summary>
 
-Useful commands:
+```sh
+brew install <package>         # Install a package
+brew upgrade                   # Upgrade all packages
+brew upgrade <package>         # Upgrade a specific package
 
-- `brew bundle check --verbose` - checks dependencies
-- `brew bundle dump` - generates Brewfile
+brew uninstall <package>       # Uninstall a package
+brew cleanup                   # Remove outdated versions
 
+brew bundle dump               # Generate a Brewfile from current system
+brew bundle install            # Install everything from Brewfile
+brew bundle check --verbose    # Check what is missing from Brewfile
+brew bundle cleanup            # Show what would be removed (not in Brewfile)
+brew bundle cleanup --force    # Remove all not listed in Brewfile
+
+brew tap                       # List tapped repositories
+brew tap <user/repo>           # Add (tap) a third-party repository
+brew untap <user/repo>         # Remove (untap) a tapped repository
+
+brew doctor                    # Check system for potential issues
+brew config                    # Show Homebrew system configuration
+brew outdated                  # List outdated packages
+brew list                      # List installed formulae
+brew list --cask               # List installed casks (GUI apps)
+brew missing                   # List formulae with missing dependencies
+
+brew services list             # Show background services managed by Homebrew
+brew services start <package>  # Start a service (e.g. postgresql)
+brew services stop <package>   # Stop a service
+```
+</details>
 
 ## Zsh & Oh My Zsh
 
