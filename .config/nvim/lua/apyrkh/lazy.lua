@@ -34,6 +34,8 @@ require("lazy").setup(
       notify = false, -- Disable notifications for updates
     },
 
+    -- concurrency = 5,
+
     -- Disable change detection notifications
     change_detection = {
       notify = false,
