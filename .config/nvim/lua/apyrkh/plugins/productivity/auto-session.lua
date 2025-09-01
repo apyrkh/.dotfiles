@@ -9,7 +9,7 @@ return {
 
     auto_session.setup({
       auto_restore = false,
-      suppressed_dirs = { "~/", "~/Dev/", "~/Downloads", "~/Documents", "~/Desktop/" },
+      suppressed_dirs = { "~/", "~/Downloads", "~/Documents", "~/Desktop/" },
     })
   end,
 }
