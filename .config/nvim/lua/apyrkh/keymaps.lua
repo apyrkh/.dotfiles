@@ -244,11 +244,11 @@ wk.add({
 wk.add({
   mode = "n",
   { "<leader>w",  group = "Sessions" },
-  { "<leader>ww", "<cmd>SessionSave<CR>",          desc = "Save Session" },
-  { "<leader>wr", "<cmd>SessionRestore<CR>",       desc = "Restore Session" },
-  { "<leader>wo", "<cmd>Autosession search<CR>",   desc = "List Saved Sessions" },
-  { "<leader>wd", "<cmd>Autosession delete<CR>",   desc = "Delete Saved Sessions" },
-  { "<leader>wD", "<cmd>SessionPurgeOrphaned<CR>", desc = "Purge All Orphaned Session" },
+  { "<leader>ww", "<cmd>AutoSession save<CR>",          desc = "Save Session" },
+  { "<leader>wr", "<cmd>AutoSession restore<CR>",       desc = "Restore Session" },
+  { "<leader>wo", "<cmd>Autosession search<CR>",        desc = "List Saved Sessions" },
+  { "<leader>wd", "<cmd>Autosession delete<CR>",        desc = "Delete Saved Sessions" },
+  { "<leader>wD", "<cmd>Autosession purgeOrphaned<CR>", desc = "Purge All Orphaned Session" },
 })
 
 -- UI stuff
