@@ -11,16 +11,13 @@ return {
   },
   config = function()
     local telescope = require("telescope")
-    local actions = require("telescope.actions")
 
     telescope.setup({
       defaults = {
-        mappings = {
-          i = {
-            ["<C-k>"] = actions.move_selection_previous,
-            ["<C-j>"] = actions.move_selection_next,
-          }
-        },
+        file_ignore_patterns = {
+          "%.DS_Store",
+          "%.git"
+        }
       },
       pickers = {
         buffers = {
@@ -28,7 +25,7 @@ return {
           ignore_current_buffer = true,
           mappings = {
             i = {
-              ["<C-d>"] = "delete_buffer",
+              ["<S-d>"] = "delete_buffer",
             },
           },
         },
@@ -36,7 +33,7 @@ return {
           fzf = {},
         },
         find_files = {
-          find_command = { "fd", "--type", "f", "--follow", "--hidden", "--exclude", ".git" }
+          find_command = { "fd", "--type", "f", "--follow", "--hidden" }
         },
         spell_suggest = {
           theme = "cursor"

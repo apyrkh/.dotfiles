@@ -212,6 +212,7 @@ wk.add({
   {
     mode = "n",
     { "<leader>f",  group = "Search (Telescope)" },
+    { "<leader>fd", "<cmd>Telescope git_status<CR>",    desc = "Browse Git Status" },
     { "<leader>ff", "<cmd>Telescope find_files<CR>",    desc = "Search Files" },
     { "<leader>fg", telescope_multigrep,                desc = "Search Text" },
     { "<leader>fc", "<cmd>Telescope grep_string<CR>",   desc = "Search Text Under Cursor" },
