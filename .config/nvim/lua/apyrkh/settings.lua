@@ -1,6 +1,7 @@
--- Set leader key (commonly used in mappings)
+-- Set leader key
 vim.g.mapleader = " "
 
+-- Diagnostics
 vim.diagnostic.config({
   -- virtual_text = true,
   virtual_text = { current_line = true },
@@ -8,7 +9,6 @@ vim.diagnostic.config({
   -- virtual_lines = { current_line = true },
   float = { border = "rounded" },
 })
-
 
 -- Highlight yanked text
 -- vim.api.nvim_create_autocmd("TextYankPost", {
@@ -18,32 +18,7 @@ vim.diagnostic.config({
 --   end
 -- })
 
--- Hide copilot on suggestion
-local copilot_was_enabled = vim.g.copilot_enabled;
-
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'BlinkCmpMenuOpen',
-  callback = function()
-    copilot_was_enabled = vim.g.copilot_enabled
-    if copilot_was_enabled then
-      vim.fn['copilot#Dismiss']()
-      vim.cmd("Copilot disable")
-    end
-  end,
-})
-
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'BlinkCmpMenuClose',
-  callback = function()
-    if copilot_was_enabled then
-      vim.cmd("Copilot enable")
-      vim.fn['copilot#Suggest']()
-    end
-  end,
-})
-
 -- Auto-reload files when modified externally
--- https://unix.stackexchange.com/a/383044
 vim.opt.autoread = true
 
 -- Line numbers
@@ -54,7 +29,7 @@ vim.opt.relativenumber = true -- show relative line numbers
 vim.opt.scrolloff = 5     -- minimal number of screen lines to keep above and below the cursor
 vim.opt.expandtab = true  -- expand tab to spaces
 vim.opt.shiftwidth = 2    -- 2 spaces for indent width
-vim.opt.tabstop = 2       -- 2 spaces for tabs (prettier default)
+vim.opt.tabstop = 2       -- 2 spaces for tabs
 vim.opt.autoindent = true -- copy indent from current line when starting new one
 vim.opt.smartindent = true
 vim.opt.textwidth = 80
@@ -81,13 +56,13 @@ vim.opt.ignorecase = true -- ignore case when searching
 vim.opt.smartcase = true  -- if you include mixed case in your search, assumes you want case-sensitive
 
 -- Backspace and clipboard
-vim.opt.backspace = "indent,eol,start"  -- allow backspace on indent, end of line or insert mode start position
-vim.opt.clipboard:append("unnamedplus") -- use system clipboard as default register
-vim.opt.mouse = "a"                     -- enable mouse, for resizing splits
+vim.opt.backspace = "indent,eol,start"
+vim.opt.clipboard:append("unnamedplus")
+vim.opt.mouse = "a"
 
 -- Window splitting
-vim.opt.splitright = true -- split vertical window to the right
-vim.opt.splitbelow = true -- split horizontal window to the bottom
+vim.opt.splitright = true
+vim.opt.splitbelow = true
 
 -- Spelling
 vim.opt.spell = true
