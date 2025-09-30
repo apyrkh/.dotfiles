@@ -1,5 +1,5 @@
-require("apyrkh.keymaps")
 require("apyrkh.settings")
+require("apyrkh.keymaps")
 require("apyrkh.workspace")
 
 require("apyrkh.lazy")

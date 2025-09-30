@@ -5,7 +5,7 @@ return {
   config = function()
     require("blame").setup({
       date_format = "%Y.%m.%d %H:%M",
-      virtual_text = true,
+      relative_date_if_recent = false,
     })
   end
 }
