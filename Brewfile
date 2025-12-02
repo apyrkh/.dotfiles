@@ -20,6 +20,7 @@ brew "luarocks"
 brew "ripgrep"
 
 brew "gnu-time"
+brew "mtr" # my trace route
 brew "tree"
 brew "fx" # json viewer and processor, https://fx.wtf
 
