@@ -88,7 +88,7 @@ ssh-add ~/.ssh/id_rsa
 ### Configure Git User
 
 ```bash
-cat <<EOF >> ~/.gitconfig_local
+cat <<EOF >> ~/.gitconfig.local
 [user]
   name = <NAME>
   email = <EMAIL>
