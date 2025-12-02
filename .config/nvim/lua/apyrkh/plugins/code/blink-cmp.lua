@@ -34,6 +34,7 @@ return {
     completion = {
       ghost_text = {
         enabled = true,
+        show_without_menu = false,
       },
       list = {
         max_items = 20,
