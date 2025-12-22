@@ -4,6 +4,8 @@
 
 This repository contains my personal dotfiles for setting up a development environment.
 
+- [Storage layout](docs/storage.md)
+
 ## Clone and Install
 
 > [!IMPORTANT]
