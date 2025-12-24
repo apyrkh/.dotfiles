@@ -24,6 +24,10 @@ cat install.sh  # Review the script before running
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+brew bundle --file Brewfile
+brew bundle --file Brewfile.personal
+brew bundle --file Brewfile.work
 ```
 
 <details>
@@ -83,6 +87,10 @@ echo $SHELL
 ### Add SSH keys
 
 ```bash
+ssh-keygen -t ed25519 -C "your_email@example.com" -f ~/.ssh/id_ed25519_personal
+ssh-add ~/.ssh/id_ed25519_personal
+
+# legacy RSA key (if needed)
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 ssh-add ~/.ssh/id_rsa
 ```

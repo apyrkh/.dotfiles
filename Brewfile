@@ -1,46 +1,46 @@
-tap "homebrew/bundle"
-tap "homebrew/services"
+## === fonts ===
+cask "font-jetbrains-mono-nerd-font"
 
-# === dev ===
+# === terminal ===
 #cask "warp"
 cask "wezterm"
-cask "font-jetbrains-mono-nerd-font"
+# brew "zsh"       # macOS already ships with zsh
 
-## === zsh ===
-brew "zsh"
-brew "cowsay"
-brew "eza"
-brew "fortune"
-
-## === neovim ===
-brew "neovim"
-brew "fd"
-cask "font-jetbrains-mono-nerd-font"
-brew "luarocks"
-brew "ripgrep"
-
-brew "gnu-time"
-brew "mtr" # my trace route
-brew "tree"
-brew "fx" # json viewer and processor, https://fx.wtf
-
-brew "git"
-brew "nvm"
-
+# === dev tools ===
 cask "jetbrains-toolbox"
 
-# === soft ===
+# === neovim (runtime deps) ===
+brew "neovim"
+brew "fd"         # used by telescope
+brew "ripgrep"    # used by telescope / live grep
+brew "luarocks"   # luarocks.nvim / lua deps
+
+## === cli ===
+brew "git"
+brew "nvm"        # managed via zsh plugin
+brew "tree"
+brew "eza"
+brew "fx"         # json viewer and processor, https://fx.wtf
+brew "gnu-time"
+brew "mtr"        # my trace route
+brew "ffmpeg"
+
+# fun / misc
+brew "cowsay"
+brew "fortune"
+
+# === apps ===
 cask "google-chrome"
 cask "google-drive"
 cask "opera"
-
-cask "android-file-transfer"
-cask "appcleaner"
-cask "chatgpt"
 cask "keepassxc"
-cask "keycastr" # keystroke visualiser
-cask "logi-options+"
 cask "notion"
+cask "chatgpt"
+
+cask "openmtp"    # android-file-transfer
+cask "appcleaner"
+cask "keycastr"   # keystroke visualiser
+cask "logi-options+"
 
 #cask "slack"
 cask "discord"
@@ -50,6 +50,7 @@ cask "zoom"
 
 cask "adobe-acrobat-reader"
 cask "iina"
+cask "obs"
 cask "paintbrush"
 cask "upscayl"
 # brew "blackhole-2ch" # macOS virtual audio loopback driver
@@ -60,10 +61,6 @@ cask "upscayl"
 # cask "mongodb-compass"
 
 brew "postgresql@16", restart_service: :changed
-
-# === containers ===
-#brew "podman"
-#brew "podman-compose"
 
 # === games ===
 cask "battle-net"
