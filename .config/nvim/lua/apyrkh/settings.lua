@@ -32,6 +32,7 @@ vim.opt.shiftwidth = 2    -- 2 spaces for indent width
 vim.opt.tabstop = 2       -- 2 spaces for tabs
 vim.opt.autoindent = true -- copy indent from current line when starting new one
 vim.opt.smartindent = true
+vim.opt.colorcolumn = "80"  -- vertical line at 80 characters
 vim.opt.textwidth = 80
 vim.opt.wrap = false -- disable line wrapping
 
@@ -57,7 +58,7 @@ vim.opt.smartcase = true  -- if you include mixed case in your search, assumes y
 
 -- Backspace and clipboard
 vim.opt.backspace = "indent,eol,start"
-vim.opt.clipboard:append("unnamedplus")
+vim.opt.clipboard = "unnamedplus"
 vim.opt.mouse = "a"
 
 -- Window splitting

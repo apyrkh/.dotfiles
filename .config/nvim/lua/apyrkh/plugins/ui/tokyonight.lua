@@ -9,6 +9,5 @@ return {
       style = "moon",
       light_style = "day",
     })
-    vim.cmd [[colorscheme tokyonight]]
   end,
 }

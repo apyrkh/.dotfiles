@@ -195,14 +195,51 @@ wk.add({
 })
 
 -- UI stuff
-function ToggleBackground()
-  local current_bg = vim.api.nvim_get_option_value("background", {})
-  vim.api.nvim_set_option_value("background", current_bg == "light" and "dark" or "light", {})
+-- find index in table
+local function index_of(tbl, val)
+  for i, v in ipairs(tbl) do
+    if v == val then return i end
+  end
+  return nil
+end
+
+-- available flavours
+local flavours = { "latte", "frappe", "macchiato", "mocha" }
+
+-- try to detect current flavour, fallback to mocha
+local current_flavour = vim.g.catppuccin_flavour or "mocha"
+local flavour_index = index_of(flavours, current_flavour) or 4
+
+function CycleCatppuccinFlavour()
+  -- next flavour
+  flavour_index = (flavour_index % #flavours) + 1
+  local next_flavour = flavours[flavour_index]
+
+  -- set global for persistence within session
+  vim.g.catppuccin_flavour = next_flavour
+
+  -- apply
+  require("catppuccin").setup({ flavour = next_flavour })
+  vim.cmd.colorscheme("catppuccin")
+end
+
+function CycleCatppuccinFlavourBackwards()
+  -- previous flavour
+  flavour_index = ((flavour_index - 2 + #flavours) % #flavours) + 1
+  local prev_flavour = flavours[flavour_index]
+
+  -- set global for persistence within session
+  vim.g.catppuccin_flavour = prev_flavour
+
+  -- apply
+  require("catppuccin").setup({ flavour = prev_flavour })
+  vim.cmd.colorscheme("catppuccin")
 end
 
 wk.add({
   mode = "n",
   { "<leader>u",  group = "UI Settings" },
-  { "<leader>ut", ToggleBackground,                                         desc = "Toggle Theme" },
+  { "<leader>ut", CycleCatppuccinFlavour,                                         desc = "Toggle Theme" },
+  { "<leader>uT", CycleCatppuccinFlavourBackwards,                                         desc = "Toggle Theme" },
   { "<leader>uq", function() vim.cmd("CellularAutomaton make_it_rain") end, desc = "Make It Rain" },
 })
