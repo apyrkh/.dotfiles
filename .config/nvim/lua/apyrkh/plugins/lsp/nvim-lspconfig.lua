@@ -59,7 +59,9 @@ return {
       },
     })
 
-    vim.lsp.config("biome", {})
+    vim.lsp.config("biome", {
+      cmd = { "npx", "biome", "lsp-proxy" }, -- use Biome from the project
+    })
 
     vim.lsp.config("jsonls", {
       settings = {
