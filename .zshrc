@@ -39,6 +39,10 @@ DISABLE_UNTRACKED_FILES_DIRTY="true" # speed up prompt by ignoring untracked fil
 alias ll="eza -l --group-directories-first --icons"
 alias lla="ll -a"
 
+alias v="nvim"
+alias vv="NVIM_APPNAME=ndev nvim"
+# alias vv="VIMRUNTIME=~/@Projects/github.com/neovim/neovim/runtime NVIM_APPNAME=ndev ~/@Projects/github.com/neovim/neovim/build/bin/nvim"
+
 # === CUSTOM SCRIPTS ===
 export PATH="${HOME}/.jsvu/bin:${PATH}" # jsvu binaries
 source ~/.config/zsh/scripts/timed.zsh  # time wrapper with formatted output (timed)
