@@ -1,10 +1,11 @@
 return {
   "stevearc/conform.nvim",
   opts = {
-    format_on_save = {
-      timeout_ms = 500,
-      lsp_fallback = true, -- fallback to LSP formatter if no formatter
-    },
+    format_on_save = false,
+    -- format_on_save = {
+    --   timeout_ms = 500,
+    --   lsp_fallback = true, -- fallback to LSP formatter if no formatter
+    -- },
 
     formatters_by_ft = {
       javascript      = { "biome", "eslint_d", "prettier" },
