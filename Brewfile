@@ -7,6 +7,7 @@ cask "wezterm"
 # brew "zsh"       # macOS already ships with zsh
 
 # === dev tools ===
+brew "cmake"
 cask "jetbrains-toolbox"
 
 # === neovim (runtime deps) ===
