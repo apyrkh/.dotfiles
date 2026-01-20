@@ -1,48 +1,9 @@
 apyrkh/plugins/
-├── appearance.lua   -- UI & Visuals: Themes, statusline, and decorations
-│   ├── catppuccin.lua, tokyonight.lua (Color schemes)
-│   ├── lualine.lua (Statusline)
-│   ├── nvim-colorizer.lua (Color highlighter)
-│   ├── indent-blankline.lua (Indent guides)
-│   ├── dressing.lua (UI hooks for inputs/selects)
-│   └── cellular-automaton.lua (Animation/Effects)
-│
-├── editor.lua       -- Windows, file exploration, and in-editor navigation
-│   ├── nvim-tree.lua (File explorer sidebar)
-│   ├── oil.lua (Editing the file system as a buffer)
-│   ├── which-key.lua (Keybinding documentation/popup)
-│   ├── trouble.lua (Diagnostics and error list)
-│   └── vim-illuminate.lua (Highlighting same words under cursor)
-│
-├── navigation.lua   -- Global search and quick file switching
-│   ├── fzf-lua.lua (High-performance fuzzy finder)
-│   ├── telescope.lua (Fuzzy finder)
-│   └── harpoon.lua (Fast file switching/bookmarks)
-│
-├── code.lua         -- Intelligence: LSP, Completion, and Syntax
-│   ├── nvim-lspconfig.lua (LSP configurations)
-│   ├── mason.lua (LSP/Linter/Formatter installer)
-│   ├── blink-cmp.lua (Autocompletion engine)
-│   ├── nvim-treesitter.lua (Syntax highlighting and parsing)
-│   ├── conform.lua (Formatting bridge)
-│   ├── copilot.lua (AI completion)
-│   └── nvim-ts-autotag.lua (Auto-close/rename HTML/XML tags)
-│
-├── coding_utils.lua -- Text manipulation and micro-editing
-│   ├── nvim-autopairs.lua (Automatic brackets)
-│   ├── comment.lua (Smart commenting)
-│   ├── mini.ai.lua (Extended text objects)
-│   ├── mini.surround.lua (Add/delete/replace surroundings)
-│   ├── substitute.lua (Enhanced exchange/substitution)
-│   └── tabular.lua (Text alignment)
-│
-├── vcs.lua          -- Version Control: Git integration
-│   ├── neogit.lua (Magit-style Git interface)
-│   ├── gitsigns.lua (Buffer signs and hunk actions)
-│   ├── diffview.lua (Diff and merge tool)
-│   └── blame.lua (Git blame information)
-│
-└── productivity.lua -- Workflow and session management
-    ├── auto-session.lua (Session persistence)
-    ├── yanky.lua (Clipboard history and management)
-    └── todo-comments.lua (Highlight and search TODO/FIXME/NOTE)
+├── appearance.lua
+├── editor.lua
+├── navigation.lua
+├── code.lua
+├── code_ai.lua
+├── code_utils.lua
+├── vcs.lua
+└── productivity.lua
