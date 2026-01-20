@@ -83,7 +83,11 @@ return {
       "saghen/blink.cmp"
     },
     config = function()
-      local servers = { "lua_ls" }
+      local servers = {
+        "lua_ls",
+
+        "ts_ls",
+      }
 
       for _, server in ipairs(servers) do
         local opts = require("lsp.servers." .. server)

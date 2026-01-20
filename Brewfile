@@ -12,9 +12,10 @@ cask "jetbrains-toolbox"
 
 # === neovim (runtime deps) ===
 brew "neovim"
-brew "fd"         # used by telescope
-brew "ripgrep"    # used by telescope / live grep
-brew "luarocks"   # luarocks.nvim / lua deps
+brew "luarocks"
+brew "fzf"
+brew "fd"
+brew "ripgrep"
 
 ## === cli ===
 brew "git"

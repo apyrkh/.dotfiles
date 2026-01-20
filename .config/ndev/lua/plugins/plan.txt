@@ -15,6 +15,7 @@ apyrkh/plugins/
 │   └── vim-illuminate.lua (Highlighting same words under cursor)
 │
 ├── navigation.lua   -- Global search and quick file switching
+│   ├── fzf-lua.lua (High-performance fuzzy finder)
 │   ├── telescope.lua (Fuzzy finder)
 │   └── harpoon.lua (Fast file switching/bookmarks)
 │
