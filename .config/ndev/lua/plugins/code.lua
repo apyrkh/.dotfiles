@@ -5,7 +5,29 @@ return {
     dependencies = {
       "mason-org/mason.nvim",
     },
-    opts = {},
+    opts = {
+      ensure_installed = {
+        "bashls",
+        "lua_ls",
+        --"vimls",
+
+        --"markdown_oxide",
+        "jsonls",
+        --"yamlls",
+
+        "html",
+        "cssls",
+        "cssmodules_ls",
+        "css_variables",
+        "emmet_ls",
+
+        "ts_ls",
+        "biome",
+
+        "graphql",
+        -- "prismals",
+      },
+    },
   },
   {
     "saghen/blink.cmp",
