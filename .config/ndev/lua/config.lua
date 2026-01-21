@@ -28,16 +28,25 @@ vim.opt.wrap = false       -- disable line wrapping
 -- UI settings
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
-vim.opt.cursorline = true  -- highlight the current cursor line
-vim.opt.signcolumn = "yes" -- show sign column so that text doesn't shift
-vim.opt.list = true        -- sets how neovim will display certain whitespace in the editor
+vim.opt.cursorline = true     -- highlight the current cursor line
+vim.opt.signcolumn = "yes"    -- show sign column so that text doesn't shift
+vim.opt.list = true           -- sets how neovim will display certain whitespace in the editor
+vim.opt.winborder = "rounded" -- double, rounded, solid, shadow
 vim.opt.listchars = {
   eol = "↲",
   tab = "» ",
   space = ".",
   nbsp = "␣"
 }
-vim.opt.winborder = "rounded" -- double, rounded, solid, shadow
+vim.opt.fillchars = {
+  horiz = '━',
+  horizup = '┻',
+  horizdown = '┳',
+  vert = '┃',
+  vertleft = '┫',
+  vertright = '┣',
+  verthoriz = '╋',
+}
 
 -- Diagnostics UI
 vim.diagnostic.config({
