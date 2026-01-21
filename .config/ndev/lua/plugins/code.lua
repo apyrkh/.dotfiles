@@ -120,4 +120,39 @@ return {
       end
     end,
   },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    lazy = false,
+    version = "v0.10.0",
+    build = ":TSUpdate",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require("nvim-treesitter.configs").setup({
+        highlight = { enable = true },
+        indent = { enable = true },
+        ensure_installed = {
+          "bash",
+          "lua",
+          -- "vim",
+          -- "vimdoc",
+
+          -- "markdown",
+          "diff",
+          "json",
+          "yaml",
+
+          "html",
+          "css",
+          "scss",
+
+          "javascript",
+          "typescript",
+          "tsx",
+        },
+        incremental_selection = {
+          enable = true,
+        },
+      })
+    end
+  },
 }
