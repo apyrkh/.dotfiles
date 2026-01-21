@@ -31,11 +31,12 @@ return {
   },
   {
     "saghen/blink.cmp",
+    version = "1.*",
     dependencies = {
       "rafamadriz/friendly-snippets",
       "alexandre-abrioux/blink-cmp-npm.nvim",
     },
-    version = "1.*",
+    event = { "InsertEnter", "CmdlineEnter" },
     opts = {
       completion = {
         ghost_text = {
@@ -122,7 +123,6 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    lazy = false,
     version = "v0.10.0",
     build = ":TSUpdate",
     event = { "BufReadPre", "BufNewFile" },

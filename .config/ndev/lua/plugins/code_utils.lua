@@ -3,10 +3,8 @@ vim.g.skip_ts_context_commentstring_module = true -- Skip backwards compatibilit
 return {
   {
     "numToStr/Comment.nvim",
+    dependencies = { "JoosepAlviste/nvim-ts-context-commentstring" },
     event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "JoosepAlviste/nvim-ts-context-commentstring",
-    },
     init = function()
       -- Avoid legacy setup
       vim.g.skip_ts_context_commentstring_module = true

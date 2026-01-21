@@ -56,8 +56,8 @@
 - [ ] `sindrets/diffview.nvim` - diff & merge tool
 - [ ] `FabijanZulj/blame.nvim` - Git blame annotations
 
-## productivity.lua - Workflow & sessions
+## workflow.lua - Workflow & sessions
 
-- [ ] `rmagatti/auto-session` - session management
+- [x] `rmagatti/auto-session` - session management
 - [ ] `gbprod/yanky.nvim` - clipboard history
 - [ ] `folke/todo-comments.nvim` - highlight TODO / FIXME / NOTE
