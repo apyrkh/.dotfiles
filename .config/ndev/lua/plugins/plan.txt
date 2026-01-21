@@ -1,9 +1,9 @@
 apyrkh/plugins/
 ├── appearance.lua
-├── editor.lua
-├── navigation.lua
 ├── code.lua
 ├── code_ai.lua
 ├── code_utils.lua
+├── editor.lua
+├── navigation.lua
 ├── vcs.lua
-└── productivity.lua
+└── workflow.lua

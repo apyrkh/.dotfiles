@@ -26,5 +26,29 @@ return {
         },
       },
     },
-  }
+  },
+  -- FIX:
+  -- HACK:
+  -- WARN:
+  -- TODO:
+  -- NOTE:
+  -- TEST:
+  -- PERF:
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      search = {
+        command = "rg",
+        args = {
+          "--color=never",
+          "--no-heading",
+          "--with-filename",
+          "--line-number",
+          "--column",
+          "--hidden", -- added line
+        },
+      },
+    }
+  },
 }

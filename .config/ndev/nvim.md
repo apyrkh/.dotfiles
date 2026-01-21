@@ -60,4 +60,4 @@
 
 - [x] `rmagatti/auto-session` - session management
 - [ ] `gbprod/yanky.nvim` - clipboard history
-- [ ] `folke/todo-comments.nvim` - highlight TODO / FIXME / NOTE
+- [x] `folke/todo-comments.nvim` - highlight TODO / FIXME / NOTE
