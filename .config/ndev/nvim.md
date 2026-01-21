@@ -20,8 +20,7 @@
 
 ## navigation.lua - Search & quick file switching
 
-- [ ] `ibhagwan/fzf-lua` - primary fuzzy finder
-- [ ] `nvim-telescope/telescope.nvim` - secondary fuzzy finder
+- [x] `ibhagwan/fzf-lua` - fuzzy finder
 - [ ] `ThePrimeagen/harpoon` - quick file bookmarks
 
 ## code.lua - LSP, completion, syntax
@@ -36,7 +35,7 @@
 
 ## code_ai.lua - AI assistance
 
-- [ ] `github/copilot.vim` - inline completion
+- [x] `github/copilot.vim` - inline completion
 - [ ] `CopilotC-Nvim/CopilotChat.nvim` - Copilot chat interface
 - [ ] `coder/claudecode.nvim` - Claude-powered code actions
 - [ ] `yetone/avante.nvim` - AI-assisted coding workflows
