@@ -62,6 +62,16 @@ config.keys = {
     mods = 'LEADER',
     action = wezterm.action.MoveTabRelative(1),
   },
+  -- {
+  --   mods = "LEADER",
+  --   key = "H",
+  --   action = wezterm.action.ActivateTabRelative(-1),
+  -- },
+  -- {
+  --   mods = "LEADER",
+  --   key = "L",
+  --   action = wezterm.action.ActivateTabRelative(1),
+  -- },
   {
     mods = "LEADER",
     key = "M",
@@ -79,17 +89,17 @@ config.keys = {
   },
   {
     mods = "LEADER",
-    key = "q",
+    key = "x",
     action = wezterm.action.CloseCurrentPane { confirm = true }
   },
   {
     mods = "LEADER",
-    key = "=",
+    key = "v",
     action = wezterm.action.SplitHorizontal { domain = "CurrentPaneDomain" }
   },
   {
     mods = "LEADER",
-    key = "-",
+    key = "s",
     action = wezterm.action.SplitVertical { domain = "CurrentPaneDomain" }
   },
   {
