@@ -59,5 +59,5 @@
 ## workflow.lua - Workflow & sessions
 
 - [x] `rmagatti/auto-session` - session management
-- [ ] `gbprod/yanky.nvim` - clipboard history
+- [x] `gbprod/yanky.nvim` - clipboard history
 - [x] `folke/todo-comments.nvim` - highlight TODO / FIXME / NOTE

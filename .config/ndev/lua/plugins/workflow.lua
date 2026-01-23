@@ -27,6 +27,21 @@ return {
       },
     },
   },
+  {
+    "gbprod/yanky.nvim",
+    keys = {
+      { "<leader>p", require("fzf-lua").registers, desc = "Search Yank History", mode = "n" },
+      { "P",         "<Plug>(YankyPutBefore)",     desc = "Put Before",          mode = { "n", "x" } },
+      { "p",         "<Plug>(YankyPutAfter)",      desc = "Put After",           mode = { "n", "x" } },
+    },
+    opts = {
+      ring = {
+        history_length = 50,
+        storage = "memory",
+        update_register_on_cycle = true,
+      },
+    },
+  },
   -- FIX:
   -- HACK:
   -- WARN:
@@ -37,6 +52,9 @@ return {
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
+    keys = {
+      { "<leader>ft", "<cmd>TodoFzfLua<CR>", desc = "Search todo comments" },
+    },
     opts = {
       search = {
         command = "rg",

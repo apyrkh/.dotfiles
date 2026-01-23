@@ -34,6 +34,9 @@ return {
     config = function()
       require("fzf-lua").setup({
         winopts = { backdrop = 50 },
+        defaults = {
+          cwd_prompt = false,
+        },
         buffers = {
           sort_lastused = true,
         },
