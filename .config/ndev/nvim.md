@@ -21,7 +21,7 @@
 ## navigation.lua - Search & quick file switching
 
 - [x] `ibhagwan/fzf-lua` - fuzzy finder
-- [ ] `ThePrimeagen/harpoon` - quick file bookmarks
+- [x] `ThePrimeagen/harpoon` - quick file bookmarks
 
 ## code.lua - LSP, completion, syntax
 
