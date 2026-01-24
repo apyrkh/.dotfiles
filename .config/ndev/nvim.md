@@ -51,10 +51,10 @@
 
 ## vcs.lua - Version control & Git
 
-- [ ] `NeogitOrg/neogit` - Magit-style Git UI
-- [ ] `lewis6991/gitsigns.nvim` - Git signs & hunk actions
-- [ ] `sindrets/diffview.nvim` - diff & merge tool
-- [ ] `FabijanZulj/blame.nvim` - Git blame annotations
+- [x] `NeogitOrg/neogit` - Magit-style Git UI
+- [-] `lewis6991/gitsigns.nvim` - Git signs & hunk actions
+- [x] `sindrets/diffview.nvim` - diff & merge tool
+- [x] `FabijanZulj/blame.nvim` - Git blame annotations
 
 ## workflow.lua - Workflow & sessions
 
