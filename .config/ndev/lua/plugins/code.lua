@@ -1,33 +1,52 @@
 return {
-  { "mason-org/mason.nvim", opts = {} },
   {
-    "mason-org/mason-lspconfig.nvim",
+    "neovim/nvim-lspconfig",
     dependencies = {
-      "mason-org/mason.nvim",
+      { "mason-org/mason.nvim", opts = {} },
+      "mason-org/mason-lspconfig.nvim",
+      "saghen/blink.cmp"
     },
-    opts = {
-      ensure_installed = {
-        "bashls",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      local mlsp = require("mason-lspconfig")
+      mlsp.setup({
+        ensure_installed = {
+          "bashls",
+          "lua_ls",
+          --"vimls",
+
+          --"markdown_oxide",
+          "jsonls",
+          --"yamlls",
+
+          "html",
+          "cssls",
+          "cssmodules_ls",
+          "css_variables",
+          "emmet_ls",
+
+          "ts_ls",
+          "biome",
+
+          "graphql",
+          -- "prismals",
+        },
+      })
+
+      local servers = {
         "lua_ls",
-        --"vimls",
-
-        --"markdown_oxide",
-        "jsonls",
-        --"yamlls",
-
-        "html",
-        "cssls",
-        "cssmodules_ls",
-        "css_variables",
-        "emmet_ls",
 
         "ts_ls",
-        "biome",
+      }
 
-        "graphql",
-        -- "prismals",
-      },
-    },
+      for _, server in ipairs(servers) do
+        local opts = require("lsp.servers." .. server)
+
+        opts.capabilities = require('blink.cmp').get_lsp_capabilities(opts.capabilities)
+
+        vim.lsp.config(server, opts)
+      end
+    end,
   },
   {
     "saghen/blink.cmp",
@@ -101,27 +120,6 @@ return {
     opts_extend = { "sources.default" }
   },
   {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      "saghen/blink.cmp"
-    },
-    config = function()
-      local servers = {
-        "lua_ls",
-
-        "ts_ls",
-      }
-
-      for _, server in ipairs(servers) do
-        local opts = require("lsp.servers." .. server)
-
-        opts.capabilities = require('blink.cmp').get_lsp_capabilities(opts.capabilities)
-
-        vim.lsp.config(server, opts)
-      end
-    end,
-  },
-  {
     "nvim-treesitter/nvim-treesitter",
     version = "v0.10.0",
     build = ":TSUpdate",
@@ -155,4 +153,10 @@ return {
       })
     end
   },
+  {
+    "windwp/nvim-ts-autotag",
+    event = "InsertEnter",
+    ft = { "html", "javascriptreact", "typescriptreact", "xml" },
+    opts = {},
+  }
 }

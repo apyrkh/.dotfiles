@@ -1,7 +1,7 @@
 return {
   {
     "lewis6991/gitsigns.nvim",
-    event = "VeryLazy",
+    event = { "BufReadPre", "BufNewFile" },
     keys = {
       { "<leader>v[", function() require("gitsigns").nav_hunk("prev", { target = "all" }) end, desc = "Prev Hunk" },
       { "<leader>v]", function() require("gitsigns").nav_hunk("next", { target = "all" }) end, desc = "Next Hunk" },
@@ -19,22 +19,21 @@ return {
     },
   },
   {
-    "sindrets/diffview.nvim",
-    opts = {
-      enhanced_diff_hl = true, -- Highlight word-level changes in diffs
-      -- TODO: figure signs out (they are the default ones)
-      -- signs = {
-      --   fold_closed = "",
-      --   fold_open = "",
-      --   done = "✓",
-      -- },
-    },
-  },
-  {
     "NeogitOrg/neogit",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "sindrets/diffview.nvim",
+      {
+        "sindrets/diffview.nvim",
+        opts = {
+          enhanced_diff_hl = true, -- Highlight word-level changes in diffs
+          -- TODO: figure signs out (they are the default ones)
+          -- signs = {
+          --   fold_closed = "",
+          --   fold_open = "",
+          --   done = "✓",
+          -- },
+        },
+      },
 
       -- Only one of these is needed, not both.
       -- "nvim-telescope/telescope.nvim",
@@ -49,15 +48,15 @@ return {
       commit_editor = {
         kind = "vsplit",
       },
+      integrations = {
+        diffview = true,
+        fzf_lua = true,
+      },
       -- TODO: figure signs out
       -- signs = {
       --   hunk = { "", "" },
       --   item = { "", "" },
       --   section = { "", "" },
-      -- },
-      -- integrations = {
-      --   diffview = true,
-      --   telescope = false,
       -- },
     },
   },

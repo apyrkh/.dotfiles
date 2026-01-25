@@ -1,7 +1,9 @@
 return {
   {
     "rmagatti/auto-session",
-    dependencies = { "ibhagwan/fzf-lua" },
+    dependencies = {
+      "ibhagwan/fzf-lua",
+    },
     keys = {
       { "<leader>ww", "<cmd>AutoSession save<CR>",          desc = "Save Session" },
       { "<leader>wr", "<cmd>AutoSession restore<CR>",       desc = "Restore Session" },
@@ -30,9 +32,9 @@ return {
   {
     "gbprod/yanky.nvim",
     keys = {
-      { "<leader>p", require("fzf-lua").registers, desc = "Search Yank History", mode = "n" },
-      { "P",         "<Plug>(YankyPutBefore)",     desc = "Put Before",          mode = { "n", "x" } },
-      { "p",         "<Plug>(YankyPutAfter)",      desc = "Put After",           mode = { "n", "x" } },
+      { "<leader>p", function() require("fzf-lua").registers() end, desc = "Search Yank History" },
+      { "P",         "<Plug>(YankyPutBefore)",                      desc = "Put Before",         mode = { "n", "x" } },
+      { "p",         "<Plug>(YankyPutAfter)",                       desc = "Put After",          mode = { "n", "x" } },
     },
     opts = {
       ring = {

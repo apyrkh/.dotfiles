@@ -31,7 +31,7 @@
 - [x] `neovim/nvim-lspconfig` - LSP configuration
 - [x] `nvim-treesitter/nvim-treesitter` - syntax parsing & highlighting
 - [ ] `stevearc/conform.nvim` - formatting bridge
-- [ ] `windwp/nvim-ts-autotag` - auto-close/rename HTML & JSX tags
+- [x] `windwp/nvim-ts-autotag` - auto-close/rename HTML & JSX tags
 
 ## code_ai.lua - AI assistance
 

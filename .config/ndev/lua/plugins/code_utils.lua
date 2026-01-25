@@ -1,9 +1,9 @@
-vim.g.skip_ts_context_commentstring_module = true -- Skip backwards compatibility routines
-
 return {
   {
     "numToStr/Comment.nvim",
-    dependencies = { "JoosepAlviste/nvim-ts-context-commentstring" },
+    dependencies = {
+      { "JoosepAlviste/nvim-ts-context-commentstring", opts = { enable_autocmd = false } },
+    },
     event = { "BufReadPre", "BufNewFile" },
     init = function()
       -- Avoid legacy setup
@@ -11,9 +11,7 @@ return {
     end,
     config = function()
       require("Comment").setup({
-        pre_hook = require(
-          "ts_context_commentstring.integrations.comment_nvim"
-        ).create_pre_hook(),
+        pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
       })
     end,
   },

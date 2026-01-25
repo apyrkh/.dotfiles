@@ -1,30 +1,59 @@
 return {
   {
     "github/copilot.vim",
-    event = "InsertEnter", -- optional
-    keys = {
-      { "<leader>cc", function() _G.CopilotToggle() end, desc = "Toggle Copilot" },
-      { "<leader>cs", "<cmd>Copilot setup<CR>",          desc = "Setup Copilot" },
-      { "<leader>cp", "<cmd>Copilot panel<CR>",          desc = "Open Copilot Panel" },
-      { "<leader>cq", "<cmd>Copilot signout<CR>",        desc = "Signout Copilot" },
-    },
     init = function()
       vim.g.copilot_enabled = false
     end,
-    config = function()
-      local function toggle_copilot()
-        if vim.g.copilot_enabled then
-          vim.cmd("Copilot disable")
-          vim.g.copilot_enabled = false
-          vim.notify("Copilot disabled")
-        else
-          vim.cmd("Copilot enable")
-          vim.g.copilot_enabled = true
-          vim.notify("Copilot enabled")
-        end
-      end
+    keys = {
+      {
+        "<leader>cc",
+        function()
+          vim.cmd("Copilot status")
+          if vim.g.copilot_enabled then
+            vim.cmd("Copilot disable")
+            vim.g.copilot_enabled = false
+            vim.notify("Copilot disabled", vim.log.levels.INFO)
+          else
+            vim.cmd("Copilot enable")
+            vim.g.copilot_enabled = true
+            vim.notify("Copilot enabled", vim.log.levels.INFO)
+          end
+        end,
+        desc = "Toggle Copilot"
+      },
+      {
+        "<leader>cs",
+        function()
+          vim.cmd("Copilot setup")
+          vim.notify("Copilot setup", vim.log.levels.INFO)
+        end,
+        desc = "Setup Copilot"
+      },
+      {
+        "<leader>cp",
+        function()
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            local name = vim.api.nvim_buf_get_name(buf)
+            if name:match("^copilot:///panel/") then
+              vim.api.nvim_win_close(win, true)
+              return
+            end
+          end
 
-      _G.CopilotToggle = toggle_copilot
-    end,
+          vim.cmd("Copilot panel")
+          vim.notify("Copilot panel", vim.log.levels.INFO)
+        end,
+        desc = "Open Copilot Panel"
+      },
+      {
+        "<leader>cq",
+        function()
+          vim.cmd("Copilot signout")
+          vim.notify("Copilot signout", vim.log.levels.INFO)
+        end,
+        desc = "Signout Copilot"
+      },
+    },
   },
 }

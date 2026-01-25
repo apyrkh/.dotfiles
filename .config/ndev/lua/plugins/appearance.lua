@@ -2,15 +2,14 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function()
-      require("lualine").setup({
-        sections = {
-          lualine_b = { "branch" },
-          lualine_c = { { "filename", path = 1 } },
-          lualine_x = { "encoding", "filetype" },
-        }
-      })
-    end,
+    event = "VeryLazy",
+    opts = {
+      sections = {
+        lualine_b = { "branch" },
+        lualine_c = { { "filename", path = 1 } },
+        lualine_x = { "encoding", "filetype" },
+      }
+    },
   },
   -- themes
   {
@@ -28,14 +27,10 @@ return {
   },
   {
     "folke/tokyonight.nvim",
-    lazy = false,
-    -- make sure to load this before all the other start plugins
-    priority = 1000,
-    config = function()
-      require("tokyonight").setup({
-        style = "moon",
-        light_style = "day",
-      })
-    end,
+    lazy = true,
+    opts = {
+      style = "moon",
+      light_style = "day",
+    },
   },
 }
