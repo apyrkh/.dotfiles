@@ -29,7 +29,7 @@ return {
   {
     "ibhagwan/fzf-lua",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    lazy = true,
+    event = "VeryLazy",
     keys = {
       { "<leader>f=",  function() require("fzf-lua").builtin() end,              desc = "Buildins" },
 
@@ -66,5 +66,10 @@ return {
       defaults = { cwd_prompt = false },
       buffers = { sort_lastused = true },
     },
+    config = function(_, opts)
+      local fzf = require("fzf-lua")
+      fzf.setup(opts)
+      fzf.register_ui_select()
+    end,
   },
 }

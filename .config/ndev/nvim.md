@@ -2,13 +2,13 @@
 
 ## appearance.lua - UI & visuals
 
+- [x] `folke/snacks.nvim` - high-performance core UI utilities and QoL tools
 - [x] `catppuccin/nvim` - color scheme
 - [x] `folke/tokyonight.nvim` - color scheme
 - [x] `nvim-lualine/lualine.nvim` - statusline
-- [ ] `norcalli/nvim-colorizer.lua` - color highlighter
-- [ ] `lukas-reineke/indent-blankline.nvim` - indent guides
-- [ ] `stevearc/dressing.nvim` - input/select UI
-- [ ] `eandrju/cellular-automaton.nvim` - fun animations/effects
+- [x] `nvim-mini/mini.indentscope` - visualize and operate on indent scope
+- [x] `norcalli/nvim-colorizer.lua` - color highlighter
+- [x] `eandrju/cellular-automaton.nvim` - fun animations/effects
 
 ## editor.lua - Windows & file exploration
 
@@ -16,7 +16,6 @@
 - [ ] `stevearc/oil.nvim` - edit filesystem as buffer
 - [ ] `folke/which-key.nvim` - keybinding popup
 - [ ] `folke/trouble.nvim` - diagnostics list
-- [ ] `RRethy/vim-illuminate` - highlight word under cursor
 
 ## navigation.lua - Search & quick file switching
 

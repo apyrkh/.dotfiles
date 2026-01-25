@@ -42,7 +42,7 @@ return {
       for _, server in ipairs(servers) do
         local opts = require("lsp.servers." .. server)
 
-        opts.capabilities = require('blink.cmp').get_lsp_capabilities(opts.capabilities)
+        opts.capabilities = require("blink.cmp").get_lsp_capabilities(opts.capabilities)
 
         vim.lsp.config(server, opts)
       end
@@ -155,8 +155,8 @@ return {
   },
   {
     "windwp/nvim-ts-autotag",
-    event = "InsertEnter",
     ft = { "html", "javascriptreact", "typescriptreact", "xml" },
+    event = "InsertEnter",
     opts = {},
   }
 }

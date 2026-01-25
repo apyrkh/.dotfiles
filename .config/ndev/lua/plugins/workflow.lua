@@ -1,5 +1,6 @@
 return {
   {
+    -- @TODO: consider nvim-mini/mini.sessions
     "rmagatti/auto-session",
     dependencies = {
       "ibhagwan/fzf-lua",
@@ -54,6 +55,7 @@ return {
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
+    event = { "BufReadPost", "BufNewFile" },
     keys = {
       { "<leader>ft", "<cmd>TodoFzfLua<CR>", desc = "Search todo comments" },
     },
