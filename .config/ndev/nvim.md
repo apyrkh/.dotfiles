@@ -29,7 +29,7 @@
 - [x] `saghen/blink.cmp` - completion engine
 - [x] `neovim/nvim-lspconfig` - LSP configuration
 - [x] `nvim-treesitter/nvim-treesitter` - syntax parsing & highlighting
-- [ ] `stevearc/conform.nvim` - formatting bridge
+- [x] `stevearc/conform.nvim` - formatting bridge
 - [x] `windwp/nvim-ts-autotag` - auto-close/rename HTML & JSX tags
 
 ## code_ai.lua - AI assistance
@@ -51,9 +51,8 @@
 ## vcs.lua - Version control & Git
 
 - [x] `NeogitOrg/neogit` - Magit-style Git UI
-- [-] `lewis6991/gitsigns.nvim` - Git signs & hunk actions
+- [x] `lewis6991/gitsigns.nvim` - Git signs & hunk actions
 - [x] `sindrets/diffview.nvim` - diff & merge tool
-- [x] `FabijanZulj/blame.nvim` - Git blame annotations
 
 ## workflow.lua - Workflow & sessions
 

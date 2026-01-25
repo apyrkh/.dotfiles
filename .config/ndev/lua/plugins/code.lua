@@ -1,52 +1,41 @@
 return {
   {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      { "mason-org/mason.nvim", opts = {} },
-      "mason-org/mason-lspconfig.nvim",
-      "saghen/blink.cmp"
+    "stevearc/conform.nvim",
+    event = { "BufWritePre" },
+    keys = {
+      {
+        "<leader>df",
+        function()
+          require("conform").format({ async = true, lsp_format = "fallback" })
+        end,
+        desc = "Format File (Conform)",
+      },
     },
-    event = { "BufReadPre", "BufNewFile" },
-    config = function()
-      local mlsp = require("mason-lspconfig")
-      mlsp.setup({
-        ensure_installed = {
-          "bashls",
-          "lua_ls",
-          --"vimls",
+    opts = {
+      format_on_save = false,
+      -- format_on_save = {
+      --   lsp_format = "fallback", -- fallback to LSP formatter if no formatter
+      --   timeout_ms = 500,
+      -- },
 
-          --"markdown_oxide",
-          "jsonls",
-          --"yamlls",
+      formatters_by_ft = {
+        javascript      = { "biome", "eslint_d", "prettierd", "prettier", stop_after_first = true },
+        javascriptreact = { "biome", "eslint_d", "prettierd", "prettier", stop_after_first = true },
+        typescript      = { "biome", "eslint_d", "prettierd", "prettier", stop_after_first = true },
+        typescriptreact = { "biome", "eslint_d", "prettierd", "prettier", stop_after_first = true },
 
-          "html",
-          "cssls",
-          "cssmodules_ls",
-          "css_variables",
-          "emmet_ls",
+        json            = { "biome", "prettierd", "prettier", stop_after_first = true },
+        jsonc           = { "biome", "prettierd", "prettier", stop_after_first = true },
 
-          "ts_ls",
-          "biome",
+        css             = { "biome", "prettierd", "prettier", stop_after_first = true },
+        scss            = { "biome", "prettierd", "prettier", stop_after_first = true },
+        html            = { "biome", "prettierd", "prettier", stop_after_first = true },
 
-          "graphql",
-          -- "prismals",
-        },
-      })
+        markdown        = { "prettierd", "prettier", stop_after_first = true },
 
-      local servers = {
-        "lua_ls",
-
-        "ts_ls",
-      }
-
-      for _, server in ipairs(servers) do
-        local opts = require("lsp.servers." .. server)
-
-        opts.capabilities = require("blink.cmp").get_lsp_capabilities(opts.capabilities)
-
-        vim.lsp.config(server, opts)
-      end
-    end,
+        ["_"]           = { "lsp" },
+      },
+    },
   },
   {
     "saghen/blink.cmp",
@@ -118,6 +107,55 @@ return {
       },
     },
     opts_extend = { "sources.default" }
+  },
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      { "mason-org/mason.nvim", opts = {} },
+      "mason-org/mason-lspconfig.nvim",
+      "saghen/blink.cmp"
+    },
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      local mlsp = require("mason-lspconfig")
+      mlsp.setup({
+        ensure_installed = {
+          "bashls",
+          "lua_ls",
+          --"vimls",
+
+          --"markdown_oxide",
+          "jsonls",
+          --"yamlls",
+
+          "html",
+          "cssls",
+          "cssmodules_ls",
+          "css_variables",
+          "emmet_ls",
+
+          "ts_ls",
+          "biome",
+
+          "graphql",
+          -- "prismals",
+        },
+      })
+
+      local servers = {
+        "lua_ls",
+
+        "ts_ls",
+      }
+
+      for _, server in ipairs(servers) do
+        local opts = require("lsp.servers." .. server)
+
+        opts.capabilities = require("blink.cmp").get_lsp_capabilities(opts.capabilities)
+
+        vim.lsp.config(server, opts)
+      end
+    end,
   },
   {
     "nvim-treesitter/nvim-treesitter",
