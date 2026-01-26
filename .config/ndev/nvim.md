@@ -41,12 +41,11 @@
 
 ## code_utils.lua - Text manipulation & editing
 
-- [ ] `windwp/nvim-autopairs` - automatic brackets
-- [x] `numToStr/Comment.nvim` - smart commenting
-- [ ] `echasnovski/mini.ai` - extended text objects
-- [ ] `echasnovski/mini.surround` - surround actions
-- [ ] `gbprod/substitute.nvim` - enhanced substitution/exchange
-- [ ] `godlygeek/tabular` - text alignment
+- [x] `nvim-mini/mini.ai` - extended text objects
+- [x] `nvim-mini/mini.align` - align actions
+- [x] `nvim-mini/mini.operators` - extended operators
+- [x] `nvim-mini/mini.pairs` - automatic brackets
+- [x] `nvim-mini/mini.surround` - surround actions
 
 ## vcs.lua - Version control & Git
 

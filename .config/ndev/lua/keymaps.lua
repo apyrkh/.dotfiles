@@ -18,12 +18,13 @@ vim.keymap.set("n", "<S-Down>", "<cmd>resize -2<CR>", { noremap = true, silent =
 vim.keymap.set("n", "<S-Left>", "<cmd>vertical resize -2<CR>", { noremap = true, silent = true, desc = "Decrease Width" })
 vim.keymap.set("n", "<S-Right>", "<cmd>vertical resize +2<CR>", { noremap = true, silent = true, desc = "Increase Width" })
 
- -- Scroll + center
+-- Scroll + center
+
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { silent = true, remap = true, desc = "Scroll Up Center" })
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { silent = true, remap = true, desc = "Scroll Down Center" })
 
- -- Search: keep centered
- -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
+-- Search: keep centered
+-- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
 vim.keymap.set("n", "n", "'Nn'[v:searchforward].'zzzv'", { noremap = true, silent = true, expr = true, desc = "Next Search" })
 vim.keymap.set("n", "N", "'nN'[v:searchforward].'zzzv'", { noremap = true, silent = true, expr = true, desc = "Prev Search" })
 vim.keymap.set({ "x", "o" }, "n", "'Nn'[v:searchforward]", { noremap = true, silent = true, expr = true, desc = "Next Search" })
