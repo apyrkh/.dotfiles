@@ -4,11 +4,5 @@ return {
   "echasnovski/mini.surround",
   version = false,
   event = { "BufReadPre", "BufNewFile" },
-  config = function()
-    local mini = require("mini.surround")
-
-    mini.setup({
-
-    })
-  end,
+  opts = {},
 }

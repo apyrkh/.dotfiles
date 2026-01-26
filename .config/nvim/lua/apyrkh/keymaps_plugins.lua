@@ -113,7 +113,7 @@ wk.add({
   { "<leader>dt",  "<cmd>Telescope lsp_type_definitions<CR>",                 opts, desc = "Go to Type Definition (LSP)" },
   { "<leader>d[",  function() illuminate.goto_prev_reference("wrapscan") end, opts, desc = "Prev Reference" },
   { "<leader>d]",  function() illuminate.goto_next_reference("wrapscan") end, opts, desc = "Next Reference" },
-  { "<leader>dqq", "<cmd>LspRestart<CR>",                                         opts, desc = "Restart LSP" },
+  { "<leader>dqq", "<cmd>LspRestart<CR>",                                     opts, desc = "Restart LSP" },
 })
 
 -- Substitute/Surround
@@ -239,7 +239,7 @@ end
 wk.add({
   mode = "n",
   { "<leader>u",  group = "UI Settings" },
-  { "<leader>ut", CycleCatppuccinFlavour,                                         desc = "Toggle Theme" },
-  { "<leader>uT", CycleCatppuccinFlavourBackwards,                                         desc = "Toggle Theme" },
+  { "<leader>ut", CycleCatppuccinFlavour,                                   desc = "Toggle Theme" },
+  { "<leader>uT", CycleCatppuccinFlavourBackwards,                          desc = "Toggle Theme" },
   { "<leader>uq", function() vim.cmd("CellularAutomaton make_it_rain") end, desc = "Make It Rain" },
 })
