@@ -55,7 +55,7 @@ cask "iina"
 cask "obs"
 cask "paintbrush"
 cask "upscayl"
-# brew "blackhole-2ch" # macOS virtual audio loopback driver
+# cask "blackhole-2ch" # macOS virtual audio loopback driver
 
 # === databases ===
 # tap "mongodb/brew"
