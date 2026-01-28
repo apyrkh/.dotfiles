@@ -26,7 +26,7 @@ return {
         "sindrets/diffview.nvim",
         opts = {
           enhanced_diff_hl = true, -- Highlight word-level changes in diffs
-          -- TODO: figure signs out (they are the default ones)
+          -- TODO: ui.icons
           -- signs = {
           --   fold_closed = "",
           --   fold_open = "",
@@ -52,7 +52,7 @@ return {
         diffview = true,
         fzf_lua = true,
       },
-      -- TODO: figure signs out
+      -- TODO: ui.icons
       -- signs = {
       --   hunk = { "", "" },
       --   item = { "", "" },

@@ -52,8 +52,67 @@ return {
     end,
   },
   {
+    "nvim-tree/nvim-tree.lua",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons"
+    },
+    keys = {
+      { "<leader>ee", "<cmd>NvimTreeToggle<CR>",   desc = "Toggle Explorer" },
+      { "<leader>eo", "<cmd>NvimTreeFindFile<CR>", desc = "Open in Explorer" },
+    },
+    init = function()
+      -- disabling netrw is strongly advised, :h nvim-tree-netrw
+      vim.g.loaded_netrw = 1
+      vim.g.loaded_netrwPlugin = 1
+    end,
+    opts = {
+      view = {
+        width = 40,
+        relativenumber = true,
+      },
+      filters = {
+        custom = { ".DS_Store" },
+      },
+      renderer = {
+        indent_markers = {
+          enable = true,
+        },
+        -- TODO: ui.icons
+        -- icons = {
+        --   glyphs = {
+        --     folder = {
+        --       arrow_closed = "", -- arrow when folder is closed
+        --       arrow_open = "", -- arrow when folder is open
+        --     },
+        --   },
+        -- },
+      },
+      -- disable window_picker for explorer to work well with window splits
+      actions = {
+        open_file = {
+          window_picker = {
+            enable = false,
+          },
+        },
+      },
+      git = {
+        ignore = false,
+      },
+      diagnostics = {
+        enable = true,
+        show_on_dirs = true,
+        -- TODO: ui.icons
+        -- icons = {
+        --   hint = "",
+        --   info = "",
+        --   warning = "",
+        --   error = "",
+        -- },
+      },
+    },
+  },
+  {
     "folke/trouble.nvim",
-    opts = {}, -- for default options, refer to the configuration section for custom setup.
     cmd = "Trouble",
     keys = {
       { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>",                        desc = "Diagnostics (Trouble)" },
@@ -63,5 +122,6 @@ return {
       { "<leader>xl", "<cmd>Trouble loclist toggle<cr>",                            desc = "Location List (Trouble)" },
       { "<leader>xq", "<cmd>Trouble qflist toggle<cr>",                             desc = "Quickfix List (Trouble)" },
     },
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
   },
 }

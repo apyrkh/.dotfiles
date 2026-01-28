@@ -13,9 +13,9 @@ return {
 
       -- rename
       {
-        "<leader>cr",
+        "<leader>er",
         function() require("snacks").rename.rename_file() end,
-        desc = "Rename File",
+        desc = "Rename",
       },
 
       -- words
@@ -103,7 +103,7 @@ return {
         delay = 10,
         animation = function() return 0 end, -- disable animation
       },
-      -- @TODO: ui.icon
+      -- TODO: ui.icon
       -- "╎" (default) "│" "┊" "┆" "⋮"
       -- symbol = "╎",
       options = {
@@ -130,6 +130,7 @@ return {
     opts = {
       preset = "modern",
       spec = {
+        { "<leader>e", group = "file", icon = "󰙅" },
         { "<leader>f", group = "find", icon = "󰍉" },
         { "<leader>h", group = "harpoon", icon = "󱡁" },
         { "<leader>c", group = "code", icon = "" },
