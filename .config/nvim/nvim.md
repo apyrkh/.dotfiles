@@ -14,7 +14,7 @@
 ## editor.lua - Windows & file exploration
 
 - [x] `stevearc/oil.nvim` - edit filesystem as buffer
-- [ ] `nvim-tree/nvim-tree.lua` - file explorer sidebar
+- [x] `nvim-tree/nvim-tree.lua` - file explorer sidebar
 - [x] `folke/trouble.nvim` - diagnostics list
 
 ## navigation.lua - Search & quick file switching

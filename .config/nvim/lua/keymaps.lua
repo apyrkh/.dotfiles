@@ -17,7 +17,6 @@ vim.keymap.set("n", "<S-Left>", "<cmd>vertical resize -2<CR>", { noremap = true,
 vim.keymap.set("n", "<S-Right>", "<cmd>vertical resize +2<CR>", { noremap = true, silent = true, desc = "Increase Width" })
 
 -- Scroll + center
-
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { silent = true, remap = true, desc = "Scroll Up Center" })
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { silent = true, remap = true, desc = "Scroll Down Center" })
 

@@ -29,41 +29,75 @@ return {
     "ibhagwan/fzf-lua",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     event = "VeryLazy",
-    keys = {
-      { "<leader>f?",  function() require("fzf-lua").builtin() end,              desc = "Builtins" },
+    keys = function()
+      local function get_cwd()
+        local ok, api = pcall(require, "nvim-tree.api")
+        -- nvim-tree is not loaded or not an active buffer
+        if not ok or not api.tree.is_tree_buf(0) then return nil end
 
-      -- Files / search
-      { "<leader>ff",  function() require("fzf-lua").files() end,                desc = "Files" },
-      { "<leader>fg",  function() require("fzf-lua").live_grep() end,            desc = "Grep (live)" },
-      { "<leader>fg",  function() require("fzf-lua").grep_visual() end,          desc = "Grep selection (live)", mode = "v", },
-      { "<leader>fc",  function() require("fzf-lua").grep_cword() end,           desc = "Grep cursor" },
-      { "<leader>fr",  function() require("fzf-lua").resume() end,               desc = "Resume" },
+        local node = api.tree.get_node_under_cursor()
+        if not node or node.name == ".." then return nil end
 
-      -- Buffers
-      { "<leader>fb",  function() require("fzf-lua").buffers() end,              desc = "Buffers" },
+        local path = node.type == "directory" and node.absolute_path or vim.fn.fnamemodify(node.absolute_path, ":h")
+        return path
+      end
 
-      -- Help / misc
-      { "<leader>fp",  function() require("fzf-lua").registers() end,            desc = "Registers" },
-      { "<leader>fs",  function() require("fzf-lua").spell_suggest() end,        desc = "Spelling" },
-      { "<leader>fh",  function() require("fzf-lua").help_tags() end,            desc = "Help tags" },
-      { "<leader>fk",  function() require("fzf-lua").keymaps() end,              desc = "Keymaps" },
+      local function cwd_aware_search(fn_name)
+        return function()
+          local opts = {}
 
-      -- VCS: Git
-      { "<leader>vfs", function() require("fzf-lua").git_status() end,           desc = "Status" },
-      { "<leader>vfb", function() require("fzf-lua").git_blame() end,            desc = "Blame" },
-      { "<leader>vfc", function() require("fzf-lua").git_commits() end,          desc = "Commits" },
-      { "<leader>vfC", function() require("fzf-lua").git_bcommits() end,         desc = "Buffer commits" },
+          local tree_path = get_cwd()
+          if tree_path then
+            opts.cwd = tree_path
+          end
 
-      -- LSP
-      { "<leader>dd",  function() require("fzf-lua").lsp_definitions() end,      desc = "Definition" },
-      { "<leader>dr",  function() require("fzf-lua").lsp_references() end,       desc = "References" },
-      { "<leader>dt",  function() require("fzf-lua").lsp_typedefs() end,         desc = "Type Definition" },
-      { "<leader>ds",  function() require("fzf-lua").lsp_document_symbols() end, desc = "Symbols" },
-    },
+          require("fzf-lua")[fn_name](opts)
+        end
+      end
+
+      return {
+        { "<leader>f?",  function() require("fzf-lua").builtin() end,              desc = "Builtins" },
+
+        -- Files / search
+        { "<leader>ff",  cwd_aware_search("files"),                                desc = "Files" },
+        { "<leader>fg",  cwd_aware_search("live_grep"),                            desc = "Grep (live)" },
+        { "<leader>fg",  function() require("fzf-lua").grep_visual() end,          desc = "Grep selection (live)", mode = "v", },
+        { "<leader>fc",  function() require("fzf-lua").grep_cword() end,           desc = "Grep cursor" },
+        { "<leader>fr",  function() require("fzf-lua").resume() end,               desc = "Resume" },
+
+        -- Buffers
+        { "<leader>fb",  function() require("fzf-lua").buffers() end,              desc = "Buffers" },
+
+        -- Help / misc
+        { "<leader>fp",  function() require("fzf-lua").registers() end,            desc = "Registers" },
+        { "<leader>fs",  function() require("fzf-lua").spell_suggest() end,        desc = "Spelling" },
+        { "<leader>fh",  function() require("fzf-lua").help_tags() end,            desc = "Help tags" },
+        { "<leader>fk",  function() require("fzf-lua").keymaps() end,              desc = "Keymaps" },
+
+        -- VCS: Git
+        { "<leader>vfs", function() require("fzf-lua").git_status() end,           desc = "Status" },
+        { "<leader>vfb", function() require("fzf-lua").git_blame() end,            desc = "Blame" },
+        { "<leader>vfc", function() require("fzf-lua").git_commits() end,          desc = "Commits" },
+        { "<leader>vfC", function() require("fzf-lua").git_bcommits() end,         desc = "Buffer commits" },
+
+        -- LSP
+        { "<leader>dd",  function() require("fzf-lua").lsp_definitions() end,      desc = "Definition" },
+        { "<leader>dr",  function() require("fzf-lua").lsp_references() end,       desc = "References" },
+        { "<leader>dt",  function() require("fzf-lua").lsp_typedefs() end,         desc = "Type Definition" },
+        { "<leader>ds",  function() require("fzf-lua").lsp_document_symbols() end, desc = "Symbols" },
+      }
+    end,
     opts = {
       winopts = { backdrop = 50 },
       defaults = { cwd_prompt = false },
       buffers = { sort_lastused = true },
+      grep = {
+        hidden = true,
+        -- default + "--glob '!.git/*'"
+        -- "-e" must be at the end
+        rg_opts =
+        "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --glob '!.git/*' -e",
+      },
     },
     config = function(_, opts)
       local fzf = require("fzf-lua")
