@@ -3,33 +3,33 @@
 ## appearance.lua - UI & visuals
 
 - [x] `folke/snacks.nvim` - high-performance core UI utilities and QoL tools
+- [x] `norcalli/nvim-colorizer.lua` - color highlighter
+- [x] `nvim-mini/mini.indentscope` - visualize and operate on indent scope
+- [x] `nvim-lualine/lualine.nvim` - statusline
+- [x] `folke/which-key.nvim` - keybinding popup
 - [x] `catppuccin/nvim` - color scheme
 - [x] `folke/tokyonight.nvim` - color scheme
-- [x] `nvim-lualine/lualine.nvim` - statusline
-- [x] `nvim-mini/mini.indentscope` - visualize and operate on indent scope
-- [x] `norcalli/nvim-colorizer.lua` - color highlighter
 - [x] `eandrju/cellular-automaton.nvim` - fun animations/effects
 
 ## editor.lua - Windows & file exploration
 
+- [x] `stevearc/oil.nvim` - edit filesystem as buffer
 - [ ] `nvim-tree/nvim-tree.lua` - file explorer sidebar
-- [ ] `stevearc/oil.nvim` - edit filesystem as buffer
-- [ ] `folke/which-key.nvim` - keybinding popup
-- [ ] `folke/trouble.nvim` - diagnostics list
+- [x] `folke/trouble.nvim` - diagnostics list
 
 ## navigation.lua - Search & quick file switching
 
-- [x] `ibhagwan/fzf-lua` - fuzzy finder
 - [x] `ThePrimeagen/harpoon` - quick file bookmarks
+- [x] `ibhagwan/fzf-lua` - fuzzy finder
 
 ## code.lua - LSP, completion, syntax
 
-- [x] `williamboman/mason.nvim` - installer for LSP/formatters/linters
-- [x] `williamboman/mason-lspconfig.nvim` - mason ↔ LSP bridge
+- [x] `stevearc/conform.nvim` - formatting bridge
 - [x] `saghen/blink.cmp` - completion engine
 - [x] `neovim/nvim-lspconfig` - LSP configuration
+    - [x] `williamboman/mason.nvim` - installer for LSP/formatters/linters
+    - [x] `williamboman/mason-lspconfig.nvim` - mason ↔ LSP bridge
 - [x] `nvim-treesitter/nvim-treesitter` - syntax parsing & highlighting
-- [x] `stevearc/conform.nvim` - formatting bridge
 - [x] `windwp/nvim-ts-autotag` - auto-close/rename HTML & JSX tags
 
 ## code_ai.lua - AI assistance
@@ -41,6 +41,7 @@
 
 ## code_utils.lua - Text manipulation & editing
 
+- [x] `numToStr/Comment.nvim` - temp disabled
 - [x] `nvim-mini/mini.ai` - extended text objects
 - [x] `nvim-mini/mini.align` - align actions
 - [x] `nvim-mini/mini.operators` - extended operators
@@ -49,9 +50,9 @@
 
 ## vcs.lua - Version control & Git
 
-- [x] `NeogitOrg/neogit` - Magit-style Git UI
 - [x] `lewis6991/gitsigns.nvim` - Git signs & hunk actions
-- [x] `sindrets/diffview.nvim` - diff & merge tool
+- [x] `NeogitOrg/neogit` - Magit-style Git UI
+    - [x] `sindrets/diffview.nvim` - diff & merge tool
 
 ## workflow.lua - Workflow & sessions
 

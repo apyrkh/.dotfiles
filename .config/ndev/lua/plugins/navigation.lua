@@ -4,19 +4,18 @@ return {
     branch = "harpoon2",
     dependencies = { "nvim-lua/plenary.nvim" },
     keys = {
-      { "<leader>h",  nil,                                                                               desc = "Harpoon" },
-      { "<leader>ha", function() require("harpoon"):list():add() end,                                    desc = "Harpoon File" },
-      { "<leader>hh", function() require("harpoon").ui:toggle_quick_menu(require("harpoon"):list()) end, desc = "Harpoon Quick Menu" },
-      { "<leader>1",  function() require("harpoon"):list():select(1) end,                                desc = "Harpoon to File 1" },
-      { "<leader>2",  function() require("harpoon"):list():select(2) end,                                desc = "Harpoon to File 2" },
-      { "<leader>3",  function() require("harpoon"):list():select(3) end,                                desc = "Harpoon to File 3" },
-      { "<leader>4",  function() require("harpoon"):list():select(4) end,                                desc = "Harpoon to File 4" },
-      { "<leader>5",  function() require("harpoon"):list():select(5) end,                                desc = "Harpoon to File 5" },
-      { "<leader>6",  function() require("harpoon"):list():select(6) end,                                desc = "Harpoon to File 6" },
-      { "<leader>7",  function() require("harpoon"):list():select(7) end,                                desc = "Harpoon to File 7" },
-      { "<leader>8",  function() require("harpoon"):list():select(8) end,                                desc = "Harpoon to File 8" },
-      { "<leader>9",  function() require("harpoon"):list():select(9) end,                                desc = "Harpoon to File 9" },
-      { "<leader>0",  function() require("harpoon"):list():select(0) end,                                desc = "Harpoon to File 0" },
+      { "<leader>ha", function() require("harpoon"):list():add() end,                                    desc = "Add File" },
+      { "<leader>hh", function() require("harpoon").ui:toggle_quick_menu(require("harpoon"):list()) end, desc = "List Menu" },
+      { "<leader>1",  function() require("harpoon"):list():select(1) end,                                desc = "Harpoon File 1" },
+      { "<leader>2",  function() require("harpoon"):list():select(2) end,                                desc = "Harpoon File 2" },
+      { "<leader>3",  function() require("harpoon"):list():select(3) end,                                desc = "Harpoon File 3" },
+      { "<leader>4",  function() require("harpoon"):list():select(4) end,                                desc = "Harpoon File 4" },
+      { "<leader>5",  function() require("harpoon"):list():select(5) end,                                desc = "Harpoon File 5" },
+      { "<leader>6",  function() require("harpoon"):list():select(6) end,                                desc = "Harpoon File 6" },
+      { "<leader>7",  function() require("harpoon"):list():select(7) end,                                desc = "Harpoon File 7" },
+      { "<leader>8",  function() require("harpoon"):list():select(8) end,                                desc = "Harpoon File 8" },
+      { "<leader>9",  function() require("harpoon"):list():select(9) end,                                desc = "Harpoon File 9" },
+      { "<leader>0",  function() require("harpoon"):list():select(0) end,                                desc = "Harpoon File 0" },
       { "<leader>h[", function() require("harpoon"):list():prev() end,                                   desc = "Harpoon Prev File" },
       { "<leader>h]", function() require("harpoon"):list():next() end,                                   desc = "Harpoon Next File" },
     },
@@ -31,35 +30,35 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     event = "VeryLazy",
     keys = {
-      { "<leader>f=",  function() require("fzf-lua").builtin() end,              desc = "Buildins" },
+      { "<leader>f?",  function() require("fzf-lua").builtin() end,              desc = "Builtins" },
 
       -- Files / search
-      { "<leader>ff",  function() require("fzf-lua").files() end,                desc = "Find files" },
-      { "<leader>fg",  function() require("fzf-lua").live_grep() end,            desc = "Live grep" },
-      { "<leader>fg",  function() require("fzf-lua").grep_visual() end,          desc = "Live grep selection",   mode = "v", },
-      { "<leader>fc",  function() require("fzf-lua").grep_cword() end,           desc = "Grep word under cursor" },
+      { "<leader>ff",  function() require("fzf-lua").files() end,                desc = "Files" },
+      { "<leader>fg",  function() require("fzf-lua").live_grep() end,            desc = "Grep (live)" },
+      { "<leader>fg",  function() require("fzf-lua").grep_visual() end,          desc = "Grep selection (live)", mode = "v", },
+      { "<leader>fc",  function() require("fzf-lua").grep_cword() end,           desc = "Grep cursor" },
       { "<leader>fr",  function() require("fzf-lua").resume() end,               desc = "Resume" },
 
       -- Buffers
       { "<leader>fb",  function() require("fzf-lua").buffers() end,              desc = "Buffers" },
 
       -- Help / misc
+      { "<leader>fp",  function() require("fzf-lua").registers() end,            desc = "Registers" },
+      { "<leader>fs",  function() require("fzf-lua").spell_suggest() end,        desc = "Spelling" },
       { "<leader>fh",  function() require("fzf-lua").help_tags() end,            desc = "Help tags" },
       { "<leader>fk",  function() require("fzf-lua").keymaps() end,              desc = "Keymaps" },
-      { "<leader>fs",  function() require("fzf-lua").spell_suggest() end,        desc = "Spelling" },
 
       -- VCS: Git
-      { "<leader>fvs", function() require("fzf-lua").git_status() end,           desc = "Git status" },
-      { "<leader>fvb", function() require("fzf-lua").git_blame() end,            desc = "Git blame" },
-      { "<leader>fvc", function() require("fzf-lua").git_commits() end,          desc = "Git commits" },
-      { "<leader>fvC", function() require("fzf-lua").git_bcommits() end,         desc = "Git buffer commits" },
+      { "<leader>vfs", function() require("fzf-lua").git_status() end,           desc = "Status" },
+      { "<leader>vfb", function() require("fzf-lua").git_blame() end,            desc = "Blame" },
+      { "<leader>vfc", function() require("fzf-lua").git_commits() end,          desc = "Commits" },
+      { "<leader>vfC", function() require("fzf-lua").git_bcommits() end,         desc = "Buffer commits" },
 
       -- LSP
-      -- TODO: rethink necessity of lsp bindings
-      { "<leader>dd",  function() require("fzf-lua").lsp_definitions() end,      desc = "LSP definitions" },
-      { "<leader>dr",  function() require("fzf-lua").lsp_references() end,       desc = "References (Fzf)" },
-      { "<leader>dt",  function() require("fzf-lua").lsp_typedefs() end,         desc = "LSP type definitions" },
-      { "<leader>ds",  function() require("fzf-lua").lsp_document_symbols() end, desc = "Document Symbols" },
+      { "<leader>dd",  function() require("fzf-lua").lsp_definitions() end,      desc = "Definition" },
+      { "<leader>dr",  function() require("fzf-lua").lsp_references() end,       desc = "References" },
+      { "<leader>dt",  function() require("fzf-lua").lsp_typedefs() end,         desc = "Type Definition" },
+      { "<leader>ds",  function() require("fzf-lua").lsp_document_symbols() end, desc = "Symbols" },
     },
     opts = {
       winopts = { backdrop = 50 },

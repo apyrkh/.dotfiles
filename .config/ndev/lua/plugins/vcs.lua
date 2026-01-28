@@ -13,8 +13,8 @@ return {
       { "<leader>vD", function() require("gitsigns").diffthis("~") end,                        desc = "Diff This (~)" },
     },
     opts = {
-      current_line_blame = true,
-      current_line_blame_formatter = "<abbrev_sha> <author_time:%Y.%m.%d %H:%M> <author>: <summary>",
+      -- current_line_blame = true,
+      -- current_line_blame_formatter = "<abbrev_sha> <author_time:%Y.%m.%d %H:%M> <author>: <summary>",
       word_diff = true,
     },
   },

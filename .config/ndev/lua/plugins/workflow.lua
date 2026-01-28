@@ -33,9 +33,9 @@ return {
   {
     "gbprod/yanky.nvim",
     keys = {
-      { "<leader>p", function() require("fzf-lua").registers() end, desc = "Search Yank History" },
-      { "P",         "<Plug>(YankyPutBefore)",                      desc = "Put Before",         mode = { "n", "x" } },
-      { "p",         "<Plug>(YankyPutAfter)",                       desc = "Put After",          mode = { "n", "x" } },
+      { "P",         "<Plug>(YankyPutBefore)",                   desc = "Put Before",  mode = { "n", "x" } },
+      { "p",         "<Plug>(YankyPutAfter)",                    desc = "Put After",   mode = { "n", "x" } },
+      { "<leader>p", function() vim.cmd("YankyRingHistory") end, desc = "Yank History" },
     },
     opts = {
       ring = {
@@ -57,7 +57,7 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     event = { "BufReadPost", "BufNewFile" },
     keys = {
-      { "<leader>ft", "<cmd>TodoFzfLua<CR>", desc = "Search todo comments" },
+      { "<leader>ft", "<cmd>TodoFzfLua<CR>", desc = "Todo Comments" },
     },
     opts = {
       search = {

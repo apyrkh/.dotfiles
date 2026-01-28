@@ -6,7 +6,7 @@ return {
     end,
     keys = {
       {
-        "<leader>cc",
+        "<leader>ac",
         function()
           vim.cmd("Copilot status")
           if vim.g.copilot_enabled then
@@ -22,7 +22,7 @@ return {
         desc = "Toggle Copilot"
       },
       {
-        "<leader>cs",
+        "<leader>as",
         function()
           vim.cmd("Copilot setup")
           vim.notify("Copilot setup", vim.log.levels.INFO)
@@ -30,7 +30,7 @@ return {
         desc = "Setup Copilot"
       },
       {
-        "<leader>cp",
+        "<leader>ap",
         function()
           for _, win in ipairs(vim.api.nvim_list_wins()) do
             local buf = vim.api.nvim_win_get_buf(win)
@@ -47,7 +47,7 @@ return {
         desc = "Open Copilot Panel"
       },
       {
-        "<leader>cq",
+        "<leader>aq",
         function()
           vim.cmd("Copilot signout")
           vim.notify("Copilot signout", vim.log.levels.INFO)

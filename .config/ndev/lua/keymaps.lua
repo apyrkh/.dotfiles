@@ -1,5 +1,3 @@
-vim.keymap.set("n", "<leader>e", "<Cmd>Explore<CR>")
-
 -- Tabs
 vim.keymap.set("n", "<leader>tn", "<cmd>tabnew<CR>", { noremap = true, silent = true, desc = "Open New Tab" })
 vim.keymap.set("n", "<leader>tq", "<cmd>tabclose<CR>", { noremap = true, silent = true, desc = "Close Tab" })

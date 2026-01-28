@@ -13,7 +13,7 @@ return {
 
       -- rename
       {
-        "<leader>rn",
+        "<leader>cr",
         function() require("snacks").rename.rename_file() end,
         desc = "Rename File",
       },
@@ -39,17 +39,7 @@ return {
 
       -- scratch
       {
-        "<leader>.",
-        function() require("snacks").scratch() end,
-        desc = "Toggle Scratch Buffer"
-      },
-      {
-        "<leader>S",
-        function() require("snacks").scratch.select() end,
-        desc = "Select Scratch Buffer"
-      },
-      {
-        "<leader>sc",
+        "<leader>sn",
         function()
           local filetypes = {
             "javascript",
@@ -72,12 +62,16 @@ return {
           end)
         end,
         desc = "Create Scratch Buffer with Filetype",
-      }
+      },
+      {
+        "<leader>so",
+        function() require("snacks").scratch.select() end,
+        desc = "Select Scratch Buffer"
+      },
     },
     opts = {
       input = { enabled = true },
       notifier = { enabled = true },
-      scroll = { enabled = true },
 
       rename = { enabled = true },
       words = { enabled = true },
@@ -130,6 +124,62 @@ return {
       }
     },
   },
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {
+      preset = "modern",
+      spec = {
+        { "<leader>f", group = "find", icon = "󰍉" },
+        { "<leader>h", group = "harpoon", icon = "󱡁" },
+        { "<leader>c", group = "code", icon = "" },
+        { "<leader>d", group = "dev/lsp", icon = "󱈄" },
+        { "<leader>a", group = "ai", icon = "󰚩" },
+        { "<leader>v", group = "vcs", icon = "" },
+        { "<leader>vf", group = "git-search", icon = "󰍉" },
+        { "<leader>x", group = "diagnostics", icon = "" },
+        { "<leader>s", group = "scratch", icon = "" },
+        { "<leader>t", group = "tabs", icon = "󰓩" },
+        { "<leader>w", group = "session", icon = "" },
+        { "<leader>u", group = "ui", icon = "󰏘" },
+
+        { "<leader>p", group = "Yank History", icon = "" },
+        { "<leader>?", group = "Keymaps", icon = "" },
+
+        { "]", group = "next", icon = "󰒭" },
+        { "[", group = "prev", icon = "󰒮" },
+
+        -- @TODO: think about a better keybinding
+        { "<leader>0", hidden = true },
+        { "<leader>1", hidden = true },
+        { "<leader>2", hidden = true },
+        { "<leader>3", hidden = true },
+        { "<leader>4", hidden = true },
+        { "<leader>5", hidden = true },
+        { "<leader>6", hidden = true },
+        { "<leader>7", hidden = true },
+        { "<leader>8", hidden = true },
+        { "<leader>9", hidden = true },
+      },
+    },
+    -- plugins
+    -- marks ' or `
+    -- registers " in NORMAL or <C-r> in INSERT
+    -- spelling z=
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show()
+        end,
+        desc = "Keymaps",
+      },
+    },
+    init = function()
+      vim.opt.timeout = true
+      vim.opt.timeoutlen = 300
+    end,
+  },
   -- themes
   {
     "catppuccin/nvim",
@@ -152,6 +202,7 @@ return {
       light_style = "day",
     },
   },
+  -- fun screen saver
   {
     "eandrju/cellular-automaton.nvim",
     keys = {
