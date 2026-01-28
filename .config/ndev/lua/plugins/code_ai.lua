@@ -8,13 +8,13 @@ return {
       {
         "<leader>ac",
         function()
-          vim.cmd("Copilot status")
           if vim.g.copilot_enabled then
             vim.cmd("Copilot disable")
             vim.g.copilot_enabled = false
             vim.notify("Copilot disabled", vim.log.levels.INFO)
           else
             vim.cmd("Copilot enable")
+            vim.cmd("Copilot status")
             vim.g.copilot_enabled = true
             vim.notify("Copilot enabled", vim.log.levels.INFO)
           end
