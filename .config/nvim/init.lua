@@ -1,7 +1,6 @@
-require("apyrkh.settings")
-require("apyrkh.keymaps")
-require("apyrkh.workspace")
+require("config")
+require("autocmds")
+require("keymaps")
+require("workspace")
 
-require("apyrkh.lazy")
-require("apyrkh.keymaps_plugins")
-require("apyrkh.settings_plugins")
+require("plugin-manager")

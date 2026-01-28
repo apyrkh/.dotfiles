@@ -41,9 +41,10 @@ alias ll="eza -l --group-directories-first --icons"
 alias lla="ll -a"
 alias cpwd="pwd | pbcopy"
 
+alias vold="NVIM_APPNAME=nvim.bak nvim"
 alias v="nvim"
-alias vv="NVIM_APPNAME=ndev nvim"
-# alias vv="VIMRUNTIME=~/@Projects/github.com/neovim/neovim/runtime NVIM_APPNAME=ndev ~/@Projects/github.com/neovim/neovim/build/bin/nvim"
+# alias vv="NVIM_APPNAME=ndev nvim"
+alias vv="VIMRUNTIME=~/@Projects/github.com/neovim/neovim/runtime NVIM_APPNAME=ndev ~/@Projects/github.com/neovim/neovim/build/bin/nvim"
 
 # === CUSTOM SCRIPTS ===
 # @TODO: consider safety (wrapper)

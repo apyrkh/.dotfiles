@@ -17,6 +17,7 @@ dotfiles_dir="$HOME/.dotfiles"
 files=(
   ".profile"
   ".config/nvim"
+  ".config/nvim.bak"
   ".config/wezterm"
   ".config/zsh"
   ".gitconfig"
