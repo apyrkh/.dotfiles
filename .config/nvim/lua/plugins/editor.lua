@@ -11,6 +11,7 @@ return {
         ["<C-v>"] = { "actions.select", opts = { vertical = true } },
         ["<C-s>"] = { "actions.select", opts = { horizontal = true } },
         ["<C-h>"] = false,
+        ["<C-l>"] = false,
       },
       view_options = {
         show_hidden = true,
@@ -67,9 +68,11 @@ return {
         relativenumber = true,
       },
       filters = {
+        git_ignored = false,
         custom = { ".DS_Store" },
       },
       renderer = {
+        highlight_git = true,
         indent_markers = {
           enable = true,
         },
@@ -91,12 +94,8 @@ return {
           },
         },
       },
-      git = {
-        ignore = false,
-      },
       diagnostics = {
         enable = true,
-        show_on_dirs = true,
         -- TODO: ui.icons
         -- icons = {
         --   hint = "",
