@@ -22,6 +22,7 @@ brew "git"
 brew "nvm"        # managed via zsh plugin
 brew "tree"
 brew "eza"
+brew "zoxide"
 brew "fx"         # json viewer and processor, https://fx.wtf
 brew "gnu-time"
 brew "mtr"        # my trace route

@@ -15,7 +15,6 @@ STATUS_MISSING="✖ missing source"
 backup_dir="$HOME/.dotfiles_backup-$(date +%Y%m%d_%H%M%S)"
 dotfiles_dir="$HOME/.dotfiles"
 files=(
-  ".profile"
   ".config/nvim"
   ".config/nvim.bak"
   ".config/wezterm"
@@ -23,6 +22,7 @@ files=(
   ".gitconfig"
   ".vimrc"
   ".zshrc"
+  ".zprofile"
 )
 
 printf "\n=== Installing dotfiles ===\n\n"

@@ -4,22 +4,19 @@ export LANG=en_US.UTF-8
 # === OH MY ZSH CORE ===
 export ZSH="$HOME/.oh-my-zsh"
 
-# Themes https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+# https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="half-life" # current
 # ZSH_THEME="robbyrussell" # default
 
 # === PLUGINS ===
 # Manually installed plugins in $ZSH_CUSTOM/plugins:
+# - you-should-use
 # - zsh-autosuggestions
 # - zsh-syntax-highlighting
-# - you-should-use
 plugins=(
   chucknorris
-  dotenv                 # .env file when you cd into project root directory
-  gitfast                # completion for git
-  history                # command line history
-  # @TODO: consider zoxide
-  z
+  gitfast                   # completion for git
+  history                   # command line history
   you-should-use
   zsh-autosuggestions
   zsh-syntax-highlighting
@@ -31,30 +28,37 @@ zstyle ":omz:update" frequency 7
 # === LOAD OhMyZsh
 source $ZSH/oh-my-zsh.sh
 
+# === SHELL OPTIONS ===
+setopt NO_BEEP
+setopt HIST_IGNORE_ALL_DUPS
+setopt SHARE_HISTORY
+
 # === USER CONFIGURATION ===
 export EDITOR="nvim"
 export DISABLE_UNTRACKED_FILES_DIRTY="true" # speed up prompt by ignoring untracked files in Git status
 
+# === TOOLS INIT ===
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
+
 # === ALIASES ===
-# @TODO: consider safety (wrapper)
 alias ll="eza -l --group-directories-first --icons"
 alias lla="ll -a"
-alias cpwd="pwd | pbcopy"
+cpwd() { pwd | pbcopy; echo "Copied to clipboard"; }
 
-alias vold="NVIM_APPNAME=nvim.bak nvim"
 alias v="nvim"
-# alias vv="NVIM_APPNAME=ndev nvim"
-alias vv="VIMRUNTIME=~/@Projects/github.com/neovim/neovim/runtime NVIM_APPNAME=ndev ~/@Projects/github.com/neovim/neovim/build/bin/nvim"
+vv() {
+  NVIM_APPNAME=qwe \
+  nvim "$@"
+}
+# vv() {
+#   VIMRUNTIME=~/@Projects/github.com/neovim/neovim/runtime \
+#   NVIM_APPNAME=ndev \
+#   ~/@Projects/github.com/neovim/neovim/build/bin/nvim "$@"
+# }
 
 # === CUSTOM SCRIPTS ===
-# @TODO: consider safety (wrapper)
-export PATH="${HOME}/.jsvu/bin:${PATH}" # jsvu binaries
+path=("$HOME/.jsvu/bin" $path)
 source ~/.config/zsh/scripts/timed.zsh  # time wrapper with formatted output (timed)
 
-# === NVM ===
-[ -s "$HOME/.profile" ] && . "$HOME/.profile"
-
 # === LOCAL OVERRIDES ===
-if [ -f "$HOME/.zshrc.local" ]; then
-    source "$HOME/.zshrc.local"
-fi
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
