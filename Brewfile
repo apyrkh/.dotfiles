@@ -40,9 +40,10 @@ cask "keepassxc"
 cask "notion"
 cask "chatgpt"
 
-cask "openmtp"    # android-file-transfer
+cask "openmtp"        # android-file-transfer
 cask "appcleaner"
-cask "keycastr"   # keystroke visualiser
+cask "balenaetcher"   # tool to flash OS images to SD cards & USB drives
+cask "keycastr"       # keystroke visualiser
 cask "logi-options+"
 
 #cask "slack"
