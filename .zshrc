@@ -47,7 +47,7 @@ cpwd() { pwd | pbcopy; echo "Copied to clipboard"; }
 
 alias v="nvim"
 vv() {
-  NVIM_APPNAME=qwe \
+  NVIM_APPNAME=ndev \
   nvim "$@"
 }
 # vv() {
