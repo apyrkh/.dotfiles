@@ -6,7 +6,7 @@ let mapleader = " "
 set autoread
 
 " Highlight yanked text
-" @TODO: add highlight settings
+" TODO: add highlight settings
 
 " Line numbers
 set number               " shows absolute line number

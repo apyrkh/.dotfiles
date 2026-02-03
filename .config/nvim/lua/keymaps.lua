@@ -17,8 +17,8 @@ vim.keymap.set("n", "<S-Left>", "<cmd>vertical resize -2<CR>", { noremap = true,
 vim.keymap.set("n", "<S-Right>", "<cmd>vertical resize +2<CR>", { noremap = true, silent = true, desc = "Increase Width" })
 
 -- Scroll + center
-vim.keymap.set("n", "<C-u>", "<C-u>zz", { silent = true, remap = true, desc = "Scroll Up Center" })
-vim.keymap.set("n", "<C-d>", "<C-d>zz", { silent = true, remap = true, desc = "Scroll Down Center" })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true, desc = "Scroll Up Center" })
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true, desc = "Scroll Down Center" })
 
 -- Search: keep centered
 -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
@@ -26,7 +26,7 @@ vim.keymap.set("n", "n", "'Nn'[v:searchforward].'zzzv'", { noremap = true, silen
 vim.keymap.set("n", "N", "'nN'[v:searchforward].'zzzv'", { noremap = true, silent = true, expr = true, desc = "Prev Search" })
 vim.keymap.set({ "x", "o" }, "n", "'Nn'[v:searchforward]", { noremap = true, silent = true, expr = true, desc = "Next Search" })
 vim.keymap.set({ "x", "o" }, "N", "'nN'[v:searchforward]", { noremap = true, silent = true, expr = true, desc = "Prev Search" })
-vim.keymap.set({ "n", "i" }, "<esc>", "<cmd>noh<cr><esc>", { noremap = true, silent = true, desc = "Clear Highlight" })
+vim.keymap.set("n", "<esc>", "<cmd>noh<CR><esc>", { noremap = true, silent = true, desc = "Clear Highlight" })
 
 -- Edit (move lines / indent)
 vim.keymap.set("v", "<S-j>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true, desc = "Move Line Down" })

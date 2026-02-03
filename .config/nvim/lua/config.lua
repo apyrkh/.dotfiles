@@ -3,7 +3,7 @@ vim.g.mapleader = " "
 
 -- System
 vim.opt.autoread = true  -- auto-reload files when modified externally
--- @TODO: implement clean up for undo file (hotkey?)
+-- TODO: implement clean up for undo file (hotkey?)
 vim.opt.undofile = true  -- save undo history to a file
 vim.opt.swapfile = false
 vim.opt.updatetime = 250 -- faster completion and diagnostic display

@@ -40,27 +40,7 @@ return {
       -- scratch
       {
         "<leader>sn",
-        function()
-          local filetypes = {
-            "javascript",
-            "javascriptreact",
-            "typescript",
-            "typescriptreact",
-            "html",
-            "css",
-            "json",
-            "markdown",
-            "text",
-          }
-          vim.ui.select(filetypes, {
-            prompt = "Scratch Filetype:",
-          }, function(ft)
-            if ft then
-              -- require("snacks").scratch({ ft = ft, name = "Scratch: " .. ft })
-              require("snacks").scratch({ ft = ft })
-            end
-          end)
-        end,
+        function() require("snacks").scratch() end,
         desc = "Create Scratch Buffer with Filetype",
       },
       {
@@ -79,6 +59,97 @@ return {
       scratch = { enabled = true },
       terminal = { enabled = true },
     },
+  },
+  -- FIX:
+  -- HACK:
+  -- WARN:
+  -- TODO:
+  -- NOTE:
+  -- TEST:
+  -- PERF:
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    event = { "BufReadPost", "BufNewFile" },
+    keys = {
+      { "<leader>ft", "<cmd>TodoFzfLua<CR>", desc = "Todo Comments" },
+    },
+    opts = {
+      signs = false,
+      keywords = {
+        FIX = { color = "error" },
+        TODO = { color = "info" },
+      },
+      merge_keywords = false,
+      search = {
+        command = "rg",
+        args = {
+          "--color=never",
+          "--no-heading",
+          "--with-filename",
+          "--line-number",
+          "--column",
+          "--hidden", -- added line
+        },
+      },
+    }
+  },
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {
+      preset = "modern",
+      spec = {
+        { "<leader>e", group = "file", icon = "󰙅" },
+        { "<leader>f", group = "find", icon = "󰍉" },
+        { "<leader>h", group = "harpoon", icon = "󱡁" },
+        { "<leader>c", group = "code", icon = "" },
+        { "<leader>d", group = "dev/lsp", icon = "󱈄" },
+        { "<leader>a", group = "ai", icon = "󰚩" },
+        { "<leader>v", group = "vcs", icon = "" },
+        { "<leader>vf", group = "git-search", icon = "󰍉" },
+        { "<leader>x", group = "diagnostics", icon = "" },
+        { "<leader>s", group = "scratch", icon = "" },
+        { "<leader>t", group = "tabs", icon = "󰓩" },
+        { "<leader>w", group = "session", icon = "" },
+        { "<leader>u", group = "ui", icon = "󰏘" },
+
+        { "<leader>p", group = "Yank History", icon = "" },
+        { "<leader>?", group = "Keymaps", icon = "" },
+
+        { "]", group = "next", icon = "󰒭" },
+        { "[", group = "prev", icon = "󰒮" },
+
+        -- TODO: think about a better keybinding
+        { "<leader>0", hidden = true },
+        { "<leader>1", hidden = true },
+        { "<leader>2", hidden = true },
+        { "<leader>3", hidden = true },
+        { "<leader>4", hidden = true },
+        { "<leader>5", hidden = true },
+        { "<leader>6", hidden = true },
+        { "<leader>7", hidden = true },
+        { "<leader>8", hidden = true },
+        { "<leader>9", hidden = true },
+      },
+    },
+    -- plugins
+    -- marks ' or `
+    -- registers " in NORMAL or <C-r> in INSERT
+    -- spelling z=
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show()
+        end,
+        desc = "Keymaps",
+      },
+    },
+    init = function()
+      vim.opt.timeout = true
+      vim.opt.timeoutlen = 300
+    end,
   },
   {
     "catgoose/nvim-colorizer.lua",
@@ -112,7 +183,7 @@ return {
     },
   },
   {
-    -- @TODO: consider nvim-mini/mini.statusline
+    -- TODO: consider nvim-mini/mini.statusline
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     event = "VeryLazy",
@@ -123,63 +194,6 @@ return {
         lualine_x = { "encoding", "filetype" },
       }
     },
-  },
-  {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
-    opts = {
-      preset = "modern",
-      spec = {
-        { "<leader>e", group = "file", icon = "󰙅" },
-        { "<leader>f", group = "find", icon = "󰍉" },
-        { "<leader>h", group = "harpoon", icon = "󱡁" },
-        { "<leader>c", group = "code", icon = "" },
-        { "<leader>d", group = "dev/lsp", icon = "󱈄" },
-        { "<leader>a", group = "ai", icon = "󰚩" },
-        { "<leader>v", group = "vcs", icon = "" },
-        { "<leader>vf", group = "git-search", icon = "󰍉" },
-        { "<leader>x", group = "diagnostics", icon = "" },
-        { "<leader>s", group = "scratch", icon = "" },
-        { "<leader>t", group = "tabs", icon = "󰓩" },
-        { "<leader>w", group = "session", icon = "" },
-        { "<leader>u", group = "ui", icon = "󰏘" },
-
-        { "<leader>p", group = "Yank History", icon = "" },
-        { "<leader>?", group = "Keymaps", icon = "" },
-
-        { "]", group = "next", icon = "󰒭" },
-        { "[", group = "prev", icon = "󰒮" },
-
-        -- @TODO: think about a better keybinding
-        { "<leader>0", hidden = true },
-        { "<leader>1", hidden = true },
-        { "<leader>2", hidden = true },
-        { "<leader>3", hidden = true },
-        { "<leader>4", hidden = true },
-        { "<leader>5", hidden = true },
-        { "<leader>6", hidden = true },
-        { "<leader>7", hidden = true },
-        { "<leader>8", hidden = true },
-        { "<leader>9", hidden = true },
-      },
-    },
-    -- plugins
-    -- marks ' or `
-    -- registers " in NORMAL or <C-r> in INSERT
-    -- spelling z=
-    keys = {
-      {
-        "<leader>?",
-        function()
-          require("which-key").show()
-        end,
-        desc = "Keymaps",
-      },
-    },
-    init = function()
-      vim.opt.timeout = true
-      vim.opt.timeoutlen = 300
-    end,
   },
   -- themes
   {

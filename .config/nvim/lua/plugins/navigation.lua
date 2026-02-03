@@ -35,24 +35,38 @@ return {
         local ok_tree, api = pcall(require, "nvim-tree.api")
         if ok_tree and api.tree.is_tree_buf(0) then
           local node = api.tree.get_node_under_cursor()
-          if node and node.name ~= ".." then
-            return vim.fs.normalize(
-              node.type == "directory" and node.absolute_path
-              or vim.fn.fnamemodify(node.absolute_path, ":h")
-            )
+          if node and node.name ~= ".." and node.type == "directory" then
+            return vim.fs.normalize(node.absolute_path)
           end
+
+          -- TODO: cursor on files is considered as parent dir
+          -- if node and node.name ~= ".." then
+          --   return vim.fs.normalize(
+          --     node.type == "directory" and node.absolute_path
+          --     or vim.fn.fnamemodify(node.absolute_path, ":h")
+          --   )
+          -- end
         end
 
         -- oil.nvim
         local ok_oil, oil = pcall(require, "oil")
         if ok_oil and vim.bo.filetype == "oil" then
           local entry = oil.get_cursor_entry()
-          if entry then
-            return vim.fs.normalize(
-              entry.type == "directory" and entry.name ~= ".." and oil.get_current_dir() .. entry.name
-              or oil.get_current_dir()
-            )
+          if entry.name == ".." then
+            return oil.get_current_dir()
           end
+
+          if entry.type == "directory" then
+            return vim.fs.normalize(oil.get_current_dir() .. entry.name)
+          end
+
+          -- TODO: cursor on files is considered as parent dir
+          -- if entry then
+          --   return vim.fs.normalize(
+          --     entry.type == "directory" and entry.name ~= ".." and oil.get_current_dir() .. entry.name
+          --     or oil.get_current_dir()
+          --   )
+          -- end
         end
 
         return nil

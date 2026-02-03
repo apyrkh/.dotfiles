@@ -3,6 +3,15 @@ return {
     "github/copilot.vim",
     init = function()
       vim.g.copilot_enabled = false
+
+      vim.g.copilot_no_tab_map = true
+      vim.keymap.set("i", "<Tab>", function()
+        return vim.g.copilot_enabled and vim.fn["copilot#Accept"]() or "\t"
+      end, { expr = true, silent = true, replace_keycodes = false })
+      vim.keymap.set("i", "<S-Tab>", function()
+        return vim.g.copilot_enabled and vim.fn["copilot#Dismiss"]() or
+            vim.api.nvim_replace_termcodes("<C-d>", true, true, true)
+      end, { expr = true, silent = true, replace_keycodes = false })
     end,
     keys = {
       {

@@ -1,6 +1,6 @@
 return {
   {
-    -- @TODO: consider nvim-mini/mini.sessions
+    -- TODO: consider nvim-mini/mini.sessions
     "rmagatti/auto-session",
     dependencies = {
       "ibhagwan/fzf-lua",
@@ -29,48 +29,5 @@ return {
         },
       },
     },
-  },
-  {
-    "gbprod/yanky.nvim",
-    keys = {
-      { "P",         "<Plug>(YankyPutBefore)",                   desc = "Put Before",  mode = { "n", "x" } },
-      { "p",         "<Plug>(YankyPutAfter)",                    desc = "Put After",   mode = { "n", "x" } },
-      { "<leader>p", function() vim.cmd("YankyRingHistory") end, desc = "Yank History" },
-    },
-    opts = {
-      ring = {
-        history_length = 50,
-        storage = "memory",
-        update_register_on_cycle = true,
-      },
-    },
-  },
-  -- FIX:
-  -- HACK:
-  -- WARN:
-  -- TODO:
-  -- NOTE:
-  -- TEST:
-  -- PERF:
-  {
-    "folke/todo-comments.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    event = { "BufReadPost", "BufNewFile" },
-    keys = {
-      { "<leader>ft", "<cmd>TodoFzfLua<CR>", desc = "Todo Comments" },
-    },
-    opts = {
-      search = {
-        command = "rg",
-        args = {
-          "--color=never",
-          "--no-heading",
-          "--with-filename",
-          "--line-number",
-          "--column",
-          "--hidden", -- added line
-        },
-      },
-    }
   },
 }

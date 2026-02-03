@@ -1,5 +1,18 @@
 return {
   {
+    "folke/trouble.nvim",
+    cmd = "Trouble",
+    keys = {
+      { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>",                        desc = "Diagnostics (Trouble)" },
+      { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",           desc = "Buffer Diagnostics (Trouble)" },
+      { "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>",                desc = "Symbols (Trouble)" },
+      { "<leader>xr", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "LSP Definitions/references (Trouble)" },
+      { "<leader>xl", "<cmd>Trouble loclist toggle<cr>",                            desc = "Location List (Trouble)" },
+      { "<leader>xq", "<cmd>Trouble qflist toggle<cr>",                             desc = "Quickfix List (Trouble)" },
+    },
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+  },
+  {
     "stevearc/conform.nvim",
     event = { "BufWritePre" },
     keys = {
@@ -48,18 +61,25 @@ return {
     opts = {
       completion = {
         ghost_text = {
-          enabled = true,
+          enabled = false,
           show_without_menu = false,
         },
         list = {
           max_items = 30,
+          selection = { preselect = false, auto_insert = false },
         },
         menu = {
           enabled = true,
-          auto_show = false,
+          -- auto_show = false,
           max_height = 22,
-          scrollbar = false,
+          direction_priority = { 'n', 's' },
+          -- direction_priority = { 'n' },
+          -- scrollbar = false,
         },
+        documentation = {
+          auto_show = true,
+          auto_show_delay_ms = 10,
+        }
       },
 
       fuzzy = { implementation = "prefer_rust_with_warning" },
@@ -174,5 +194,5 @@ return {
     ft = { "html", "javascriptreact", "typescriptreact", "xml" },
     event = "InsertEnter",
     opts = {},
-  }
+  },
 }
