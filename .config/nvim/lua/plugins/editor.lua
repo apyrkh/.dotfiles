@@ -31,21 +31,39 @@ return {
     },
   },
   {
-    'nvim-mini/mini.comment',
+    "nvim-mini/mini.comment",
+    dependencies = {
+      {
+        "JoosepAlviste/nvim-ts-context-commentstring",
+        opts = {
+          enable_autocmd = false, -- mini.comment will handle it
+        },
+      },
+    },
     version = false,
     keys = {
       { "gc",  mode = { "n", "x" } },
       { "gcc", mode = { "n", "x" } }
     },
-    opts = {
-      -- TODO: use <leader>
-      -- mappings = {
-      --   comment = 'gc',
-      --   comment_line = 'gcc',
-      --   comment_visual = 'gc',
-      --   textobject = 'gc',
-      -- },
-    }
+    -- opts = {
+    --   -- TODO: use <leader>
+    --   -- mappings = {
+    --   --   comment = 'gc',
+    --   --   comment_line = 'gcc',
+    --   --   comment_visual = 'gc',
+    --   --   textobject = 'gc',
+    --   -- },
+    -- },
+    opts = function()
+      return {
+        options = {
+          custom_commentstring = function()
+            return require("ts_context_commentstring.internal").calculate_commentstring()
+                or vim.bo.commentstring
+          end,
+        },
+      }
+    end,
   },
   {
     "nvim-mini/mini.operators",
