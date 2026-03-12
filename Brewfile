@@ -8,6 +8,7 @@ cask "wezterm"
 
 # === dev tools ===
 brew "cmake"
+brew "go"
 cask "jetbrains-toolbox"
 
 # === neovim (runtime deps) ===
