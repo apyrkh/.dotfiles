@@ -46,6 +46,8 @@ return {
 
         markdown        = { "prettierd", "prettier", stop_after_first = true },
 
+        sql             = { "pg_format", stop_after_first = true },
+
         ["_"]           = { "lsp" },
       },
     },
@@ -66,7 +68,6 @@ return {
         },
         list = {
           max_items = 30,
-          selection = { preselect = false, auto_insert = false },
         },
         menu = {
           enabled = true,
@@ -117,7 +118,6 @@ return {
         },
         keymap = {
           preset = "cmdline",
-          ["<CR>"] = { "accept_and_enter", "fallback" },
           ["C-<space>"] = {},
           ["<C-p>"] = {},
           ["<C-n>"] = {},
@@ -161,6 +161,7 @@ return {
     build = ":TSUpdate",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
+      ---@diagnostic disable-next-line: missing-fields
       require("nvim-treesitter.configs").setup({
         highlight = { enable = true },
         indent = { enable = true },
@@ -182,6 +183,8 @@ return {
           "javascript",
           "typescript",
           "tsx",
+
+          "sql",
         },
         incremental_selection = {
           enable = true,

@@ -41,8 +41,7 @@ return {
         pattern = "OilActionsPost",
         callback = function(event)
           if event.data.actions[1].type == "move" then
-            -- TODO: make it save and check that Snacks.rename exists
-            require("snacks").rename.on_rename_file(event.data.actions[1].src_url, event.data.actions[1].dest_url)
+            Snacks.rename.on_rename_file(event.data.actions[1].src_url, event.data.actions[1].dest_url)
           end
         end,
       })

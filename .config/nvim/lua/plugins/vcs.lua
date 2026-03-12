@@ -15,7 +15,7 @@ return {
     opts = {
       -- current_line_blame = true,
       -- current_line_blame_formatter = "<abbrev_sha> <author_time:%Y.%m.%d %H:%M> <author>: <summary>",
-      word_diff = true,
+      -- word_diff = true,
     },
   },
   {

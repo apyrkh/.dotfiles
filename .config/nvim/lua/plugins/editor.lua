@@ -9,8 +9,10 @@ return {
     "nvim-mini/mini.align",
     version = false,
     keys = {
+      -- { "<leader>ga", mode = { "n", "x" } },
+      -- { "<leader>gA", mode = { "n", "x" } },
       { "ga", mode = { "n", "x" } },
-      { "gA", mode = { "n", "x" } }
+      { "gA", mode = { "n", "x" } },
       -- "ga" - start
       -- "gA" - start with preview
       --    "s" - split, e.g. "s_<CR>"
@@ -25,8 +27,8 @@ return {
     opts = {
       -- TODO: use <leader>
       -- mappings = {
-      --   start = 'ga',
-      --   start_with_preview = 'gA',
+      --   start = "<leader>ga",
+      --   start_with_preview = "<leader>gA",
       -- },
     },
   },
@@ -48,10 +50,10 @@ return {
     -- opts = {
     --   -- TODO: use <leader>
     --   -- mappings = {
-    --   --   comment = 'gc',
-    --   --   comment_line = 'gcc',
-    --   --   comment_visual = 'gc',
-    --   --   textobject = 'gc',
+    --   --   comment = "gc",
+    --   --   comment_line = "gcc",
+    --   --   comment_visual = "gc",
+    --   --   textobject = "gc",
     --   -- },
     -- },
     opts = function()
@@ -82,7 +84,7 @@ return {
     },
     opts = {},
   },
-  -- TODO: consider ultimate-autopair.nvim if mini.pais does not work well
+  -- TODO: consider ultimate-autopair.nvim if mini.pairs does not work well
   {
     "nvim-mini/mini.pairs",
     version = false,

@@ -7,45 +7,45 @@ return {
       -- notifier
       {
         "<leader>un",
-        function() require("snacks").notifier.show_history() end,
+        function() Snacks.notifier.show_history() end,
         desc = "Notification History"
       },
 
       -- rename
       {
         "<leader>er",
-        function() require("snacks").rename.rename_file() end,
+        function() Snacks.rename.rename_file() end,
         desc = "Rename",
       },
 
       -- words
       {
         "]w",
-        function() require("snacks").words.jump(1, true) end,
+        function() Snacks.words.jump(1, true) end,
         desc = "Next Word"
       },
       {
         "[w",
-        function() require("snacks").words.jump(-1, true) end,
+        function() Snacks.words.jump(-1, true) end,
         desc = "Prev Word"
       },
 
       -- terminal
       {
         "<leader>ut",
-        function() require("snacks").terminal.toggle() end,
+        function() Snacks.terminal.toggle() end,
         desc = "Toggle Terminal"
       },
 
       -- scratch
       {
-        "<leader>sn",
-        function() require("snacks").scratch() end,
+        "<leader>so",
+        function() Snacks.scratch() end,
         desc = "Create Scratch Buffer with Filetype",
       },
       {
-        "<leader>so",
-        function() require("snacks").scratch.select() end,
+        "<leader>sf",
+        function() Snacks.scratch.select() end,
         desc = "Select Scratch Buffer"
       },
     },
@@ -155,13 +155,12 @@ return {
     "catgoose/nvim-colorizer.lua",
     event = { "BufReadPre", "BufNewFile" },
     opts = {
-      user_default_options = {
-        names = false,
-        rgb_fn = true,
-        hsl_fn = true,
-        oklch_fn = true,
-        css = true,
-        css_fn = true,
+      options = {
+        parsers = {
+          css = true,
+          names = { enable = false },
+          css_fn = true,
+        },
       },
     },
   },
