@@ -1,11 +1,11 @@
 -- Search for .nvim/init.lua from current working directory up to home directory
 local function find_project_file()
-  local home_dir = vim.loop.os_homedir() or "/" -- stop at home directory
+  local home_dir = vim.env.HOME or "/" -- stop traversal at home directory
   local current_dir = vim.fn.getcwd()
 
   while current_dir and #current_dir >= #home_dir do
     local project_file = current_dir .. "/.nvim/init.lua"
-    if vim.fn.filereadable(project_file) == 1 then
+    if vim.uv.fs_stat(project_file) then
       return project_file
     end
 
