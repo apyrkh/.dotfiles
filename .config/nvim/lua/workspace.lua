@@ -15,6 +15,6 @@ end
 
 local project_file = find_project_file()
 if project_file then
-  print("Loading project settings from: " .. project_file)
+  vim.notify("Workspace config: " .. project_file, vim.log.levels.INFO)
   dofile(project_file)
 end

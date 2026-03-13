@@ -3,6 +3,7 @@ vim.g.mapleader = " "
 
 -- System
 vim.opt.autoread = true  -- auto-reload files when modified externally
+vim.opt.lazyredraw = true
 -- TODO: implement clean up for undo file (hotkey?)
 vim.opt.undofile = true  -- save undo history to a file
 vim.opt.swapfile = false
@@ -29,7 +30,9 @@ vim.opt.wrap = false       -- disable line wrapping
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
 vim.opt.cursorline = true     -- highlight the current cursor line
-vim.opt.signcolumn = "yes"    -- show sign column so that text doesn't shift
+vim.opt.signcolumn = "yes:2"  -- show sign column with reserved 2 columns (LSP + git)
+vim.opt.laststatus = 3        -- show single status line
+vim.opt.showmode = false      -- hide "-- INSERT --" etc
 vim.opt.list = true           -- sets how neovim will display certain whitespace in the editor
 vim.opt.winborder = "rounded" -- double, rounded, solid, shadow
 vim.opt.listchars = {
@@ -77,6 +80,7 @@ vim.opt.mouse = "a"
 -- Window splitting
 vim.opt.splitright = true
 vim.opt.splitbelow = true
+vim.opt.splitkeep = "screen"
 
 -- Spelling
 vim.opt.spell = true
