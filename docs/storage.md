@@ -1,11 +1,10 @@
 # Storage Layout
 
-This document describes the intentional storage layout of the home directory.
-The goal is clarity, safety, and long-term maintainability across multiple machines.
+This document defines the structure of the home directory, ensuring clarity, safety, and long-term maintainability across multiple machines.
 
 ---
 
-## Cloud Roles
+## Cloud Storage
 
 iCloud:
 - Personal documents, notes, identity, assets
@@ -17,10 +16,9 @@ Google Drive:
 
 ---
 
-## Top-Level Structure (`~`)
+## Directory Layout
 
-System- and App-managed directories (Pages, Numbers, etc.) are left untouched.
-User-managed content is grouped under `@`-prefixed directories:
+User-managed content is grouped under `@`-prefixed directories for organizational consistency:
 
 ```text
 ~
@@ -28,8 +26,8 @@ User-managed content is grouped under `@`-prefixed directories:
 ├── @Archive
 ├── @Cloud
 │   ├── iCloud        -> ~/Library/Mobile Documents/com~apple~CloudDocs
-│   │   ├── @Notes
 │   │   ├── @Docs
+│   │   ├── @Notes
 │   │   ├── @Tmp
 │   │   └── @Shared
 │   └── GoogleDrive   -> ~/Library/CloudStorage/GoogleDrive-*/My Drive
@@ -47,6 +45,8 @@ User-managed content is grouped under `@`-prefixed directories:
 ├── @Tmp
 └── @Vault
 ```
+
+---
 
 ## Setup
 

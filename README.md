@@ -1,10 +1,19 @@
 # .dotfiles
 
-## Overview
-
 This repository contains my personal dotfiles for setting up a development environment.
 
 - [Storage layout](docs/storage.md)
+
+## Manifesto
+
+**Philosophy:** Minimalism, focus, and efficiency.
+
+- **Workflow:** Terminal-centric for minimal distractions and maximum productivity.
+- **Minimalism:** Every configuration is purpose-driven, removing excess fluff while keeping essential functionality.
+- **Focus:** Tools and settings promote clarity, avoiding clutter or unnecessary visual noise.
+- **Reliability:** Built to be lightweight, fast, and highly maintainable.
+
+"More signal, less noise."
 
 ## Clone and Install
 
@@ -59,8 +68,8 @@ brew list --cask               # List installed casks (GUI apps)
 brew missing                   # List formulae with missing dependencies
 
 brew services list             # Show background services managed by Homebrew
-brew services start <package>  # Start a service (e.g. postgresql)
-brew services stop <package>   # Stop a service
+brew services start <service>  # Start a background service
+brew services stop <service>   # Stop a service
 ```
 </details>
 
@@ -77,7 +86,7 @@ git clone --depth=1 https://github.com/MichaelAquilina/zsh-you-should-use ${ZSH_
 # Apply changes
 source ~/.zshrc
 
-# Set Zsh as the default shell
+# Default shell
 chsh -s $(which zsh)
 echo $SHELL
 ```
@@ -114,11 +123,7 @@ nvm alias default lts
 
 ## Tips
 
-### Neovim Shortcuts
-
-- `:Lazy` - Open the Lazy.nvim plugin menu
-- `:Mason` - Open the Mason.nvim plugin menu
-
-### Misc
-
-- `chmod +x FILENAME` - make file executable
+- **Neovim Shortcuts:**
+  - `:Lazy` - Open plugin menu
+  - `:Mason` - Open Mason.nvim menu
+- **Make File Executable:** `chmod +x FILENAME`
