@@ -16,7 +16,6 @@ backup_dir="$HOME/.dotfiles_backup-$(date +%Y%m%d_%H%M%S)"
 dotfiles_dir="$HOME/.dotfiles"
 files=(
   ".config/nvim"
-  ".config/nvim.bak"
   ".config/wezterm"
   ".config/zsh"
   ".gitconfig"
