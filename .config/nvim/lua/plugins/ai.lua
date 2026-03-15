@@ -1,68 +1,82 @@
 return {
   {
-    "github/copilot.vim",
-    init = function()
-      vim.g.copilot_enabled = false
-
-      vim.g.copilot_no_tab_map = true
-      vim.keymap.set("i", "<Tab>", function()
-        return vim.g.copilot_enabled and vim.fn["copilot#Accept"]() or "\t"
-      end, { expr = true, silent = true, replace_keycodes = false })
-      vim.keymap.set("i", "<S-Tab>", function()
-        return vim.g.copilot_enabled and vim.fn["copilot#Dismiss"]() or
-            vim.api.nvim_replace_termcodes("<C-d>", true, true, true)
-      end, { expr = true, silent = true, replace_keycodes = false })
-    end,
+    "zbirenbaum/copilot.lua",
+    event = "InsertEnter",
+    cmd = "Copilot",
     keys = {
       {
-        "<leader>ac",
+        "<Tab>",
         function()
-          if vim.g.copilot_enabled then
-            vim.cmd("Copilot disable")
-            vim.g.copilot_enabled = false
-            vim.notify("Copilot disabled", vim.log.levels.INFO)
-          else
-            vim.cmd("Copilot enable")
-            vim.cmd("Copilot status")
-            vim.g.copilot_enabled = true
-            vim.notify("Copilot enabled", vim.log.levels.INFO)
+          local suggestion = require("copilot.suggestion")
+          if suggestion.is_visible() then
+            suggestion.accept()
+            -- expr=true must return a string
+            return ""
           end
+          return vim.api.nvim_replace_termcodes("<Tab>", true, true, true)
         end,
-        desc = "Toggle Copilot"
+        mode = "i",
+        expr = true,
+        silent = true,
+        desc = "Copilot Smart Accept",
       },
       {
-        "<leader>as",
+        "<leader>ct",
         function()
-          vim.cmd("Copilot setup")
-          vim.notify("Copilot setup", vim.log.levels.INFO)
-        end,
-        desc = "Setup Copilot"
-      },
-      {
-        "<leader>ap",
-        function()
-          for _, win in ipairs(vim.api.nvim_list_wins()) do
-            local buf = vim.api.nvim_win_get_buf(win)
-            local name = vim.api.nvim_buf_get_name(buf)
-            if name:match("^copilot:///panel/") then
-              vim.api.nvim_win_close(win, true)
-              return
-            end
-          end
+          local client = require("copilot.client")
+          local enabled = not client.is_disabled()
 
-          vim.cmd("Copilot panel")
-          vim.notify("Copilot panel", vim.log.levels.INFO)
+          vim.cmd(enabled and "Copilot disable" or "Copilot enable")
+          vim.notify("Copilot " .. (enabled and "disabled" or "enabled"))
         end,
-        desc = "Open Copilot Panel"
+        desc = "Toggle Copilot",
       },
-      {
-        "<leader>aq",
-        function()
-          vim.cmd("Copilot signout")
-          vim.notify("Copilot signout", vim.log.levels.INFO)
-        end,
-        desc = "Signout Copilot"
+      { "<leader>cs", "<cmd>Copilot status<cr>", desc = "Copilot Status" },
+    },
+    opts = {
+      suggestion = {
+        enabled = true,
+        auto_trigger = true,
+        keymap = {
+          accept = false, -- Handled by custom LUA function
+          accept_word = "<M-Right>",
+          next = "<M-]>",
+          prev = "<M-[>",
+          dismiss = "<S-Tab>",
+        },
       },
+      panel = { enabled = false },
+    },
+  },
+  {
+    "yetone/avante.nvim",
+    version = false,
+    build = "make",
+    event = "VeryLazy",
+    -- Note: copilot.lua is no longer a hard dependency here
+    -- because it's already defined above
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      -- Optional
+      "ibhagwan/fzf-lua",
+      "folke/snacks.nvim",
+      "nvim-tree/nvim-web-devicons",
+    },
+    opts = {
+      provider = "copilot",
+      behaviour = {
+        auto_suggestions = false, -- handled by copilot.lua
+        auto_apply_diff_after_generation = true,
+      },
+      input = {
+        provider = "snacks",
+      },
+    },
+    keys = {
+      { "<leader>aa", "<cmd>AvanteAsk<cr>",     desc = "Avante: Ask (Chat)" },
+      { "<leader>ae", "<cmd>AvanteEdit<cr>",    desc = "Avante: Edit (Selection)", mode = { "n", "v" } },
+      { "<leader>ar", "<cmd>AvanteRefresh<cr>", desc = "Avante: Refresh Context" },
     },
   },
 }

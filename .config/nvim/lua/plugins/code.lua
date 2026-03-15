@@ -71,10 +71,10 @@ return {
         },
         menu = {
           enabled = true,
-          -- auto_show = false,
-          max_height = 22,
+          max_height = 10 + 2,
           direction_priority = { 'n', 's' },
           -- direction_priority = { 'n' },
+          -- auto_show = false,
           -- scrollbar = false,
         },
         documentation = {
@@ -88,6 +88,7 @@ return {
       -- See :h blink-cmp-config-keymap for defining your own keymap
       keymap = {
         preset = "default",
+        ["<Esc>"] = { "cancel", "fallback" },
         ["C-<space>"] = {},
         ["<C-p>"] = {},
         ["<C-n>"] = {},
@@ -118,6 +119,7 @@ return {
         },
         keymap = {
           preset = "cmdline",
+          ["<Esc>"] = { "cancel", "fallback" },
           ["C-<space>"] = {},
           ["<C-p>"] = {},
           ["<C-n>"] = {},
@@ -137,8 +139,8 @@ return {
       "saghen/blink.cmp",
       "b0o/schemastore.nvim",
     },
-    cmd = { "Mason", "LspInfo" },
     event = { "BufReadPre", "BufNewFile" },
+    cmd = { "Mason", "LspInfo" },
     config = function()
       local lsp_config = require("lsp")
       local ensure_installed = vim.tbl_keys(lsp_config)
