@@ -58,6 +58,7 @@ return {
     dependencies = {
       "rafamadriz/friendly-snippets",
       "alexandre-abrioux/blink-cmp-npm.nvim",
+      "Kaiser-Yang/blink-cmp-avante",
     },
     event = { "InsertEnter", "CmdlineEnter" },
     opts = {
@@ -88,7 +89,6 @@ return {
       -- See :h blink-cmp-config-keymap for defining your own keymap
       keymap = {
         preset = "default",
-        ["<Esc>"] = { "cancel", "fallback" },
         ["C-<space>"] = {},
         ["<C-p>"] = {},
         ["<C-n>"] = {},
@@ -104,8 +104,9 @@ return {
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { "lsp", "snippets", "buffer", "path", "npm" },
+        default = { "lsp", "avante", "snippets", "buffer", "path", "npm" },
         providers = {
+          avante = { name = "avante", module = "blink-cmp-avante", async = true },
           npm = { name = "npm", module = "blink-cmp-npm", async = true },
         },
       },
@@ -119,7 +120,6 @@ return {
         },
         keymap = {
           preset = "cmdline",
-          ["<Esc>"] = { "cancel", "fallback" },
           ["C-<space>"] = {},
           ["<C-p>"] = {},
           ["<C-n>"] = {},

@@ -121,6 +121,14 @@ nvm install --lts
 nvm alias default lts
 ```
 
+## Install Bun
+
+Install [Bun](chatgpt://generic-entity?number=0):
+
+```bash
+curl -fsSL https://bun.sh/install | bash
+```
+
 ## Tips
 
 - **Neovim Shortcuts:**

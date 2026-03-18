@@ -34,6 +34,32 @@ return {
       { "<leader>cs", "<cmd>Copilot status<cr>", desc = "Copilot Status" },
     },
     opts = {
+      filetypes = {
+        ["*"] = true,
+        gitcommit = true,
+        NeogitCommitMessage = true,
+      },
+      should_attach = function(buf_id)
+        local bt = vim.bo[buf_id].buftype
+        local ft = vim.bo[buf_id].filetype
+
+        -- allow git commit buffers (Neogit)
+        if ft == "gitcommit" then
+          return true
+        end
+
+        if not vim.bo[buf_id].buflisted then
+          vim.notify("not attaching, buffer is not 'buflisted'", vim.log.levels.DEBUG)
+          return false
+        end
+
+        if bt ~= "" then
+          vim.notify("not attaching, buffer 'buftype' is " .. bt, vim.log.levels.DEBUG)
+          return false
+        end
+
+        return true
+      end,
       suggestion = {
         enabled = true,
         auto_trigger = true,
@@ -65,13 +91,37 @@ return {
     },
     opts = {
       provider = "copilot",
+      providers = {
+        -- https://docs.github.com/ru/copilot/concepts/billing/copilot-requests
+        copilot = {
+          model = "gpt-4.1", -- Primary for daily coding & refactoring
+          -- model = "gpt-5.1-codex-mini", -- Toggle for Planning/Architecture (Smart & Slow)
+          -- model = "gpt-4o",             -- Better for analysis & docs
+          -- model = "gpt-5-mini",         -- Advanced reasoning & architecture
+          extra_request_body = {
+            max_tokens = 4096,
+          },
+        },
+        -- @TODO: add open router support with free models
+      },
       behaviour = {
         auto_suggestions = false, -- handled by copilot.lua
-        auto_apply_diff_after_generation = true,
+        -- auto_apply_diff_after_generation = true,
       },
-      input = {
-        provider = "snacks",
-      },
+      -- input = {
+      --   --- @type avante.InputProvider
+      --   provider = "snacks",
+      --   provider_opts = {
+      --     -- Additional snacks.input options
+      --     title = "Avante Input",
+      --     icon = " ",
+      --   },
+      -- },
+      -- selector = {
+      --   --- @type avante.SelectorProvider
+      --   provider = "snacks",
+      --   provider_opts = {},
+      -- },
     },
     keys = {
       { "<leader>aa", "<cmd>AvanteAsk<cr>",     desc = "Avante: Ask (Chat)" },

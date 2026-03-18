@@ -51,7 +51,10 @@ return {
     },
     opts = {
       input = { enabled = true },
-      notifier = { enabled = true },
+      notifier = {
+        enabled = true,
+        level = "info",
+      },
 
       rename = { enabled = true },
       words = { enabled = true },
