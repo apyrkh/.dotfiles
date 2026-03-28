@@ -26,14 +26,13 @@ User-managed content is grouped under `@`-prefixed directories for organizationa
 ├── @Archive
 ├── @Cloud
 │   ├── iCloud        -> ~/Library/Mobile Documents/com~apple~CloudDocs
-│   │   ├── @Docs
+│   │   ├── @Focus
 │   │   ├── @Notes
+│   │   ├── @Projects
 │   │   ├── @Tmp
-│   │   └── @Shared
 │   └── GoogleDrive   -> ~/Library/CloudStorage/GoogleDrive-*/My Drive
 │       ├── __identity
 │       ├── @Access
-│       ├── @Archive
 │       ├── @Assets
 │       ├── @Docs
 │       ├── @Finance

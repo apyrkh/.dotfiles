@@ -90,13 +90,14 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     opts = {
+      auto_suggestions_provider = nil,
       provider = "copilot",
       providers = {
         -- https://docs.github.com/ru/copilot/concepts/billing/copilot-requests
         copilot = {
-          model = "gpt-4.1", -- Primary for daily coding & refactoring
-          -- model = "gpt-5.1-codex-mini", -- Toggle for Planning/Architecture (Smart & Slow)
           -- model = "gpt-4o",             -- Better for analysis & docs
+          model = "gpt-4.1",            -- Primary for daily coding & refactoring
+          -- model = "gpt-5.1-codex-mini", -- Toggle for Planning/Architecture (Smart & Slow)
           -- model = "gpt-5-mini",         -- Advanced reasoning & architecture
           extra_request_body = {
             max_tokens = 4096,
@@ -107,6 +108,9 @@ return {
       behaviour = {
         auto_suggestions = false, -- handled by copilot.lua
         -- auto_apply_diff_after_generation = true,
+      },
+      windows = {
+        width = 50,
       },
       -- input = {
       --   --- @type avante.InputProvider

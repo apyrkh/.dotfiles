@@ -4,7 +4,7 @@ cask "font-jetbrains-mono-nerd-font"
 # === terminal ===
 #cask "warp"
 cask "wezterm"
-# brew "zsh"       # macOS already ships with zsh
+brew "zsh"       # macOS already ships with zsh
 
 # === dev tools ===
 brew "cmake"

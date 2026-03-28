@@ -121,12 +121,20 @@ return {
       winopts = { backdrop = 50 },
       defaults = { cwd_prompt = false },
       buffers = { sort_lastused = true },
+      files = {
+        hidden = true,
+        fd_opts = "--type f --hidden --follow --exclude .git --exclude .DS_Store",
+      },
       grep = {
         hidden = true,
         -- default + "--glob '!.git/*'"
         -- "-e" must be at the end
         rg_opts =
-        "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --glob '!.git/*' -e",
+            "--column --line-number --no-heading --color=always --smart-case " ..
+            "--max-columns=4096 " ..
+            "--glob '!.git/*' " ..
+            "--glob '!.DS_Store' " .. -- exclude macOS junk
+            "-e",
       },
     },
     config = function(_, opts)

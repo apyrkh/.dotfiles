@@ -21,6 +21,7 @@ return {
         function()
           require("conform").format({ async = true, lsp_format = "fallback" })
         end,
+        mode = { "n", "x" }, -- normal and any visual mode
         desc = "Format File (Conform)",
       },
     },
