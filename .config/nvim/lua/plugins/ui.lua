@@ -161,8 +161,8 @@ return {
       options = {
         parsers = {
           css = true,
-          names = { enable = false },
           css_fn = true,
+          names = { enable = false },
         },
       },
     },
