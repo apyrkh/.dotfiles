@@ -11,6 +11,12 @@ return {
         desc = "Notification History"
       },
 
+      {
+        "<leader>vg",
+        function() Snacks.lazygit() end,
+        desc = "Lazygit"
+      },
+
       -- rename
       {
         "<leader>er",
@@ -55,6 +61,8 @@ return {
         enabled = true,
         level = "info",
       },
+
+      lazygit = { enabled = true },
 
       rename = { enabled = true },
       words = { enabled = true },

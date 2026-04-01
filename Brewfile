@@ -4,7 +4,7 @@ cask "font-jetbrains-mono-nerd-font"
 # === terminal ===
 #cask "warp"
 cask "wezterm"
-brew "zsh"       # macOS already ships with zsh
+# brew "zsh"       # macOS already ships with zsh
 
 # === dev tools ===
 brew "cmake"
@@ -13,6 +13,7 @@ cask "jetbrains-toolbox"
 
 # === neovim (runtime deps) ===
 brew "neovim"
+brew "tree-sitter-cli"
 brew "luarocks"
 brew "fzf"
 brew "fd"
@@ -20,10 +21,11 @@ brew "ripgrep"
 
 ## === cli ===
 brew "git"
+brew "lazygit"
 brew "nvm"        # managed via zsh plugin
 brew "tree"
 brew "eza"
-brew "zoxide"
+brew "zoxide"     # zi
 brew "fx"         # json viewer and processor, https://fx.wtf
 brew "gnu-time"
 brew "mtr"        # my trace route
@@ -41,6 +43,7 @@ cask "keepassxc"
 cask "notion"
 cask "chatgpt"
 
+cask "aldente"        # battery health management for macbooks
 cask "openmtp"        # android-file-transfer
 cask "appcleaner"
 cask "balenaetcher"   # tool to flash OS images to SD cards & USB drives

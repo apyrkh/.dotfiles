@@ -59,7 +59,6 @@ return {
     dependencies = {
       "rafamadriz/friendly-snippets",
       "alexandre-abrioux/blink-cmp-npm.nvim",
-      "Kaiser-Yang/blink-cmp-avante",
     },
     event = { "InsertEnter", "CmdlineEnter" },
     opts = {
@@ -74,8 +73,8 @@ return {
         menu = {
           enabled = true,
           max_height = 10 + 2,
-          direction_priority = { 'n', 's' },
-          -- direction_priority = { 'n' },
+          direction_priority = { "n", "s" },
+          -- direction_priority = { "n" },
           -- auto_show = false,
           -- scrollbar = false,
         },
@@ -105,9 +104,23 @@ return {
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { "lsp", "avante", "snippets", "buffer", "path", "npm" },
+        default = { "lsp", "snippets", "buffer", "path", "npm" },
+
         providers = {
-          avante = { name = "avante", module = "blink-cmp-avante", async = true },
+          lsp = {
+            transform_items = function(_, items)
+              local kind = require("blink.cmp.types").CompletionItemKind
+              return vim.tbl_filter(function(item)
+                return item.kind ~= kind.Snippet
+              end, items)
+            end,
+          },
+          snippets = {
+            score_offset = -10,
+          },
+          buffer = {
+            min_keyword_length = 3,
+          },
           npm = { name = "npm", module = "blink-cmp-npm", async = true },
         },
       },
@@ -160,38 +173,38 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    version = "v0.10.0",
+    lazy = false,
     build = ":TSUpdate",
-    event = { "BufReadPre", "BufNewFile" },
     config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require("nvim-treesitter.configs").setup({
-        highlight = { enable = true },
-        indent = { enable = true },
-        ensure_installed = {
-          "bash",
-          "lua",
-          -- "vim",
-          -- "vimdoc",
+      local treesitter = require("nvim-treesitter")
+      treesitter.install({
+        "bash",
+        "lua",
+        "vim",
+        "vimdoc",
 
-          -- "markdown",
-          "diff",
-          "json",
-          "yaml",
+        "markdown",
+        "markdown_inline",
+        "diff",
+        "json",
+        "yaml",
 
-          "html",
-          "css",
-          "scss",
+        "html",
+        "css",
+        "scss",
 
-          "javascript",
-          "typescript",
-          "tsx",
+        "javascript",
+        "typescript",
+        "tsx",
 
-          "sql",
-        },
-        incremental_selection = {
-          enable = true,
-        },
+        "sql",
+      })
+
+      -- vim.treesitter.start()
+      vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+        callback = function(args)
+          pcall(vim.treesitter.start, args.buf)
+        end,
       })
     end
   },
