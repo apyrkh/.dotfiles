@@ -33,3 +33,26 @@ vim.keymap.set("v", "<S-j>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true
 vim.keymap.set("v", "<S-k>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true, desc = "Move Line Up" })
 vim.keymap.set("v", "<", "<gv", { noremap = true, silent = true, desc = "Shift Left" })
 vim.keymap.set("v", ">", ">gv", { noremap = true, silent = true, desc = "Shift Right" })
+
+-- Quick-fix
+local quickfix_opts = function(desc)
+  return { noremap = true, silent = true, desc = desc }
+end
+
+vim.keymap.set("n", "<leader>qo", "<cmd>copen<CR>", quickfix_opts("Quickfix Open"))
+vim.keymap.set("n", "<leader>qc", "<cmd>cclose<CR>", quickfix_opts("Quickfix Close"))
+vim.keymap.set("n", "<leader>qb", "<cmd>colder<CR><cmd>copen<CR>", quickfix_opts("Quickfix History Back"))
+vim.keymap.set("n", "<leader>qf", "<cmd>cnewer<CR><cmd>copen<CR>", quickfix_opts("Quickfix History Forward"))
+
+vim.keymap.set("n", "<leader>qq", function()
+  local word = vim.fn.expand("<cword>")
+  vim.fn.setqflist({}, "a", { title = "REF: " .. word })
+end, quickfix_opts("Quickfix Title From Word"))
+
+vim.keymap.set("n", "<leader>qr", function()
+  local qf = vim.fn.getqflist({ title = 1 })
+  local title = vim.fn.input("QF title: ", qf.title or "")
+  if title ~= "" then
+    vim.fn.setqflist({}, "a", { title = title })
+  end
+end, quickfix_opts("Quickfix Rename"))

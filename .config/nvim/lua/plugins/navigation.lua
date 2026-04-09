@@ -95,14 +95,22 @@ return {
         { "<leader>fc",  function() require("fzf-lua").grep_cword() end,           desc = "Grep cursor" },
         { "<leader>fr",  function() require("fzf-lua").resume() end,               desc = "Resume" },
 
-        -- Buffers
-        { "<leader>fb",  function() require("fzf-lua").buffers() end,              desc = "Buffers" },
-
         -- Help / misc
-        { "<leader>fp",  function() require("fzf-lua").registers() end,            desc = "Registers" },
-        { "<leader>fs",  function() require("fzf-lua").spell_suggest() end,        desc = "Spelling" },
+        { "<leader>fb",  function() require("fzf-lua").buffers() end,              desc = "Buffers" },
         { "<leader>fh",  function() require("fzf-lua").help_tags() end,            desc = "Help tags" },
         { "<leader>fk",  function() require("fzf-lua").keymaps() end,              desc = "Keymaps" },
+        { "<leader>fp",  function() require("fzf-lua").registers() end,            desc = "Registers" },
+        { "<leader>fs",  function() require("fzf-lua").spell_suggest() end,        desc = "Spelling" },
+        { "<leader>fq",  function() require("fzf-lua").quickfix_stack() end,       desc = "Spelling" },
+
+        -- Find: LSP
+        { "<leader>flr", function() require("fzf-lua").lsp_references() end,             desc = "References" },
+        { "<leader>fld", function() require("fzf-lua").lsp_definitions() end,            desc = "Definitions" },
+        { "<leader>fli", function() require("fzf-lua").lsp_implementations() end,        desc = "Implementations" },
+        { "<leader>fls", function() require("fzf-lua").lsp_document_symbols() end,       desc = "Document symbols" },
+        { "<leader>flS", function() require("fzf-lua").lsp_live_workspace_symbols() end, desc = "Workspace symbols" },
+        { "<leader>fln", function() require("fzf-lua").lsp_incoming_calls() end,         desc = "Incoming calls" },
+        { "<leader>flo", function() require("fzf-lua").lsp_outgoing_calls() end,         desc = "Outgoing calls" },
 
         -- VCS: Git
         { "<leader>vfs", function() require("fzf-lua").git_status() end,           desc = "Status" },
