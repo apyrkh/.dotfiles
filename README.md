@@ -121,6 +121,12 @@ nvm install --lts
 nvm alias default lts
 ```
 
+## Install Claud Code
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
 ## Install Bun
 
 Install [Bun](chatgpt://generic-entity?number=0):

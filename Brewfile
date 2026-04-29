@@ -22,9 +22,9 @@ brew "ripgrep"
 ## === cli ===
 brew "git"
 brew "lazygit"
-brew "nvm"        # managed via zsh plugin
+brew "nvm"
 brew "tree"
-brew "eza"
+brew "eza"        # modern ls replacement
 brew "zoxide"     # zi
 brew "fx"         # json viewer and processor, https://fx.wtf
 brew "gnu-time"

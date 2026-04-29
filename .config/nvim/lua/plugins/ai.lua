@@ -34,32 +34,32 @@ return {
       { "<leader>cs", "<cmd>Copilot status<cr>", desc = "Copilot Status" },
     },
     opts = {
-      filetypes = {
-        ["*"] = true,
-        gitcommit = true,
-        NeogitCommitMessage = true,
-      },
-      should_attach = function(buf_id)
-        local bt = vim.bo[buf_id].buftype
-        local ft = vim.bo[buf_id].filetype
-
-        -- allow git commit buffers (Neogit)
-        if ft == "gitcommit" then
-          return true
-        end
-
-        if not vim.bo[buf_id].buflisted then
-          vim.notify("not attaching, buffer is not 'buflisted'", vim.log.levels.DEBUG)
-          return false
-        end
-
-        if bt ~= "" then
-          vim.notify("not attaching, buffer 'buftype' is " .. bt, vim.log.levels.DEBUG)
-          return false
-        end
-
-        return true
-      end,
+      -- filetypes = {
+      --   ["*"] = true,
+      --   gitcommit = true,
+      --   NeogitCommitMessage = true,
+      -- },
+      -- should_attach = function(buf_id)
+      --   local bt = vim.bo[buf_id].buftype
+      --   local ft = vim.bo[buf_id].filetype
+      --
+      --   -- allow git commit buffers (Neogit)
+      --   if ft == "gitcommit" then
+      --     return true
+      --   end
+      --
+      --   if not vim.bo[buf_id].buflisted then
+      --     vim.notify("not attaching, buffer is not 'buflisted'", vim.log.levels.DEBUG)
+      --     return false
+      --   end
+      --
+      --   if bt ~= "" then
+      --     vim.notify("not attaching, buffer 'buftype' is " .. bt, vim.log.levels.DEBUG)
+      --     return false
+      --   end
+      --
+      --   return true
+      -- end,
       suggestion = {
         enabled = true,
         auto_trigger = true,
