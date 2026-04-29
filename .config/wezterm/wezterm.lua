@@ -18,7 +18,7 @@ config.use_fancy_tab_bar = false
 config.window_decorations = "RESIZE"
 config.window_padding = {
   left = 10,
-  right = 10,
+  right = 5,
   top = 5,
   bottom = 0,
 }
