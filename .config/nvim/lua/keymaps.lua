@@ -40,7 +40,7 @@ local quickfix_opts = function(desc)
 end
 
 vim.keymap.set("n", "<leader>qo", "<cmd>copen<CR>", quickfix_opts("Quickfix Open"))
-vim.keymap.set("n", "<leader>qc", "<cmd>cclose<CR>", quickfix_opts("Quickfix Close"))
+vim.keymap.set("n", "<leader>qx", "<cmd>cclose<CR>", quickfix_opts("Quickfix Close"))
 vim.keymap.set("n", "<leader>qb", "<cmd>colder<CR><cmd>copen<CR>", quickfix_opts("Quickfix History Back"))
 vim.keymap.set("n", "<leader>qf", "<cmd>cnewer<CR><cmd>copen<CR>", quickfix_opts("Quickfix History Forward"))
 

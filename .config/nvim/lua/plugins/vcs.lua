@@ -43,6 +43,8 @@ return {
     },
     opts = {
       graph_style = "unicode",
+      commit_date_format = "%Y-%m-%d %H:%M",
+      log_date_format = "%Y-%m-%d %H:%M",
       remember_settings = false,
       commit_editor = {
         kind = "vsplit",
