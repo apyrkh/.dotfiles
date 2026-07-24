@@ -15,6 +15,8 @@ config.font_size = 13
 config.hide_tab_bar_if_only_one_tab = false
 config.use_fancy_tab_bar = false
 
+config.enable_kitty_keyboard = true
+
 config.window_decorations = "RESIZE"
 config.window_padding = {
   left = 10,
@@ -22,7 +24,6 @@ config.window_padding = {
   top = 5,
   bottom = 0,
 }
-
 
 wezterm.on("update-right-status", function(window, _)
   local text = ""

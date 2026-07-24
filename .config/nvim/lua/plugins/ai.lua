@@ -39,11 +39,14 @@ return {
       --   gitcommit = true,
       --   NeogitCommitMessage = true,
       -- },
+      filetypes = {
+        ["*"] = true,
+      },
       -- should_attach = function(buf_id)
       --   local bt = vim.bo[buf_id].buftype
       --   local ft = vim.bo[buf_id].filetype
       --
-      --   -- allow git commit buffers (Neogit)
+      --   -- allow git commit buffers (Neogit) even if not buflisted
       --   if ft == "gitcommit" then
       --     return true
       --   end
@@ -75,7 +78,9 @@ return {
     },
   },
   {
+    -- claude solves this better, so probably not needed anymore, will keep it disabled for now
     "yetone/avante.nvim",
+    enabled = false,
     version = false,
     build = "make",
     event = "VeryLazy",

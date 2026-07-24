@@ -1,9 +1,9 @@
-## === fonts ===
+# === fonts ===
 cask "font-jetbrains-mono-nerd-font"
 
 # === terminal ===
 #cask "warp"
-cask "wezterm"
+# cask "wezterm"    # using nightly manually; uncomment when switching to stable
 # brew "zsh"       # macOS already ships with zsh
 
 # === dev tools ===
@@ -19,17 +19,26 @@ brew "fzf"
 brew "fd"
 brew "ripgrep"
 
-## === cli ===
+# === cli ===
 brew "git"
 brew "lazygit"
 brew "nvm"
 brew "tree"
-brew "eza"        # modern ls replacement
-brew "zoxide"     # zi
-brew "fx"         # json viewer and processor, https://fx.wtf
+brew "eza"            # modern ls replacement
+brew "zoxide"         # zi
+brew "fx"             # json viewer and processor, https://fx.wtf
 brew "gnu-time"
-brew "mtr"        # my trace route
+brew "mtr"            # my trace route
 brew "ffmpeg"
+brew "ghostscript"    # for pdf processing
+
+tap "peonping/tap"
+brew "peonping/tap/peon-ping"
+
+# === containers ===
+brew "colima"         # container runtime for macOS, alternative to docker desktop
+brew "docker"
+brew "docker-compose"
 
 # fun / misc
 brew "cowsay"
@@ -43,7 +52,6 @@ cask "keepassxc"
 cask "notion"
 cask "chatgpt"
 
-cask "aldente"        # battery health management for macbooks
 cask "openmtp"        # android-file-transfer
 cask "appcleaner"
 cask "balenaetcher"   # tool to flash OS images to SD cards & USB drives
