@@ -7,6 +7,8 @@
 - [Storage layout](docs/storage.md)
 - [tldr notes](docs/tldr/) — quick usage examples for installed CLI tools/packages
 
+---
+
 ## Setup
 
 ### Dotfiles
@@ -104,6 +106,17 @@ chsh -s $(which zsh)
 echo $SHELL
 ```
 
+### Claude Code
+
+`install.sh` deploys `~/.claude/CLAUDE.md`, `statusline.js`, and the skills. The statusline needs one
+manual step, because `~/.claude/settings.json` is machine-specific and not tracked:
+
+```json
+{ "statusLine": { "type": "command", "command": "node /Users/<USER>/.claude/statusline.js" } }
+```
+
+---
+
 ## Dev Tools
 
 ```bash
@@ -116,11 +129,6 @@ curl -fsSL https://bun.sh/install | bash
 
 # Claude Code
 curl -fsSL https://claude.ai/install.sh | bash
-
-# install.sh (above) already deploys the global CLAUDE.md, statusline.js, and
-# bun-performance skill. The statusline needs one manual step: add a
-# "statusLine" entry to ~/.claude/settings.json (untracked, machine-specific):
-#   { "statusLine": { "type": "command", "command": "node ~/.claude/statusline.js" } }
 
 # Serena Agent (per-project, run init in repos where you want it)
 # https://oraios.github.io/serena
@@ -144,6 +152,8 @@ curl -s https://raw.githubusercontent.com/actuallymentor/battery/main/setup.sh |
 battery maintain 70-80
 battery maintain stop
 ```
+
+---
 
 ## Misc
 
