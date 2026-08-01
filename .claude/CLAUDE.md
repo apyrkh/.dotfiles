@@ -4,12 +4,14 @@ Personal macOS development environment (primary target). `README-RHEL9.md` holds
 
 ## Deployment
 
-`install.sh` symlinks the files listed in its `files=()` array from `~/.dotfiles/` into `~/`, backing up any existing target first. That array is the source of truth for what's managed — don't duplicate it here.
+`install.sh` symlinks the files listed in its `files=()` array from `~/.dotfiles/home/` into `~/`, backing up any existing target first. That array is the source of truth for what's managed — don't duplicate it here.
 
 ## Structure
 
-- `.config/nvim/lua/` — Neovim config; plugin specs live in `plugins/` by category (see below)
-- `.config/zsh/scripts/` — shell utility scripts
+- `home/` — deploy root; everything under it mirrors `~/` and is what `install.sh` symlinks. The repo root (this file, `docs/`, `install.sh`, `README.md`) is repo meta, never deployed.
+- `home/.config/nvim/lua/` — Neovim config; plugin specs live in `plugins/` by category (see below)
+- `home/.config/zsh/scripts/` — shell utility scripts
+- `home/.claude/` — global Claude Code config (`CLAUDE.md`, `statusline.js`, `skills/`), tracked **per-entry**, not as a whole directory — the rest of `~/.claude/` (settings.json, keybindings.json, hooks/, vendor skills) is machine state or third-party installs and stays untracked
 - `docs/storage.md` — storage layout notes
 - `docs/tldr/` — one short usage-notes file per installed CLI tool, linked from README's Docs section
 

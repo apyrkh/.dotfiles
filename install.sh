@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+# If this script grows beyond symlinking, split it into setup/ with small focused scripts.
+
 # Colors
 GREEN="\033[0;32m"
 CYAN="\033[0;36m"
@@ -14,7 +16,12 @@ STATUS_MISSING="✖ missing source"
 
 backup_dir="$HOME/.dotfiles_backup-$(date +%Y%m%d_%H%M%S)"
 dotfiles_dir="$HOME/.dotfiles"
+home_dir="$dotfiles_dir/home"
 files=(
+  ".claude/CLAUDE.md"
+  ".claude/statusline.js"
+  ".claude/skills/bun-performance"
+  ".claude/skills/compress-media"
   ".config/nvim"
   ".config/wezterm"
   ".config/zsh"
@@ -27,7 +34,7 @@ files=(
 printf "\n=== Installing dotfiles ===\n\n"
 
 for file in "${files[@]}"; do
-  src="$dotfiles_dir/$file"
+  src="$home_dir/$file"
   dst="$HOME/$file"
 
   display_src="${src/#$HOME/~}"
@@ -35,24 +42,24 @@ for file in "${files[@]}"; do
 
   # 1. Missing source
   if [ ! -e "$src" ]; then
-    printf "${RED}%-35s → %-25s%-10s%s${NC}\n" "$display_src" "$display_dst" "" "$STATUS_MISSING"
+    printf "${RED}%-50s → %-33s%-10s%s${NC}\n" "$display_src" "$display_dst" "" "$STATUS_MISSING"
     continue
   fi
 
   # 2. Up-to-date
-  # if [ -L "$dst" ] && [ "$(readlink "$dst")" == "$dotfiles_dir/.gitconfig" ]; then # for debug purpose
+  # if [ -L "$dst" ] && [ "$(readlink "$dst")" == "$home_dir/.gitconfig" ]; then # for debug purpose
   if [ -L "$dst" ] && [ "$(readlink "$dst")" == "$src" ]; then
-    printf "%-35s → %-25s%-10s${CYAN}%s${NC}\n" "$display_src" "$display_dst" "" "$STATUS_UP_TO_DATE"
+    printf "%-50s → %-33s%-10s${CYAN}%s${NC}\n" "$display_src" "$display_dst" "" "$STATUS_UP_TO_DATE"
     continue
   fi
 
   # 3. Installation
-  printf "%-35s → %-25s" "$display_src" "$display_dst"
+  printf "%-50s → %-33s" "$display_src" "$display_dst"
   mkdir -p "$(dirname "$dst")"
 
   if [ -e "$dst" ] || [ -L "$dst" ]; then
-    mkdir -p "$backup_dir"
-    mv "$dst" "$backup_dir/"
+    mkdir -p "$backup_dir/$(dirname "$file")"
+    mv "$dst" "$backup_dir/$file"
     printf "${GRAY}%-10s${NC}" "(backup)"
   else
     printf "%-10s" ""

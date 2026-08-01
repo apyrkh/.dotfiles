@@ -117,6 +117,11 @@ curl -fsSL https://bun.sh/install | bash
 # Claude Code
 curl -fsSL https://claude.ai/install.sh | bash
 
+# install.sh (above) already deploys the global CLAUDE.md, statusline.js, and
+# bun-performance skill. The statusline needs one manual step: add a
+# "statusLine" entry to ~/.claude/settings.json (untracked, machine-specific):
+#   { "statusLine": { "type": "command", "command": "node ~/.claude/statusline.js" } }
+
 # Serena Agent (per-project, run init in repos where you want it)
 # https://oraios.github.io/serena
 curl -LsSf https://astral.sh/uv/install.sh | sh
