@@ -1,6 +1,6 @@
 # ghostscript (`gs`)
 
-PostScript/PDF interpreter. Installed via Brewfile.
+PostScript/PDF interpreter.
 
 ## Compress a PDF
 

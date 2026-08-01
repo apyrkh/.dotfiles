@@ -31,6 +31,10 @@ brew "gnu-time"
 brew "mtr"            # my trace route
 brew "ffmpeg"
 brew "ghostscript"    # for pdf processing
+brew "pngquant"       # lossy png compression
+brew "jpegoptim"      # jpeg compression
+brew "webp"           # cwebp/dwebp; was a transitive dep, now explicit
+brew "libheif"        # heic decoding (iphone photos)
 
 tap "peonping/tap"
 brew "peonping/tap/peon-ping"

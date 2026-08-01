@@ -1,6 +1,6 @@
 # ffmpeg
 
-Audio/video conversion, compression, and editing. Installed via Brewfile.
+Audio/video conversion, compression, and editing.
 
 ## Compress a video (H.265/HEVC, QuickTime-compatible)
 
