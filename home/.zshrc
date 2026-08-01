@@ -39,6 +39,7 @@ export DISABLE_UNTRACKED_FILES_DIRTY="true" # speed up prompt by ignoring untrac
 
 # === TOOLS INIT ===
 command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
+eval "$(fnm env --use-on-cd)"
 
 # === ALIASES ===
 alias ll="eza -l --group-directories-first --icons"

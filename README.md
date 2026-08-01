@@ -121,8 +121,8 @@ manual step, because `~/.claude/settings.json` is machine-specific and not track
 
 ```bash
 # Node (LTS)
-nvm install --lts
-nvm alias default lts
+fnm install --lts
+fnm default lts-latest
 
 # Bun
 curl -fsSL https://bun.sh/install | bash

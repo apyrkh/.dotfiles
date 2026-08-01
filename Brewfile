@@ -3,13 +3,13 @@ cask "font-jetbrains-mono-nerd-font"
 
 # === terminal ===
 #cask "warp"
-# cask "wezterm"    # using nightly manually; uncomment when switching to stable
+# cask "wezterm"   # using nightly manually; uncomment when switching to stable
 # brew "zsh"       # macOS already ships with zsh
 
 # === dev tools ===
 brew "cmake"
 brew "go"
-cask "jetbrains-toolbox"
+brew "fnm"        # fast Node.js version manager (Rust-based replacement for nvm)
 
 # === neovim (runtime deps) ===
 brew "neovim"
@@ -22,33 +22,35 @@ brew "ripgrep"
 # === cli ===
 brew "git"
 brew "lazygit"
-brew "nvm"
 brew "tree"
 brew "eza"            # modern ls replacement
 brew "zoxide"         # zi
 brew "fx"             # json viewer and processor, https://fx.wtf
 brew "gnu-time"
 brew "mtr"            # my trace route
-brew "ffmpeg"
+
+# === media processing ===
+brew "ffmpeg"         # for video/audio processing
 brew "ghostscript"    # for pdf processing
 brew "pngquant"       # lossy png compression
 brew "jpegoptim"      # jpeg compression
 brew "webp"           # cwebp/dwebp; was a transitive dep, now explicit
 brew "libheif"        # heic decoding (iphone photos)
 
-tap "peonping/tap"
-brew "peonping/tap/peon-ping"
-
 # === containers ===
 brew "colima"         # container runtime for macOS, alternative to docker desktop
 brew "docker"
-brew "docker-compose"
 
-# fun / misc
+# === fun / misc ===
+tap "peonping/tap"
+brew "peonping/tap/peon-ping"
 brew "cowsay"
 brew "fortune"
+cask "battle-net"
+cask "steam"
 
 # === apps ===
+cask "jetbrains-toolbox"
 cask "google-chrome"
 cask "google-drive"
 cask "opera"
@@ -81,7 +83,3 @@ cask "upscayl"
 # cask "mongodb-compass"
 
 brew "postgresql@16", restart_service: :changed
-
-# === games ===
-cask "battle-net"
-cask "steam"
