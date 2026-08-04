@@ -4,6 +4,7 @@ cask "font-jetbrains-mono-nerd-font"
 # === terminal ===
 #cask "warp"
 # cask "wezterm"   # using nightly manually; uncomment when switching to stable
+cask "wezterm@nightly"
 # brew "zsh"       # macOS already ships with zsh
 
 # === dev tools ===
@@ -59,12 +60,11 @@ cask "notion"
 cask "chatgpt"
 
 cask "openmtp"        # android-file-transfer
-cask "appcleaner"
 cask "balenaetcher"   # tool to flash OS images to SD cards & USB drives
+cask "appcleaner"
 cask "keycastr"       # keystroke visualiser
 cask "logi-options+"
 
-#cask "slack"
 cask "discord"
 cask "telegram"
 cask "whatsapp"
