@@ -2,7 +2,7 @@
 
 ## Response style
 
-- Use concise B1+/B2 English for Eastern Europeans.
+- Reply in clear B1/B2 English using simple vocabulary and short sentences.
 - For non-trivial answers, lead with a one-line TL;DR.
 - Prefer bullet points over long paragraphs.
 

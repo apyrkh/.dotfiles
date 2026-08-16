@@ -20,8 +20,12 @@ brew "fzf"
 brew "fd"
 brew "ripgrep"
 
+brew "copilot-cli"    # GitHub Copilot CLI
+cask "codex"          # OpenAI Codex CLI
+
 # === cli ===
 brew "git"
+brew "gh"             # GitHub CLI
 brew "lazygit"
 brew "tree"
 brew "eza"            # modern ls replacement

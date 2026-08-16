@@ -3,6 +3,10 @@
 Quick usage examples for installed CLI tools. Each file is self-contained: pick the one for the
 tool you need, the commands work as-is.
 
+## Developer Tools
+
+- `gh` — [gh.md](gh.md)
+
 ## Compress or convert media
 
 | Input                | Read                             |

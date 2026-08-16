@@ -108,11 +108,18 @@ echo $SHELL
 
 ### Claude Code
 
-`install.sh` deploys `~/.claude/CLAUDE.md`, `statusline.js`, and the skills. The statusline needs one
-manual step, because `~/.claude/settings.json` is machine-specific and not tracked:
+`install.sh` deploys `~/.claude/CLAUDE.md`, `statusline.js`, and the skills.
+
+The statusline needs one manual step, because `~/.claude/settings.json` is machine-specific and not tracked:
 
 ```json
 { "statusLine": { "type": "command", "command": "node /Users/<USER>/.claude/statusline.js" } }
+```
+
+MCP servers (`~/.claude.json`) aren't tracked either — add manually:
+
+```bash
+claude mcp add --transport http --scope user context7 https://mcp.context7.com/mcp
 ```
 
 ---
@@ -120,6 +127,11 @@ manual step, because `~/.claude/settings.json` is machine-specific and not track
 ## Dev Tools
 
 ```bash
+claude  # /login on first run
+copilot  # /login on first run
+codex login
+gh auth login
+
 # Node (LTS)
 fnm install --lts
 fnm default lts-latest
