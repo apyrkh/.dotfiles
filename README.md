@@ -108,7 +108,7 @@ echo $SHELL
 
 ### Claude Code
 
-`install.sh` deploys `~/.claude/CLAUDE.md`, `statusline.js`, and the skills.
+`install.sh` deploys `~/.claude/CLAUDE.md`, `statusline.js`, tracked agents, and tracked skills.
 
 The statusline needs one manual step, because `~/.claude/settings.json` is machine-specific and not tracked:
 
