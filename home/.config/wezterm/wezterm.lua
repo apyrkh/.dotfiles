@@ -54,13 +54,13 @@ end)
 config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 2000 }
 config.keys = {
   {
-    key = '[',
-    mods = 'LEADER',
+    key = "[",
+    mods = "LEADER",
     action = wezterm.action.MoveTabRelative(-1),
   },
   {
-    key = ']',
-    mods = 'LEADER',
+    key = "]",
+    mods = "LEADER",
     action = wezterm.action.MoveTabRelative(1),
   },
   -- {
