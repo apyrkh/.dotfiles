@@ -130,7 +130,7 @@ install_bun() {
   fi
 
   info "Installing Bun"
-  curl -fsSL https://bun.sh/install | BUN_INSTALL="$dotfiles_home/.bun" bash
+  curl -fsSL https://bun.sh/install | HOME="$dotfiles_home" SHELL=/bin/sh BUN_INSTALL="$dotfiles_home/.bun" bash
   [[ -x "$dotfiles_home/.bun/bin/bun" ]] || die "Bun installation did not create the expected binary"
 }
 

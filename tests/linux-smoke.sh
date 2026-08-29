@@ -20,6 +20,7 @@ assert_command() {
 
 mkdir -p "$home_dir"
 printf 'existing vim configuration\n' > "$home_dir/.vimrc"
+zshrc_checksum="$(sha256sum "$dotfiles_dir/home/.zshrc" | cut -d ' ' -f 1)"
 
 DOTFILES_HOME="$home_dir" "$dotfiles_dir/install.sh"
 
@@ -46,11 +47,13 @@ backups=("$home_dir"/.dotfiles_backup-*)
 [[ "${#backups[@]}" -eq 1 ]]
 [[ -f "${backups[0]}/.vimrc" ]]
 [[ "$(cat "${backups[0]}/.vimrc")" == "existing vim configuration" ]]
+[[ "$(sha256sum "$dotfiles_dir/home/.zshrc" | cut -d ' ' -f 1)" == "$zshrc_checksum" ]]
 
 DOTFILES_HOME="$home_dir" "$dotfiles_dir/install.sh"
 
 backups=("$home_dir"/.dotfiles_backup-*)
 [[ "${#backups[@]}" -eq 1 ]]
+[[ "$(sha256sum "$dotfiles_dir/home/.zshrc" | cut -d ' ' -f 1)" == "$zshrc_checksum" ]]
 
 zsh -lic 'exit'
 
