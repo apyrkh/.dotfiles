@@ -134,6 +134,10 @@ install_bun() {
   [[ -x "$dotfiles_home/.bun/bin/bun" ]] || die "Bun installation did not create the expected binary"
 }
 
+install_tree_sitter_cli() {
+  install_bun_global_package "$dotfiles_home" tree-sitter-cli tree-sitter "Tree-sitter CLI"
+}
+
 install_fnm() {
   if [[ -x "$dotfiles_home/.local/share/fnm/fnm" ]]; then
     info "fnm is already installed"
@@ -164,6 +168,7 @@ link_if_absent "$(command -v fdfind)" "$local_bin/fd"
 install_neovim
 install_eza
 install_bun
+install_tree_sitter_cli
 install_devcontainer_cli "$dotfiles_home"
 install_fnm
 install_oh_my_zsh

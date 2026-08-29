@@ -70,18 +70,25 @@ find_bun() {
   return 1
 }
 
-install_devcontainer_cli() {
+install_bun_global_package() {
   local dotfiles_home="$1"
+  local package_name="$2"
+  local command_name="$3"
+  local display_name="$4"
   local bun_bin
-  local devcontainer_bin="$dotfiles_home/.bun/bin/devcontainer"
+  local command_path="$dotfiles_home/.bun/bin/$command_name"
 
-  if [[ -x "$devcontainer_bin" ]]; then
-    info "Dev Container CLI is already installed"
+  if [[ -x "$command_path" ]]; then
+    info "$display_name is already installed"
     return
   fi
 
-  bun_bin="$(find_bun "$dotfiles_home")" || die "Bun is required to install the Dev Container CLI"
-  info "Installing Dev Container CLI with Bun"
-  BUN_INSTALL="$dotfiles_home/.bun" "$bun_bin" add --global @devcontainers/cli
-  [[ -x "$devcontainer_bin" ]] || die "Bun did not install the Dev Container CLI"
+  bun_bin="$(find_bun "$dotfiles_home")" || die "Bun is required to install $display_name"
+  info "Installing $display_name with Bun"
+  BUN_INSTALL="$dotfiles_home/.bun" "$bun_bin" add --global "$package_name"
+  [[ -x "$command_path" ]] || die "Bun did not install $display_name"
+}
+
+install_devcontainer_cli() {
+  install_bun_global_package "$1" @devcontainers/cli devcontainer "Dev Container CLI"
 }

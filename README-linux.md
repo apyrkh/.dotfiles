@@ -8,9 +8,9 @@ cd ~/.dotfiles
 ./install.sh
 ```
 
-The installer needs root or passwordless `sudo`. It sets `DEBIAN_FRONTEND=noninteractive` and installs the required terminal tools without prompts: `ripgrep`, `fd-find`, `fzf`, `git`, `curl`, `build-essential`, `unzip`, `zsh`, clipboard providers, and the other tools used by the shared Zsh setup. It installs a current upstream Neovim release because the configuration requires newer APIs than distro Neovim packages may provide.
+The installer needs root or passwordless `sudo`. It sets `DEBIAN_FRONTEND=noninteractive` and installs the required terminal tools without prompts: `ripgrep`, `fd-find`, `fzf`, `git`, `curl`, `build-essential`, `tree-sitter-cli`, `unzip`, `zsh`, clipboard providers, and the other tools used by the shared Zsh setup. It installs a current upstream Neovim release because the configuration requires newer APIs than distro Neovim packages may provide.
 
-It creates `~/.local/bin/fd` for Debian/Ubuntu's `fdfind` command and adds the local bin directory to Zsh's path. It also installs Bun with its official installer, then runs `bun add --global @devcontainers/cli`. The resulting `devcontainer` command is in `~/.bun/bin`. It also installs Oh My Zsh, its configured plugins, `fnm`, and `eza`. It does not run `chsh`; change the login shell manually if required:
+It creates `~/.local/bin/fd` for Debian/Ubuntu's `fdfind` command and adds the local bin directory to Zsh's path. It also installs Bun with its official installer, then installs both `tree-sitter-cli` and `@devcontainers/cli` globally with Bun. The resulting `tree-sitter` and `devcontainer` commands are in `~/.bun/bin`. It also installs Oh My Zsh, its configured plugins, `fnm`, and `eza`. It does not run `chsh`; change the login shell manually if required:
 
 ```bash
 chsh -s "$(command -v zsh)"
@@ -25,6 +25,19 @@ Neovim uses the native clipboard provider when `xclip` or `wl-copy` is available
 ## Dev Container
 
 Open this repository with the included `.devcontainer/devcontainer.json`. The post-create command runs the same bootstrap as the `dev` user, so the configuration is linked in that container user’s home.
+
+Start or rebuild it with:
+
+```bash
+devcontainer up --workspace-folder .
+```
+
+The Dev Container CLI has no `down` command. To stop a running Dev Container, first find it and then stop its ID with Docker:
+
+```bash
+docker ps --format 'table {{.ID}}\t{{.Names}}\t{{.Label "devcontainer.local_folder"}}'
+docker stop <container-id>
+```
 
 ## Isolated validation
 
