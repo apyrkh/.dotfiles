@@ -19,6 +19,7 @@ install_apt_packages() {
     fd-find \
     fzf \
     git \
+    gh \
     ripgrep \
     tar \
     unzip \

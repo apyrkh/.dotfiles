@@ -25,7 +25,7 @@ DOTFILES_HOME="$home_dir" "$dotfiles_dir/install.sh"
 
 export PATH="$home_dir/.local/bin:$PATH"
 
-for command in curl fd fdfind fzf gcc git make nvim rg unzip zsh; do
+for command in curl fd fdfind fzf gcc gh git make nvim rg unzip zsh; do
   assert_command "$command"
 done
 
