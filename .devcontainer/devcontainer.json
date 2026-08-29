@@ -3,6 +3,6 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
-  "remoteUser": "vscode",
+  "remoteUser": "dev",
   "postCreateCommand": "bash ${containerWorkspaceFolder}/install.sh"
 }

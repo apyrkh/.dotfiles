@@ -24,7 +24,7 @@ Neovim uses the native clipboard provider when `xclip` or `wl-copy` is available
 
 ## Dev Container
 
-Open this repository with the included `.devcontainer/devcontainer.json`. The post-create command runs the same bootstrap as the `vscode` user, so the configuration is linked in that container user’s home.
+Open this repository with the included `.devcontainer/devcontainer.json`. The post-create command runs the same bootstrap as the `dev` user, so the configuration is linked in that container user’s home.
 
 ## Isolated validation
 
