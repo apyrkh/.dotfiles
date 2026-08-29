@@ -88,7 +88,7 @@ info "Installing dotfiles for $platform"
 if ((install_packages)); then
   case "$platform" in
     mac)
-      "$dotfiles_dir/scripts/mac.sh" "$dotfiles_dir" "$install_home_profile"
+      "$dotfiles_dir/scripts/mac.sh" "$dotfiles_dir" "$dotfiles_home" "$install_home_profile"
       ;;
     linux)
       "$dotfiles_dir/scripts/linux.sh" "$dotfiles_dir" "$dotfiles_home"

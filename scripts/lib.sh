@@ -55,3 +55,33 @@ link_if_absent() {
   mkdir -p "$(dirname "$target_path")"
   ln -s "$source_path" "$target_path"
 }
+
+find_bun() {
+  local dotfiles_home="$1"
+  local candidate
+
+  for candidate in "$(command -v bun || true)" "$dotfiles_home/.bun/bin/bun"; do
+    if [[ -n "$candidate" && -x "$candidate" ]]; then
+      printf '%s\n' "$candidate"
+      return
+    fi
+  done
+
+  return 1
+}
+
+install_devcontainer_cli() {
+  local dotfiles_home="$1"
+  local bun_bin
+  local devcontainer_bin="$dotfiles_home/.bun/bin/devcontainer"
+
+  if [[ -x "$devcontainer_bin" ]]; then
+    info "Dev Container CLI is already installed"
+    return
+  fi
+
+  bun_bin="$(find_bun "$dotfiles_home")" || die "Bun is required to install the Dev Container CLI"
+  info "Installing Dev Container CLI with Bun"
+  BUN_INSTALL="$dotfiles_home/.bun" "$bun_bin" add --global @devcontainers/cli
+  [[ -x "$devcontainer_bin" ]] || die "Bun did not install the Dev Container CLI"
+}

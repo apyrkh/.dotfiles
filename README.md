@@ -34,6 +34,8 @@ To update only configuration links:
 
 For isolated testing, set `DOTFILES_HOME` to a disposable target directory. `DOTFILES_DIR` can point to a repository checkout outside `~/.dotfiles`.
 
+The installer provides the Dev Container CLI through Bun on both platforms.
+
 ### Git
 
 Git identity remains local and untracked:

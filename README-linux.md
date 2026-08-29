@@ -10,7 +10,7 @@ cd ~/.dotfiles
 
 The installer needs root or passwordless `sudo`. It sets `DEBIAN_FRONTEND=noninteractive` and installs the required terminal tools without prompts: `ripgrep`, `fd-find`, `fzf`, `git`, `curl`, `build-essential`, `unzip`, `zsh`, clipboard providers, and the other tools used by the shared Zsh setup. It installs a current upstream Neovim release because the configuration requires newer APIs than distro Neovim packages may provide.
 
-It creates `~/.local/bin/fd` for Debian/Ubuntu's `fdfind` command and adds the local bin directory to Zsh's path. It also installs Oh My Zsh, its configured plugins, `fnm`, and `eza`. It does not run `chsh`; change the login shell manually if required:
+It creates `~/.local/bin/fd` for Debian/Ubuntu's `fdfind` command and adds the local bin directory to Zsh's path. It also installs Bun with its official installer, then runs `bun add --global @devcontainers/cli`. The resulting `devcontainer` command is in `~/.bun/bin`. It also installs Oh My Zsh, its configured plugins, `fnm`, and `eza`. It does not run `chsh`; change the login shell manually if required:
 
 ```bash
 chsh -s "$(command -v zsh)"

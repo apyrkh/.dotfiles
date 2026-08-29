@@ -1,6 +1,7 @@
 # === dev tools ===
 brew "cmake"
 brew "go"
+brew "bun"        # Dev Container CLI package manager
 brew "fnm"        # fast Node.js version manager (Rust-based replacement for nvm)
 
 # === neovim (runtime deps) ===

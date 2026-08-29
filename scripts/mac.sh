@@ -2,7 +2,8 @@
 set -euo pipefail
 
 dotfiles_dir="$1"
-install_home_profile="$2"
+dotfiles_home="$2"
+install_home_profile="$3"
 
 # shellcheck source=lib.sh
 source "$dotfiles_dir/scripts/lib.sh"
@@ -34,6 +35,7 @@ eval "$("$brew_bin" shellenv)"
 
 info "Installing macOS work profile"
 "$brew_bin" bundle --file "$dotfiles_dir/Brewfile"
+install_devcontainer_cli "$dotfiles_home"
 
 if [[ "$install_home_profile" -eq 1 ]]; then
   info "Installing macOS home profile"

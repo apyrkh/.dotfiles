@@ -123,6 +123,17 @@ install_eza() {
   info "Installed eza"
 }
 
+install_bun() {
+  if find_bun "$dotfiles_home" >/dev/null; then
+    info "Bun is already installed"
+    return
+  fi
+
+  info "Installing Bun"
+  curl -fsSL https://bun.sh/install | BUN_INSTALL="$dotfiles_home/.bun" bash
+  [[ -x "$dotfiles_home/.bun/bin/bun" ]] || die "Bun installation did not create the expected binary"
+}
+
 install_fnm() {
   if [[ -x "$dotfiles_home/.local/share/fnm/fnm" ]]; then
     info "fnm is already installed"
@@ -152,5 +163,7 @@ install_apt_packages
 link_if_absent "$(command -v fdfind)" "$local_bin/fd"
 install_neovim
 install_eza
+install_bun
+install_devcontainer_cli "$dotfiles_home"
 install_fnm
 install_oh_my_zsh
