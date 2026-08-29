@@ -1,0 +1,30 @@
+name: Bootstrap
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - refactor/dual-platform-bootstrap
+  workflow_dispatch:
+
+jobs:
+  linux:
+    name: Linux (${{ matrix.image }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        image:
+          - debian:bookworm
+          - ubuntu:24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build --build-arg BASE_IMAGE=${{ matrix.image }} -f tests/docker/Dockerfile .
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash -n install.sh scripts/*.sh tests/mac-smoke.sh
+      - run: bash tests/mac-smoke.sh
