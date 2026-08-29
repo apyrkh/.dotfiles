@@ -135,7 +135,39 @@ install_bun() {
 }
 
 install_tree_sitter_cli() {
-  install_bun_global_package "$dotfiles_home" tree-sitter-cli tree-sitter "Tree-sitter CLI"
+  local architecture asset temporary_dir tree_sitter_bin
+
+  tree_sitter_bin="$local_bin/tree-sitter"
+  if [[ -x "$tree_sitter_bin" ]] && "$tree_sitter_bin" --version >/dev/null 2>&1; then
+    info "Tree-sitter CLI is already installed"
+    return
+  fi
+
+  case "$(uname -m)" in
+    x86_64)
+      architecture="x64"
+      ;;
+    aarch64|arm64)
+      architecture="arm64"
+      ;;
+    *)
+      die "unsupported Tree-sitter architecture: $(uname -m)"
+      ;;
+  esac
+
+  temporary_dir="$(mktemp -d)"
+  trap 'rm -rf "$temporary_dir"' RETURN
+  asset="tree-sitter-linux-$architecture.gz"
+
+  info "Downloading current Tree-sitter CLI for $architecture"
+  curl -fsSL "https://github.com/tree-sitter/tree-sitter/releases/latest/download/$asset" -o "$temporary_dir/$asset"
+  mkdir -p "$local_bin"
+  gzip -dc "$temporary_dir/$asset" > "$temporary_dir/tree-sitter"
+  chmod 755 "$temporary_dir/tree-sitter"
+  "$temporary_dir/tree-sitter" --version >/dev/null ||
+    die "downloaded Tree-sitter CLI could not run"
+  mv "$temporary_dir/tree-sitter" "$tree_sitter_bin"
+  info "Installed Tree-sitter CLI"
 }
 
 install_fnm() {
@@ -147,6 +179,37 @@ install_fnm() {
   info "Installing fnm"
   HOME="$dotfiles_home" curl -fsSL https://fnm.vercel.app/install | HOME="$dotfiles_home" bash -s -- --skip-shell
   [[ -x "$dotfiles_home/.local/share/fnm/fnm" ]] || die "fnm installation did not create the expected binary"
+}
+
+install_node_lts() {
+  local fnm_dir="$dotfiles_home/.local/share/fnm"
+  local fnm_bin="$fnm_dir/fnm"
+  local node_wrapper="$local_bin/node"
+  local temporary_file
+
+  if ! FNM_DIR="$fnm_dir" "$fnm_bin" exec --using=default node --version >/dev/null 2>&1; then
+    info "Installing Node.js LTS with fnm"
+    FNM_DIR="$fnm_dir" "$fnm_bin" install --lts --progress never
+    FNM_DIR="$fnm_dir" "$fnm_bin" default lts-latest
+  else
+    info "Node.js LTS is already installed"
+  fi
+
+  mkdir -p "$local_bin"
+  temporary_file="$(mktemp)"
+  cat > "$temporary_file" <<'EOF'
+#!/usr/bin/env bash
+exec "$HOME/.local/share/fnm/fnm" exec --fnm-dir "$HOME/.local/share/fnm" --using=default node "$@"
+EOF
+  chmod 755 "$temporary_file"
+
+  if [[ ! -f "$node_wrapper" ]] || ! cmp -s "$temporary_file" "$node_wrapper"; then
+    mv "$temporary_file" "$node_wrapper"
+  else
+    rm "$temporary_file"
+  fi
+
+  "$node_wrapper" --version >/dev/null || die "Node.js LTS is not available through $node_wrapper"
 }
 
 install_oh_my_zsh() {
@@ -168,7 +231,8 @@ link_if_absent "$(command -v fdfind)" "$local_bin/fd"
 install_neovim
 install_eza
 install_bun
+install_fnm
+install_node_lts
 install_tree_sitter_cli
 install_devcontainer_cli "$dotfiles_home"
-install_fnm
 install_oh_my_zsh

@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         image:
-          - debian:bookworm
+          - debian:trixie
           - ubuntu:24.04
     steps:
       - uses: actions/checkout@v4

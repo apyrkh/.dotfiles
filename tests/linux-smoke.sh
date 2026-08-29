@@ -25,10 +25,12 @@ DOTFILES_HOME="$home_dir" "$dotfiles_dir/install.sh"
 
 export PATH="$home_dir/.bun/bin:$home_dir/.local/bin:$PATH"
 
-for command in bun curl devcontainer fd fdfind fzf gcc gh git make nvim rg tree-sitter unzip zsh; do
+for command in bun curl devcontainer fd fdfind fzf gcc gh git make node nvim rg tree-sitter unzip zsh; do
   assert_command "$command"
 done
 
+node --version
+tree-sitter --version
 [[ -x "$home_dir/.local/bin/eza" ]]
 [[ -x "$home_dir/.local/share/fnm/fnm" ]]
 [[ -d "$home_dir/.oh-my-zsh" ]]
