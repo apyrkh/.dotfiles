@@ -3,7 +3,7 @@ brew "cmake"
 brew "go"
 brew "bun"        # Dev Container CLI package manager
 brew "fnm"        # fast Node.js version manager (Rust-based replacement for nvm)
-brew "uv"         # Python tool manager, used to install the Serena Agent
+brew "uv"         # fast Python package/tool manager
 
 # === neovim (runtime deps) ===
 brew "neovim"

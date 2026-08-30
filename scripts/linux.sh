@@ -328,19 +328,6 @@ install_uv() {
   [[ -x "$local_bin/uv" ]] || die "uv installation did not create the expected binary"
 }
 
-install_serena_agent() {
-  local uv_bin="$local_bin/uv"
-
-  if [[ -x "$local_bin/serena" ]]; then
-    info "Serena Agent is already installed"
-    return
-  fi
-
-  info "Installing Serena Agent with uv"
-  HOME="$dotfiles_home" "$uv_bin" tool install -p 3.13 serena-agent
-  [[ -x "$local_bin/serena" ]] || die "uv did not install Serena Agent"
-}
-
 install_oh_my_zsh() {
   local zsh_dir="$dotfiles_home/.oh-my-zsh"
 
@@ -369,5 +356,4 @@ install_devcontainer_cli "$dotfiles_home"
 install_bun_global_package "$dotfiles_home" @github/copilot copilot "GitHub Copilot CLI"
 install_bun_global_package "$dotfiles_home" @openai/codex codex "OpenAI Codex CLI"
 install_uv
-install_serena_agent
 install_oh_my_zsh

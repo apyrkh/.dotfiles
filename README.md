@@ -90,17 +90,6 @@ gh auth login
 fnm install --lts
 fnm default lts-latest
 
-# Serena Agent — install.sh installs it on Linux; on macOS run manually
-# https://oraios.github.io/serena
-uv tool install -p 3.13 serena-agent  # 3.13: serena's minimum supported version
-
-# per-project, run init in each repo where you want it
-serena init
-
-## maintenance
-uv tool upgrade serena-agent
-uv tool uninstall serena-agent
-
 # peonping (macOS only)
 # https://www.peonping.com
 brew install PeonPing/tap/peon-ping

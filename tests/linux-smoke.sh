@@ -27,7 +27,7 @@ DOTFILES_HOME="$home_dir" "$dotfiles_dir/install.sh"
 export PATH="$home_dir/.bun/bin:$home_dir/.local/bin:$PATH"
 
 for command in bun codex copilot curl devcontainer fd fdfind fzf gcc gh git \
-  lazygit make node npm npx nvim rg serena tree-sitter unzip uv zsh; do
+  lazygit make node npm npx nvim rg tree-sitter unzip uv zsh; do
   assert_command "$command"
 done
 
@@ -35,7 +35,6 @@ node --version
 npm --version
 tree-sitter --version
 uv --version
-serena --help >/dev/null
 [[ -x "$home_dir/.local/bin/eza" ]]
 [[ -x "$home_dir/.local/bin/fx" ]]
 [[ -x "$home_dir/.local/share/fnm/fnm" ]]
