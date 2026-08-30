@@ -35,13 +35,6 @@ formulae+=(
     ripgrep
 )
 
-# === ai ===
-formulae+=(
-    claude
-    copilot-cli
-    codex
-)
-
 # === cli ===
 formulae+=(
     git
@@ -56,6 +49,13 @@ formulae+=(
 
 casks=(
     font-jetbrains-mono-nerd-font
+)
+
+# === ai === (cask-only, no formula exists for these)
+casks+=(
+    claude
+    copilot-cli
+    codex
 )
 
 brew install "${formulae[@]}"

@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ "${OSTYPE:-}" != darwin* ]]; then
-    echo "Error: Work/Home layer is supported on macOS only." >&2
-    exit 1
-fi
-
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 
-"$script_dir/install-work.sh"
+"$script_dir/install-mac-work.sh"
+
+if [[ "$(uname -s)" != "Darwin" ]]; then
+    echo "==> Skipping home layer: macOS only."
+    exit 0
+fi
 
 echo "==> [macOS/Home] Installing personal media & gaming apps..."
 

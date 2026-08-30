@@ -4,7 +4,7 @@ set -euo pipefail
 dotfiles_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 
 echo "== Syntax-checking all entrypoints =="
-bash -n "$dotfiles_dir/install.sh" "$dotfiles_dir/install-work.sh" "$dotfiles_dir/install-home.sh" \
+bash -n "$dotfiles_dir/install.sh" "$dotfiles_dir/install-mac-work.sh" "$dotfiles_dir/install-mac-home.sh" \
   "$dotfiles_dir"/scripts/*.sh
 
 temporary_dir="$(mktemp -d)"
@@ -32,7 +32,7 @@ printf '#!/usr/bin/env bash\nexit 0\n' > "$temporary_dir/bin/agy"
 chmod +x "$temporary_dir/bin/agy"
 
 echo "== Verifying install.sh dispatches to install-mac.sh and symlinks.sh =="
-HOME="$temporary_dir/home" BREW_LOG="$brew_log" PATH="$temporary_dir/bin:$PATH" OSTYPE="darwin23" \
+HOME="$temporary_dir/home" BREW_LOG="$brew_log" PATH="$temporary_dir/bin:$PATH" \
   "$dotfiles_dir/install.sh"
 
 grep -Fq "install --cask font-jetbrains-mono-nerd-font" "$brew_log"

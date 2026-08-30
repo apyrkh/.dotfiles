@@ -105,3 +105,4 @@ openjdk@21
 maven
 awscli
 sops
+postgresql@16

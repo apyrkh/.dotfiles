@@ -5,17 +5,18 @@ script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 
 echo "==> Detecting operating system..."
 
-case "${OSTYPE:-}" in
-  darwin*)
+os="$(uname -s)"
+case "$os" in
+  Darwin)
     echo "==> macOS detected"
     "$script_dir/scripts/install-mac.sh"
     ;;
-  linux-gnu*)
+  Linux)
     echo "==> Linux detected"
-    "$script_dir/scripts/install-linux.sh"
+    "$script_dir/scripts/install-ubuntu.sh"
     ;;
   *)
-    echo "Error: unsupported OS: ${OSTYPE:-unknown}" >&2
+    echo "Error: unsupported OS: $os" >&2
     exit 1
     ;;
 esac

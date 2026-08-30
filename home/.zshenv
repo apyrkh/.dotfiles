@@ -10,3 +10,9 @@ fi
 # only runs for login shells — non-login shells (VS Code terminals, docker exec,
 # CI) need these tools on PATH too.
 path=("$HOME/.bun/bin" "$HOME/.local/bin" "$HOME/.local/share/fnm" $path)
+
+# libpq (psql, pg_dump, ...) is keg-only in Homebrew — never symlinked into
+# the main prefix because it conflicts with the full postgresql formula.
+if command -v brew >/dev/null 2>&1; then
+  path=("$(brew --prefix libpq 2>/dev/null)/bin" $path)
+fi
