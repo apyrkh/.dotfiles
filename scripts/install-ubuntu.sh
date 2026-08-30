@@ -3,6 +3,9 @@ set -euo pipefail
 
 echo "==> [Linux/DevContainer] Installing Base CLI tools via apt-get & standalone installers..."
 
+# `sudo` resets the environment by default, so exporting DEBIAN_FRONTEND alone
+# doesn't reach the root apt-get process — `sudo env VAR=val cmd` is required
+# to actually suppress debconf prompts like tzdata's "Geographic area".
 export DEBIAN_FRONTEND=noninteractive
 
 # Standalone installers below drop binaries into these dirs; export them now
@@ -10,8 +13,8 @@ export DEBIAN_FRONTEND=noninteractive
 # resolves right after being aliased.
 export PATH="$HOME/.bun/bin:$HOME/.local/bin:$HOME/.local/share/fnm:$PATH"
 
-sudo apt-get update -y
-sudo apt-get install -y \
+sudo env DEBIAN_FRONTEND=noninteractive apt-get update -y
+sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y \
     build-essential \
     curl \
     git \
