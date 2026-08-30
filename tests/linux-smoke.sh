@@ -28,11 +28,15 @@ printf 'existing vim configuration\n' > "$home_dir/.vimrc"
 # test runs in plain bash, so export it explicitly before checking commands.
 export PATH="$home_dir/.bun/bin:$home_dir/.local/bin:$home_dir/.local/share/fnm:$PATH"
 
-for command in bash bun curl fd fdfind fzf gcc gh git nvim rg uv zsh; do
+for command in bash bun curl eza fd fdfind fzf gcc gh git go lazygit nvim rg tree-sitter uv zoxide zsh; do
   assert_command "$command"
 done
 
 [[ -x "$home_dir/.local/share/fnm/fnm" ]] || command -v fnm >/dev/null 2>&1
+[[ -d "$home_dir/.oh-my-zsh" ]]
+[[ -d "$home_dir/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]]
+[[ -d "$home_dir/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]]
+[[ -d "$home_dir/.oh-my-zsh/custom/plugins/you-should-use" ]]
 
 assert_link "$dotfiles_dir/home/.config/nvim" "$home_dir/.config/nvim"
 assert_link "$dotfiles_dir/home/.zshenv" "$home_dir/.zshenv"

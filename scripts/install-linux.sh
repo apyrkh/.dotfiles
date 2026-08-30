@@ -16,6 +16,7 @@ sudo apt-get install -y \
     curl \
     git \
     gh \
+    golang-go \
     zsh \
     ripgrep \
     fd-find \
@@ -27,6 +28,7 @@ sudo apt-get install -y \
     tree \
     sqlite3 \
     postgresql-client \
+    zoxide \
     xclip
 
 # Ubuntu's fd-find package installs the binary as "fdfind" (name clash with
@@ -54,8 +56,53 @@ if ! command -v uv &>/dev/null; then
     curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
 
+# eza (modern ls) — not in Ubuntu's default repos; install from upstream release
+if ! command -v eza &>/dev/null; then
+    echo "==> Installing eza..."
+    arch="$(uname -m)"; [[ "$arch" == "aarch64" ]] && arch="aarch64" || arch="x86_64"
+    curl -fsSL "https://github.com/eza-community/eza/releases/latest/download/eza_${arch}-unknown-linux-gnu.tar.gz" \
+        | tar -xz -C "$HOME/.local/bin" ./eza
+fi
+
+# lazygit — not in Ubuntu's default repos; install from upstream release
+if ! command -v lazygit &>/dev/null; then
+    echo "==> Installing lazygit..."
+    arch="$(uname -m)"; [[ "$arch" == "aarch64" ]] && arch="arm64" || arch="x86_64"
+    lazygit_version="$(curl -fsSL "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | sed -n 's/.*"tag_name": *"v\([^"]*\)".*/\1/p')"
+    curl -fsSL "https://github.com/jesseduffield/lazygit/releases/download/v${lazygit_version}/lazygit_${lazygit_version}_linux_${arch}.tar.gz" \
+        | tar -xz -C "$HOME/.local/bin" lazygit
+fi
+
+# tree-sitter-cli — not in Ubuntu's default repos; install from upstream release
+if ! command -v tree-sitter &>/dev/null; then
+    echo "==> Installing tree-sitter-cli..."
+    arch="$(uname -m)"; [[ "$arch" == "aarch64" ]] && arch="arm64" || arch="x64"
+    curl -fsSL "https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-${arch}.gz" \
+        | gunzip > "$HOME/.local/bin/tree-sitter"
+    chmod +x "$HOME/.local/bin/tree-sitter"
+fi
+
 # AntiGravity CLI (agy)
 if ! command -v agy &>/dev/null; then
     echo "==> Installing AntiGravity CLI (agy)..."
     curl -fsSL https://antigravity.google/cli/install.sh | bash
 fi
+
+# Oh My Zsh + plugins (.zshrc expects these to exist)
+if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+    echo "==> Installing Oh My Zsh..."
+    RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+
+plugins_dir="$HOME/.oh-my-zsh/custom/plugins"
+# Plain (not associative) array for portability across shells/bash versions.
+zsh_plugins=(
+    "zsh-autosuggestions|https://github.com/zsh-users/zsh-autosuggestions"
+    "zsh-syntax-highlighting|https://github.com/zsh-users/zsh-syntax-highlighting"
+    "you-should-use|https://github.com/MichaelAquilina/zsh-you-should-use"
+)
+for entry in "${zsh_plugins[@]}"; do
+    plugin="${entry%%|*}"
+    repo="${entry#*|}"
+    [[ -d "$plugins_dir/$plugin" ]] || git clone --depth=1 "$repo" "$plugins_dir/$plugin"
+done
