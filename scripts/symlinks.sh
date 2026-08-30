@@ -21,7 +21,6 @@ files=(
     ".vimrc"
     ".zshenv"
     ".zshrc"
-    ".zprofile"
 )
 
 create_backup_dir() {
