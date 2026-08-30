@@ -15,4 +15,4 @@ COPY --chown=dotfiles:dotfiles . /opt/dotfiles
 USER dotfiles
 ENV HOME=/home/dotfiles
 
-RUN /opt/dotfiles/tests/linux-smoke.sh /opt/dotfiles
+RUN /opt/dotfiles/tests/linux-smoke.sh

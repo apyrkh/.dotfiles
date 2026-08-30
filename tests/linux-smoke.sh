@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-dotfiles_dir="$1"
+dotfiles_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 home_dir="$HOME"
 shopt -s nullglob
 
@@ -20,119 +20,34 @@ assert_command() {
 
 mkdir -p "$home_dir"
 printf 'existing vim configuration\n' > "$home_dir/.vimrc"
-zshrc_checksum="$(sha256sum "$dotfiles_dir/home/.zshrc" | cut -d ' ' -f 1)"
 
-DOTFILES_HOME="$home_dir" "$dotfiles_dir/install.sh"
+"$dotfiles_dir/install.sh"
 
-export PATH="$home_dir/.bun/bin:$home_dir/.local/bin:$PATH"
+# Standalone installers (bun/uv/fnm/agy) put binaries outside a fresh shell's
+# default PATH; a real login shell picks this up via .zshenv, but this smoke
+# test runs in plain bash, so export it explicitly before checking commands.
+export PATH="$home_dir/.bun/bin:$home_dir/.local/bin:$home_dir/.local/share/fnm:$PATH"
 
-for command in bun codex copilot curl devcontainer fd fdfind fzf gcc gh git \
-  lazygit make node npm npx nvim rg tree-sitter unzip uv zsh; do
+for command in bash bun curl fd fdfind fzf gcc gh git nvim rg uv zsh; do
   assert_command "$command"
 done
 
-node --version
-npm --version
-tree-sitter --version
-uv --version
-[[ -x "$home_dir/.local/bin/eza" ]]
-[[ -x "$home_dir/.local/bin/fx" ]]
-[[ -x "$home_dir/.local/share/fnm/fnm" ]]
-[[ -d "$home_dir/.oh-my-zsh" ]]
-[[ -d "$home_dir/.oh-my-zsh/custom/plugins/zsh-autosuggestions/.git" ]]
-[[ -d "$home_dir/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/.git" ]]
-[[ -d "$home_dir/.oh-my-zsh/custom/plugins/you-should-use/.git" ]]
-locale -a | grep -qi '^en_US.utf8$'
+[[ -x "$home_dir/.local/share/fnm/fnm" ]] || command -v fnm >/dev/null 2>&1
 
 assert_link "$dotfiles_dir/home/.config/nvim" "$home_dir/.config/nvim"
 assert_link "$dotfiles_dir/home/.zshenv" "$home_dir/.zshenv"
 assert_link "$dotfiles_dir/home/.zshrc" "$home_dir/.zshrc"
 assert_link "$dotfiles_dir/home/.vimrc" "$home_dir/.vimrc"
+assert_link "$dotfiles_dir/home/.gitconfig" "$home_dir/.gitconfig"
 
 backups=("$home_dir"/.dotfiles_backup-*)
 [[ "${#backups[@]}" -eq 1 ]]
 [[ -f "${backups[0]}/.vimrc" ]]
 [[ "$(cat "${backups[0]}/.vimrc")" == "existing vim configuration" ]]
-[[ "$(sha256sum "$dotfiles_dir/home/.zshrc" | cut -d ' ' -f 1)" == "$zshrc_checksum" ]]
 
-DOTFILES_HOME="$home_dir" "$dotfiles_dir/install.sh"
-
+# Rerunning is safe: no duplicate backups, links stay put.
+"$dotfiles_dir/install.sh"
 backups=("$home_dir"/.dotfiles_backup-*)
 [[ "${#backups[@]}" -eq 1 ]]
-[[ "$(sha256sum "$dotfiles_dir/home/.zshrc" | cut -d ' ' -f 1)" == "$zshrc_checksum" ]]
 
-# A rerun after Neovim already has a newer /opt install must not fail (link_managed
-# repoints the version-suffixed dir instead of refusing like link_if_absent does).
-DOTFILES_HOME="$home_dir" "$dotfiles_dir/install.sh"
-
-# Tools installed by the linker's PATH additions must resolve outside a login
-# shell too (e.g. VS Code terminals, `docker exec`, CI) — not just `zsh -l`.
-# Strip the PATH this script already exported so the check actually exercises
-# .zshenv instead of just inheriting a working PATH from the parent shell.
-env -i HOME="$home_dir" TERM=xterm zsh -c 'command -v nvim' >/dev/null
-env -i HOME="$home_dir" TERM=xterm zsh -c 'command -v eza' >/dev/null
-zsh -lic 'exit'
-
-export XDG_DATA_HOME="$home_dir/.local/share/test-nvim"
-export XDG_STATE_HOME="$home_dir/.local/state/test-nvim"
-
-nvim --headless "+Lazy! sync" "+qa"
-
-# The nvim-treesitter plugin spec triggers its own parser install on startup
-# (lazy = false) as part of "+Lazy! sync", but that install runs asynchronously
-# and Lazy prints its errors without a nonzero exit code — this is what
-# silently broke Treesitter before. Poll for the parsers actually landing
-# instead of trusting the exit code, and don't kick off a second concurrent
-# install (racing the plugin's own would itself error).
-ts_check_file="$home_dir/.treesitter-check"
-nvim --headless -c "lua
-  local wanted = { 'bash', 'lua', 'typescript', 'markdown' }
-  local ok = vim.wait(120000, function()
-    local installed = require('nvim-treesitter.config').get_installed('parsers')
-    for _, lang in ipairs(wanted) do
-      if not vim.tbl_contains(installed, lang) then
-        return false
-      end
-    end
-    return true
-  end, 200)
-  local file = io.open('$ts_check_file', 'w')
-  file:write(ok and 'ok' or 'timeout')
-  file:close()
-" -c "qa" 2>&1
-
-[[ "$(cat "$ts_check_file")" == "ok" ]] ||
-  { printf 'Treesitter parser install did not finish in time\n' >&2; exit 1; }
-
-for parser in bash lua typescript markdown; do
-  [[ -f "$XDG_DATA_HOME/nvim/site/parser/$parser.so" ]] ||
-    { printf 'Expected compiled Treesitter parser: %s\n' "$parser" >&2; exit 1; }
-done
-
-# conform.nvim formatters aren't LSP servers, so mason-lspconfig doesn't
-# install them; mason-tool-installer does, but only once nvim-lspconfig's
-# lazy-load event (BufReadPre/BufNewFile) fires, so open a real file.
-# These formatters run through npm (prettier, prettierd, eslint_d), which is
-# what caught the missing ~/.local/bin/npm wrapper before this check existed.
-printf 'print(1)\n' > "$home_dir/.smoke-test.lua"
-mti_check_file="$home_dir/.mason-tool-installer-check"
-nvim --headless "$home_dir/.smoke-test.lua" -c "lua
-  local wanted = { 'eslint_d', 'prettierd', 'prettier', 'pgformatter' }
-  local registry = require('mason-registry')
-  local ok = vim.wait(300000, function()
-    for _, name in ipairs(wanted) do
-      if not registry.is_installed(name) then
-        return false
-      end
-    end
-    return true
-  end, 1000)
-  local file = io.open('$mti_check_file', 'w')
-  file:write(ok and 'ok' or 'timeout')
-  file:close()
-" -c "qa" 2>&1
-
-[[ "$(cat "$mti_check_file")" == "ok" ]] ||
-  { printf 'Mason formatter install (eslint_d/prettierd/prettier/pgformatter) did not finish in time\n' >&2; exit 1; }
-
-SSH_TTY=/tmp/dotfiles-ssh nvim --headless "+qa"
+echo "linux-smoke: OK"

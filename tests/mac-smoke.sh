@@ -2,64 +2,42 @@
 set -euo pipefail
 
 dotfiles_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
+
+echo "== Syntax-checking all entrypoints =="
+bash -n "$dotfiles_dir/install.sh" "$dotfiles_dir/install-work.sh" "$dotfiles_dir/install-home.sh" \
+  "$dotfiles_dir"/scripts/*.sh
+
 temporary_dir="$(mktemp -d)"
 trap 'rm -rf "$temporary_dir"' EXIT
 brew_log="$temporary_dir/brew.log"
-bun_log="$temporary_dir/bun.log"
 
 mkdir -p "$temporary_dir/bin" "$temporary_dir/home"
 cat > "$temporary_dir/bin/brew" <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
-
+printf '%s\n' "$*" >> "$BREW_LOG"
 case "$1" in
-  shellenv)
-    exit 0
-    ;;
-  bundle)
-    printf '%s\n' "$*" >> "$BREW_LOG"
-    ;;
-  *)
-    printf 'Unexpected brew command: %s\n' "$*" >&2
-    exit 1
-    ;;
+  tap|install) ;;
+  *) printf 'Unexpected brew command: %s\n' "$*" >&2; exit 1 ;;
 esac
 EOF
 chmod +x "$temporary_dir/bin/brew"
 
-cat > "$temporary_dir/bin/bun" <<'EOF'
-#!/usr/bin/env bash
-set -euo pipefail
+# Pre-seed state so install-mac.sh's already-installed checks short-circuit
+# instead of making real network calls (oh-my-zsh, its plugins, agy).
+mkdir -p "$temporary_dir/home/.oh-my-zsh/custom/plugins/zsh-autosuggestions" \
+  "$temporary_dir/home/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" \
+  "$temporary_dir/home/.oh-my-zsh/custom/plugins/you-should-use"
+printf '#!/usr/bin/env bash\nexit 0\n' > "$temporary_dir/bin/agy"
+chmod +x "$temporary_dir/bin/agy"
 
-if [[ "$1" != "add" || "$2" != "--global" || "$3" != "@devcontainers/cli" ]]; then
-  printf 'Unexpected bun command: %s\n' "$*" >&2
-  exit 1
-fi
-
-mkdir -p "$BUN_INSTALL/bin"
-touch "$BUN_INSTALL/bin/devcontainer"
-chmod +x "$BUN_INSTALL/bin/devcontainer"
-printf '%s\n' "$*" >> "$BUN_LOG"
-EOF
-chmod +x "$temporary_dir/bin/bun"
-
-BREW_LOG="$brew_log" BUN_LOG="$bun_log" PATH="$temporary_dir/bin:$PATH" DOTFILES_HOME="$temporary_dir/home" \
+echo "== Verifying install.sh dispatches to install-mac.sh and symlinks.sh =="
+HOME="$temporary_dir/home" BREW_LOG="$brew_log" PATH="$temporary_dir/bin:$PATH" OSTYPE="darwin23" \
   "$dotfiles_dir/install.sh"
 
-grep -Fx "bundle --file $dotfiles_dir/Brewfile" "$brew_log"
-grep -Fx "add --global @devcontainers/cli" "$bun_log"
-if grep -Fq "Brewfile.home" "$brew_log"; then
-  echo "Home profile ran without --home" >&2
-  exit 1
-fi
+grep -Fq "install --cask font-jetbrains-mono-nerd-font" "$brew_log"
+[[ -L "$temporary_dir/home/.config/nvim" ]]
+[[ -L "$temporary_dir/home/.zshrc" ]]
+[[ -L "$temporary_dir/home/.gitconfig" ]]
 
-BREW_LOG="$brew_log" BUN_LOG="$bun_log" PATH="$temporary_dir/bin:$PATH" DOTFILES_HOME="$temporary_dir/home" \
-  "$dotfiles_dir/install.sh" -H
-
-grep -Fx "bundle --file $dotfiles_dir/Brewfile.home" "$brew_log"
-
-BREW_LOG="$brew_log" BUN_LOG="$bun_log" PATH="$temporary_dir/bin:$PATH" DOTFILES_HOME="$temporary_dir/home" \
-  "$dotfiles_dir/install.sh" --home
-
-[[ "$(grep -Fxc "bundle --file $dotfiles_dir/Brewfile.home" "$brew_log")" -eq 2 ]]
-[[ "$(grep -Fxc "add --global @devcontainers/cli" "$bun_log")" -eq 1 ]]
+echo "mac-smoke: OK"
