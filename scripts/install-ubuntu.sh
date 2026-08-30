@@ -5,7 +5,9 @@ echo "==> [Linux/DevContainer] Installing Base CLI tools via apt-get & standalon
 
 # `sudo` resets the environment by default, so exporting DEBIAN_FRONTEND alone
 # doesn't reach the root apt-get process — `sudo env VAR=val cmd` is required
-# to actually suppress debconf prompts like tzdata's "Geographic area".
+# to actually suppress debconf prompts like tzdata's "Geographic area". With
+# noninteractive and no debconf preseed, tzdata's own default answer is
+# Etc/UTC — the standard choice for containers/CI regardless of where you are.
 export DEBIAN_FRONTEND=noninteractive
 
 # Standalone installers below drop binaries into these dirs; export them now
