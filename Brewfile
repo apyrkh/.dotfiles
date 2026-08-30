@@ -3,6 +3,7 @@ brew "cmake"
 brew "go"
 brew "bun"        # Dev Container CLI package manager
 brew "fnm"        # fast Node.js version manager (Rust-based replacement for nvm)
+brew "uv"         # Python tool manager, used to install the Serena Agent
 
 # === neovim (runtime deps) ===
 brew "neovim"
@@ -11,6 +12,7 @@ brew "luarocks"
 brew "fzf"
 brew "fd"
 brew "ripgrep"
+cask "font-jetbrains-mono-nerd-font"  # nvim-web-devicons glyphs
 
 brew "copilot-cli"    # GitHub Copilot CLI
 cask "codex"          # OpenAI Codex CLI

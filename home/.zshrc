@@ -74,7 +74,6 @@ vv() {
 # }
 
 # === CUSTOM SCRIPTS ===
-path=("$HOME/.jsvu/bin" $path)
 source ~/.config/zsh/scripts/timed.zsh  # time wrapper with formatted output (timed)
 
 # === LOCAL OVERRIDES ===

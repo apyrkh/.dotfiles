@@ -90,10 +90,11 @@ gh auth login
 fnm install --lts
 fnm default lts-latest
 
-# Serena Agent (per-project, run init in repos where you want it)
+# Serena Agent — install.sh installs it on Linux; on macOS run manually
 # https://oraios.github.io/serena
-curl -LsSf https://astral.sh/uv/install.sh | sh
 uv tool install -p 3.13 serena-agent  # 3.13: serena's minimum supported version
+
+# per-project, run init in each repo where you want it
 serena init
 
 ## maintenance

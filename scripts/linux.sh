@@ -16,19 +16,15 @@ install_apt_packages() {
   run_as_root env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     ca-certificates \
     build-essential \
-    cmake \
     curl \
     fd-find \
     fzf \
     git \
     gh \
-    golang-go \
     locales \
     luarocks \
-    mtr-tiny \
     ripgrep \
     tar \
-    time \
     tree \
     unzip \
     wl-clipboard \
@@ -273,11 +269,34 @@ install_fnm() {
   [[ -x "$dotfiles_home/.local/share/fnm/fnm" ]] || die "fnm installation did not create the expected binary"
 }
 
+# Writes a stable ~/.local/bin/<name> launcher that runs <name> through fnm's
+# default Node version, so it works the same whether invoked from a shell,
+# Mason (which spawns npm/npx to install LSP servers and formatters), or any
+# other non-interactive process that doesn't source `fnm env`.
+install_fnm_bin_wrapper() {
+  local name="$1"
+  local wrapper="$local_bin/$name"
+  local temporary_file
+
+  mkdir -p "$local_bin"
+  temporary_file="$(mktemp)"
+  cat > "$temporary_file" <<EOF
+#!/usr/bin/env bash
+exec "\$HOME/.local/share/fnm/fnm" exec --fnm-dir "\$HOME/.local/share/fnm" --using=default $name "\$@"
+EOF
+  chmod 755 "$temporary_file"
+
+  if [[ ! -f "$wrapper" ]] || ! cmp -s "$temporary_file" "$wrapper"; then
+    mv "$temporary_file" "$wrapper"
+  else
+    rm "$temporary_file"
+  fi
+}
+
 install_node_lts() {
   local fnm_dir="$dotfiles_home/.local/share/fnm"
   local fnm_bin="$fnm_dir/fnm"
-  local node_wrapper="$local_bin/node"
-  local temporary_file
+  local name
 
   if ! FNM_DIR="$fnm_dir" "$fnm_bin" exec --using=default node --version >/dev/null 2>&1; then
     info "Installing Node.js LTS with fnm"
@@ -287,21 +306,39 @@ install_node_lts() {
     info "Node.js LTS is already installed"
   fi
 
-  mkdir -p "$local_bin"
-  temporary_file="$(mktemp)"
-  cat > "$temporary_file" <<'EOF'
-#!/usr/bin/env bash
-exec "$HOME/.local/share/fnm/fnm" exec --fnm-dir "$HOME/.local/share/fnm" --using=default node "$@"
-EOF
-  chmod 755 "$temporary_file"
+  # npm/npx are needed too: Mason installs several LSP servers and
+  # conform.nvim formatters (prettier, prettierd, eslint_d) through npm.
+  for name in node npm npx; do
+    install_fnm_bin_wrapper "$name"
+    "$local_bin/$name" --version >/dev/null || die "$name is not available through $local_bin/$name"
+  done
+}
 
-  if [[ ! -f "$node_wrapper" ]] || ! cmp -s "$temporary_file" "$node_wrapper"; then
-    mv "$temporary_file" "$node_wrapper"
-  else
-    rm "$temporary_file"
+install_uv() {
+  if [[ -x "$local_bin/uv" ]] || command -v uv >/dev/null 2>&1; then
+    info "uv is already installed"
+    return
   fi
 
-  "$node_wrapper" --version >/dev/null || die "Node.js LTS is not available through $node_wrapper"
+  info "Installing uv"
+  # UV_NO_MODIFY_PATH: PATH is already managed by .zshenv; without this the
+  # installer appends a source line to the tracked ~/.zshrc (a symlink into
+  # the repo) and mutates the dotfile on disk.
+  curl -LsSf https://astral.sh/uv/install.sh | HOME="$dotfiles_home" UV_NO_MODIFY_PATH=1 sh
+  [[ -x "$local_bin/uv" ]] || die "uv installation did not create the expected binary"
+}
+
+install_serena_agent() {
+  local uv_bin="$local_bin/uv"
+
+  if [[ -x "$local_bin/serena" ]]; then
+    info "Serena Agent is already installed"
+    return
+  fi
+
+  info "Installing Serena Agent with uv"
+  HOME="$dotfiles_home" "$uv_bin" tool install -p 3.13 serena-agent
+  [[ -x "$local_bin/serena" ]] || die "uv did not install Serena Agent"
 }
 
 install_oh_my_zsh() {
@@ -331,4 +368,6 @@ install_tree_sitter_cli
 install_devcontainer_cli "$dotfiles_home"
 install_bun_global_package "$dotfiles_home" @github/copilot copilot "GitHub Copilot CLI"
 install_bun_global_package "$dotfiles_home" @openai/codex codex "OpenAI Codex CLI"
+install_uv
+install_serena_agent
 install_oh_my_zsh

@@ -1,5 +1,4 @@
-# === fonts and terminal ===
-cask "font-jetbrains-mono-nerd-font"
+# === terminal ===
 # cask "wezterm"   # using nightly manually; uncomment when switching to stable
 cask "wezterm@nightly"
 

@@ -27,12 +27,15 @@ DOTFILES_HOME="$home_dir" "$dotfiles_dir/install.sh"
 export PATH="$home_dir/.bun/bin:$home_dir/.local/bin:$PATH"
 
 for command in bun codex copilot curl devcontainer fd fdfind fzf gcc gh git \
-  lazygit make node nvim rg tree-sitter unzip zsh; do
+  lazygit make node npm npx nvim rg serena tree-sitter unzip uv zsh; do
   assert_command "$command"
 done
 
 node --version
+npm --version
 tree-sitter --version
+uv --version
+serena --help >/dev/null
 [[ -x "$home_dir/.local/bin/eza" ]]
 [[ -x "$home_dir/.local/bin/fx" ]]
 [[ -x "$home_dir/.local/share/fnm/fnm" ]]
@@ -106,5 +109,31 @@ for parser in bash lua typescript markdown; do
   [[ -f "$XDG_DATA_HOME/nvim/site/parser/$parser.so" ]] ||
     { printf 'Expected compiled Treesitter parser: %s\n' "$parser" >&2; exit 1; }
 done
+
+# conform.nvim formatters aren't LSP servers, so mason-lspconfig doesn't
+# install them; mason-tool-installer does, but only once nvim-lspconfig's
+# lazy-load event (BufReadPre/BufNewFile) fires, so open a real file.
+# These formatters run through npm (prettier, prettierd, eslint_d), which is
+# what caught the missing ~/.local/bin/npm wrapper before this check existed.
+printf 'print(1)\n' > "$home_dir/.smoke-test.lua"
+mti_check_file="$home_dir/.mason-tool-installer-check"
+nvim --headless "$home_dir/.smoke-test.lua" -c "lua
+  local wanted = { 'eslint_d', 'prettierd', 'prettier', 'pgformatter' }
+  local registry = require('mason-registry')
+  local ok = vim.wait(300000, function()
+    for _, name in ipairs(wanted) do
+      if not registry.is_installed(name) then
+        return false
+      end
+    end
+    return true
+  end, 1000)
+  local file = io.open('$mti_check_file', 'w')
+  file:write(ok and 'ok' or 'timeout')
+  file:close()
+" -c "qa" 2>&1
+
+[[ "$(cat "$mti_check_file")" == "ok" ]] ||
+  { printf 'Mason formatter install (eslint_d/prettierd/prettier/pgformatter) did not finish in time\n' >&2; exit 1; }
 
 SSH_TTY=/tmp/dotfiles-ssh nvim --headless "+qa"
