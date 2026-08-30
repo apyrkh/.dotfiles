@@ -4,30 +4,44 @@ set -euo pipefail
 dotfiles_dir="$1"
 dotfiles_home="$2"
 local_bin="$dotfiles_home/.local/bin"
-nvim_min_version="0.11.0"
+# nvim-treesitter (main branch) requires the latest stable/nightly Neovim; keep in step with it.
+nvim_min_version="0.12.0"
 
 # shellcheck source=lib.sh
 source "$dotfiles_dir/scripts/lib.sh"
 
 install_apt_packages() {
-  info "Installing Debian/Ubuntu packages"
+  info "Installing Ubuntu packages"
   run_as_root env DEBIAN_FRONTEND=noninteractive apt-get update
   run_as_root env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     ca-certificates \
     build-essential \
+    cmake \
     curl \
     fd-find \
     fzf \
     git \
     gh \
+    golang-go \
+    locales \
+    luarocks \
+    mtr-tiny \
     ripgrep \
     tar \
+    time \
+    tree \
     unzip \
     wl-clipboard \
     xclip \
     xz-utils \
     zoxide \
     zsh
+
+  # Neovim config assumes en_US.UTF-8, matching macOS/Homebrew's default.
+  if ! locale -a 2>/dev/null | grep -qi '^en_US.utf8$'; then
+    run_as_root sed -i 's/^# *\(en_US.UTF-8 UTF-8\)/\1/' /etc/locale.gen
+    run_as_root locale-gen en_US.UTF-8
+  fi
 }
 
 version_at_least() {
@@ -85,7 +99,7 @@ install_neovim() {
     run_as_root mv "$extracted_dir" "$install_dir"
   fi
 
-  link_if_absent "$install_dir/bin/nvim" "$local_bin/nvim"
+  link_managed "$install_dir/bin/nvim" "$local_bin/nvim"
   info "Installed Neovim $installed_version"
 }
 
@@ -121,6 +135,84 @@ install_eza() {
   mkdir -p "$local_bin"
   mv "$temporary_dir/eza" "$local_bin/eza"
   info "Installed eza"
+}
+
+latest_github_tag() {
+  local repository="$1"
+
+  curl -fsSL "https://api.github.com/repos/$repository/releases/latest" |
+    sed -n 's/.*"tag_name": *"\([^"]*\)".*/\1/p'
+}
+
+install_lazygit() {
+  local architecture asset temporary_dir tag version
+
+  if [[ -x "$local_bin/lazygit" ]] || command -v lazygit >/dev/null 2>&1; then
+    info "lazygit is already installed"
+    return
+  fi
+
+  case "$(uname -m)" in
+    x86_64)
+      architecture="x86_64"
+      ;;
+    aarch64|arm64)
+      architecture="arm64"
+      ;;
+    *)
+      die "unsupported lazygit architecture: $(uname -m)"
+      ;;
+  esac
+
+  tag="$(latest_github_tag jesseduffield/lazygit)"
+  [[ -n "$tag" ]] || die "could not determine latest lazygit release"
+  version="${tag#v}"
+
+  temporary_dir="$(mktemp -d)"
+  trap 'rm -rf "$temporary_dir"' RETURN
+  asset="lazygit_${version}_linux_$architecture.tar.gz"
+
+  info "Downloading current lazygit release for $architecture"
+  curl -fsSL "https://github.com/jesseduffield/lazygit/releases/download/$tag/$asset" -o "$temporary_dir/$asset"
+  tar -xzf "$temporary_dir/$asset" -C "$temporary_dir" lazygit
+  [[ -x "$temporary_dir/lazygit" ]] || die "lazygit archive did not contain the binary"
+
+  mkdir -p "$local_bin"
+  mv "$temporary_dir/lazygit" "$local_bin/lazygit"
+  info "Installed lazygit"
+}
+
+install_fx() {
+  local architecture asset temporary_dir
+
+  if [[ -x "$local_bin/fx" ]] || command -v fx >/dev/null 2>&1; then
+    info "fx is already installed"
+    return
+  fi
+
+  case "$(uname -m)" in
+    x86_64)
+      architecture="amd64"
+      ;;
+    aarch64|arm64)
+      architecture="arm64"
+      ;;
+    *)
+      die "unsupported fx architecture: $(uname -m)"
+      ;;
+  esac
+
+  temporary_dir="$(mktemp -d)"
+  trap 'rm -rf "$temporary_dir"' RETURN
+  asset="fx_linux_$architecture"
+
+  info "Downloading current fx release for $architecture"
+  curl -fsSL "https://github.com/antonmedv/fx/releases/latest/download/$asset" -o "$temporary_dir/$asset"
+
+  mkdir -p "$local_bin"
+  mv "$temporary_dir/$asset" "$local_bin/fx"
+  chmod +x "$local_bin/fx"
+  info "Installed fx"
 }
 
 install_bun() {
@@ -230,9 +322,13 @@ install_apt_packages
 link_if_absent "$(command -v fdfind)" "$local_bin/fd"
 install_neovim
 install_eza
+install_lazygit
+install_fx
 install_bun
 install_fnm
 install_node_lts
 install_tree_sitter_cli
 install_devcontainer_cli "$dotfiles_home"
+install_bun_global_package "$dotfiles_home" @github/copilot copilot "GitHub Copilot CLI"
+install_bun_global_package "$dotfiles_home" @openai/codex codex "OpenAI Codex CLI"
 install_oh_my_zsh

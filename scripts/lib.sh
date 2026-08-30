@@ -56,6 +56,25 @@ link_if_absent() {
   ln -s "$source_path" "$target_path"
 }
 
+# Like link_if_absent, but re-points a link the installer owns (e.g. a version-suffixed
+# tool directory in /opt) instead of refusing. Only use this for installer-managed
+# targets; user config keeps the hard failure in link_if_absent.
+link_managed() {
+  local source_path="$1"
+  local target_path="$2"
+
+  if [[ -L "$target_path" ]] && [[ "$source_path" -ef "$target_path" ]]; then
+    return
+  fi
+
+  if [[ -e "$target_path" && ! -L "$target_path" ]]; then
+    die "refusing to replace existing non-symlink path: $target_path"
+  fi
+
+  mkdir -p "$(dirname "$target_path")"
+  ln -sfn "$source_path" "$target_path"
+}
+
 find_bun() {
   local dotfiles_home="$1"
   local candidate

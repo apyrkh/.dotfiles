@@ -19,6 +19,7 @@ files=(
   ".config/zsh"
   ".gitconfig"
   ".vimrc"
+  ".zshenv"
   ".zshrc"
   ".zprofile"
 )

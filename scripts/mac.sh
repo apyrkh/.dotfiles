@@ -24,9 +24,8 @@ find_brew() {
 brew_bin="$(find_brew || true)"
 if [[ -z "$brew_bin" ]]; then
   info "Installing Homebrew"
-  if [[ "${EUID:-$(id -u)}" -ne 0 ]]; then
-    run_as_root true
-  fi
+  # Homebrew's own installer prompts for sudo itself when it needs elevation
+  # (e.g. creating /opt/homebrew); don't require passwordless sudo up front.
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   brew_bin="$(find_brew)" || die "Homebrew installation completed but brew was not found"
 fi

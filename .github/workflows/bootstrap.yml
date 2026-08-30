@@ -10,17 +10,11 @@ on:
 
 jobs:
   linux:
-    name: Linux (${{ matrix.image }})
+    name: Linux (Ubuntu 24.04)
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        image:
-          - debian:trixie
-          - ubuntu:24.04
     steps:
       - uses: actions/checkout@v4
-      - run: docker build --build-arg BASE_IMAGE=${{ matrix.image }} -f tests/docker/Dockerfile .
+      - run: docker build -f tests/docker/Dockerfile .
 
   macos:
     runs-on: macos-latest

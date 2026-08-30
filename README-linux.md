@@ -1,6 +1,6 @@
-# Debian/Ubuntu Linux setup
+# Ubuntu Linux setup
 
-Current Debian stable (Trixie) and Ubuntu 24.04 LTS or newer are supported. This path is for Dev Containers and headless remote environments as well as regular Linux hosts.
+Only Ubuntu 24.04+ is supported (matching the base image used by `.devcontainer`). This path is for Dev Containers and headless remote environments as well as regular Ubuntu hosts.
 
 ```bash
 git clone https://github.com/apyrkh/.dotfiles ~/.dotfiles
@@ -8,15 +8,15 @@ cd ~/.dotfiles
 ./install.sh
 ```
 
-The installer needs root or passwordless `sudo`. It sets `DEBIAN_FRONTEND=noninteractive` and installs the required terminal tools without prompts: `ripgrep`, `fd-find`, `fzf`, `git`, `curl`, `build-essential`, `tree-sitter-cli`, `unzip`, `zsh`, clipboard providers, and the other tools used by the shared Zsh setup. It installs a current upstream Neovim release because the configuration requires newer APIs than distro Neovim packages may provide.
+The installer needs root or passwordless `sudo`. It sets `DEBIAN_FRONTEND=noninteractive` and installs the required terminal tools without prompts: `ripgrep`, `fd-find`, `fzf`, `git`, `gh`, `curl`, `build-essential`, `cmake`, `go`, `luarocks`, `tree`, `time`, `mtr-tiny`, `unzip`, `zsh`, the `en_US.UTF-8` locale, and clipboard providers. It installs a current upstream Neovim release because the configuration requires newer APIs than distro Neovim packages may provide.
 
-It creates `~/.local/bin/fd` for Debian/Ubuntu's `fdfind` command and adds the local bin directory to Zsh's path. It installs `fnm`, uses it to install the Node.js LTS release, and provides a stable `~/.local/bin/node` launcher for headless tools such as Neovim. It downloads the upstream Tree-sitter CLI to `~/.local/bin`, which supports Debian releases where an apt package or Bun's binary is unavailable. Bun is installed with its official installer and installs `@devcontainers/cli` globally; the resulting `devcontainer` command is in `~/.bun/bin`. It also installs Oh My Zsh, its configured plugins, and `eza`. It does not run `chsh`; change the login shell manually if required:
+It creates `~/.local/bin/fd` for Ubuntu's `fdfind` command and adds `~/.local/bin` to Zsh's path via `.zshenv` (read by every shell, not just login ones). It installs `fnm`, uses it to install the Node.js LTS release, and provides a stable `~/.local/bin/node` launcher for headless tools such as Neovim and Mason (LSP installer). It downloads the upstream Tree-sitter CLI, `eza`, `lazygit`, and `fx` straight from their GitHub releases to `~/.local/bin`, since none of those are available (or current enough) via apt on Ubuntu. Bun is installed with its official installer, then runs `bun add --global` for `@devcontainers/cli`, `@github/copilot`, and `@openai/codex` — giving you `devcontainer`, `copilot`, and `codex` in `~/.bun/bin`. It also installs Oh My Zsh and its configured plugins. It does not run `chsh`; change the login shell manually if required:
 
 ```bash
 chsh -s "$(command -v zsh)"
 ```
 
-`./install.sh --home` is macOS-only and fails clearly on Linux. Run `./install.sh --skip-packages` when container image provisioning already supplied packages.
+`./install.sh --home` is macOS-only and fails clearly on Linux. Run `./install.sh --skip-packages` when container image provisioning already supplied packages. Rerunning the installer is safe: it does not require `colima`, `docker`, or `postgresql@16` — those macOS-only Brewfile entries have no Linux equivalent here.
 
 ## Clipboard behavior
 
@@ -24,7 +24,7 @@ Neovim uses the native clipboard provider when `xclip` or `wl-copy` is available
 
 ## Dev Container
 
-Open this repository with the included `.devcontainer/devcontainer.json`. The post-create command runs the same bootstrap as the `dev` user, so the configuration is linked in that container user’s home.
+Open this repository with the included `.devcontainer/devcontainer.json`. The image renames the base image's existing uid 1000 user (`vscode`) to `dev` rather than creating a new user at a different uid, so the bind-mounted workspace keeps consistent ownership. The post-create command runs the same bootstrap as the `dev` user, so the configuration is linked in that container user's home.
 
 Start or rebuild it with:
 
@@ -41,11 +41,10 @@ docker stop <container-id>
 
 ## Isolated validation
 
-The Docker smoke test uses a disposable Debian or Ubuntu image and runs the installer twice:
+The Docker smoke test uses a disposable Ubuntu 24.04 image and runs the installer three times (fresh install, no-op rerun, rerun after a Neovim install is already in place):
 
 ```bash
-docker build --build-arg BASE_IMAGE=debian:trixie -f tests/docker/Dockerfile .
-docker build --build-arg BASE_IMAGE=ubuntu:24.04 -f tests/docker/Dockerfile .
+docker build -f tests/docker/Dockerfile .
 ```
 
-It verifies required commands, links, the backup behavior, repeatability, and headless Neovim plugin synchronization. GitHub Actions runs the same two-image matrix. Do not run these provisioning tests against a local host home.
+It verifies required commands, links, the backup behavior, repeatability, and that Neovim actually compiles and loads Treesitter parsers headlessly — not just that `Lazy! sync` exits zero, since that command reports build failures without a nonzero exit code. GitHub Actions runs the same build. Do not run these provisioning tests against a local host home.

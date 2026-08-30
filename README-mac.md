@@ -10,7 +10,7 @@ cd ~/.dotfiles
 ./install.sh
 ```
 
-It installs Homebrew when needed and reconciles `Brewfile`. This profile contains development, Neovim, Git, terminal, container, and database tools. It does not install personal media tools, games, or consumer desktop applications.
+It installs Homebrew when needed (prompting for your password itself if required) and reconciles `Brewfile`. This profile contains development, Neovim, Git, terminal, container, and database tools. It does not install personal media tools, games, or consumer desktop applications.
 
 `Brewfile` installs Bun. The bootstrap then runs `bun add --global @devcontainers/cli`, which provides the `devcontainer` command.
 

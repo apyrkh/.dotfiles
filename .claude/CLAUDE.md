@@ -1,10 +1,10 @@
 # Dotfiles
 
-Personal macOS and Debian/Ubuntu development environment. macOS is the primary local target; Debian/Ubuntu supports Dev Containers and headless remote environments. Philosophy: minimalism, terminal-centric, purpose-driven.
+Personal macOS and Ubuntu development environment. macOS is the primary local target; Ubuntu supports Dev Containers and headless remote environments. Philosophy: minimalism, terminal-centric, purpose-driven.
 
 ## Deployment
 
-`install.sh` is the single bootstrap entrypoint. It detects macOS or Debian/Ubuntu, links the files listed in `scripts/link.sh` from `home/` into the target home, then installs the selected platform tools. The `files=()` array in `scripts/link.sh` is the source of truth for managed paths — don't duplicate it here.
+`install.sh` is the single bootstrap entrypoint. It detects macOS or Ubuntu, links the files listed in `scripts/link.sh` from `home/` into the target home, then installs the selected platform tools. The `files=()` array in `scripts/link.sh` is the source of truth for managed paths — don't duplicate it here.
 
 ## Structure
 
@@ -12,7 +12,7 @@ Personal macOS and Debian/Ubuntu development environment. macOS is the primary l
 - `home/.config/nvim/lua/` — Neovim config; plugin specs live in `plugins/` by category (see below)
 - `home/.config/zsh/scripts/` — shell utility scripts
 - `home/.claude/` — global Claude Code config (`CLAUDE.md`, `statusline.js`, tracked `agents/`, tracked `skills/`), tracked **per-entry**, not as a whole directory — the rest of `~/.claude/` (settings.json, keybindings.json, hooks/, vendor agents/skills) is machine state or third-party installs and stays untracked
-- `scripts/` — shared installer helpers, idempotent linking, and macOS/Debian/Ubuntu provisioning
+- `scripts/` — shared installer helpers, idempotent linking, and macOS/Ubuntu provisioning
 - `.devcontainer/` and `tests/` — disposable Dev Container and bootstrap smoke tests; never test provisioning against the local home
 - `docs/storage.md` — storage layout notes
 - `docs/tldr/` — one short usage-notes file per installed CLI tool, linked from README's Docs section. `docs/tldr/README.md` is the entry point: it holds any routing table across multiple tldr files (e.g. "which tool for which task"), so both a human and Claude can find the right file without opening every one.

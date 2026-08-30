@@ -11,7 +11,7 @@ usage() {
   cat <<'EOF'
 Usage: ./install.sh [options]
 
-Install the default development/work environment for macOS or Debian/Ubuntu.
+Install the default development/work environment for macOS or Ubuntu.
 
 Options:
   -H, --home       Install the optional macOS home profile.
@@ -64,11 +64,11 @@ case "${OSTYPE:-}" in
     # shellcheck disable=SC1091
     source /etc/os-release
     case "${ID:-}" in
-      debian|ubuntu)
+      ubuntu)
         platform="linux"
         ;;
       *)
-        die "unsupported Linux distribution: ${ID:-unknown}; only Debian and Ubuntu are supported"
+        die "unsupported Linux distribution: ${ID:-unknown}; only Ubuntu is supported"
         ;;
     esac
     ;;
