@@ -74,9 +74,14 @@ claude mcp add --transport http --scope user context7 https://mcp.context7.com/m
 
 ## Dev Container
 
-```bash
-devcontainer up --workspace-folder .
-```
-
 `postCreateCommand` runs `install.sh` -> `scripts/install-ubuntu.sh` +
 `scripts/symlinks.sh` inside the container.
+
+```bash
+devcontainer up                  # build & start (uses cwd, no --workspace-folder needed)
+devcontainer exec -- zsh         # shell into the running container
+devcontainer build --no-cache    # rebuild image after editing the Dockerfile
+
+docker ps --filter "label=devcontainer.local_folder"  # find the container
+docker rm -f <container-id>                           # stop & remove it
+```
