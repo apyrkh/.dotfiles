@@ -63,6 +63,15 @@ if ! command -v fnm &>/dev/null; then
     curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
 fi
 
+# Node.js LTS — fnm alone doesn't ship a runtime, but Neovim tooling (Mason
+# LSP servers/formatters) needs a working node/npm out of the box. .zshrc's
+# `fnm env --use-on-cd` picks up this default automatically in new shells.
+if ! fnm exec --using=default node --version &>/dev/null; then
+    echo "==> Installing Node.js LTS..."
+    fnm install --lts --progress never
+    fnm default lts-latest
+fi
+
 # Bun
 if ! command -v bun &>/dev/null; then
     echo "==> Installing Bun..."
