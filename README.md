@@ -136,9 +136,10 @@ brew services stop <service>   # Stop a service
 ## Dev Container
 
 ```bash
-devcontainer up                  # build & start (uses cwd)
-devcontainer exec -- zsh         # shell into the running container
-devcontainer build --no-cache    # rebuild image after editing the Dockerfile
+devcontainer up                             # build & start (uses cwd)
+devcontainer up --remove-existing-container  # force a clean create
+devcontainer exec zsh                       # shell into the running container
+devcontainer build --no-cache               # rebuild image after editing the Dockerfile
 
 docker ps --filter "label=devcontainer.local_folder"  # find the container
 docker rm -f <container-id>                            # stop & remove it
