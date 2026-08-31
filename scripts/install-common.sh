@@ -1,33 +1,29 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Installers that are identical on every platform: they ship their own
-# binaries into $HOME, so keeping them here avoids duplicating the same
-# ~25 lines in install-mac.sh and install-ubuntu.sh (and drifting apart).
+# Platform-independent installers: they ship binaries into $HOME, so keeping
+# them here avoids duplicating ~25 lines across the two platform scripts.
 echo "==> [Common] Installing shell framework & user-local CLIs..."
 
 export PATH="$HOME/.bun/bin:$HOME/.local/bin:$HOME/.local/share/fnm:$PATH"
 
-# Bun — ships its own installer on both platforms, so there is no reason to
-# take it from Homebrew on one and curl on the other. Must come first: the
-# AI CLIs below are npm packages installed with it.
+# Bun — own installer on both platforms. Must come first: the AI CLIs below
+# are bun-installed npm packages.
 if ! command -v bun &>/dev/null; then
     echo "==> Installing Bun..."
     curl -fsSL https://bun.sh/install | bash
 fi
 
-# Node.js LTS — fnm alone doesn't ship a runtime, but Neovim tooling (Mason
-# LSP servers/formatters) needs a working node/npm out of the box. .zshrc's
-# `fnm env --use-on-cd` picks up this default automatically in new shells.
+# Node.js LTS — fnm ships no runtime, but Neovim's Mason tooling needs node/npm
+# out of the box. .zshrc's `fnm env --use-on-cd` picks up this default.
 if ! fnm exec --using=default node --version &>/dev/null; then
     echo "==> Installing Node.js LTS..."
     fnm install --lts --progress never
     fnm default lts-latest
 fi
 
-# AI CLIs. Claude Code and agy ship installers; Copilot and Codex are npm
-# packages. The macOS `claude` cask is the Claude desktop app - a different
-# product, deliberately not installed here.
+# AI CLIs — Claude Code and agy ship installers; Copilot and Codex are npm
+# packages. (macOS `claude` cask is the desktop app, not this.)
 if ! command -v claude &>/dev/null; then
     echo "==> Installing Claude Code..."
     curl -fsSL https://claude.ai/install.sh | bash

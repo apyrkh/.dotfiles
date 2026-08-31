@@ -3,16 +3,12 @@ set -euo pipefail
 
 echo "==> [Linux/DevContainer] Installing Base CLI tools via apt-get & standalone installers..."
 
-# `sudo` resets the environment by default, so exporting DEBIAN_FRONTEND alone
-# doesn't reach the root apt-get process — `sudo env VAR=val cmd` is required
-# to actually suppress debconf prompts like tzdata's "Geographic area". With
-# noninteractive and no debconf preseed, tzdata's own default answer is
-# Etc/UTC — the standard choice for containers/CI regardless of where you are.
+# `sudo` drops env vars, so DEBIAN_FRONTEND must be passed via `sudo env ...`
+# (see apt_install) to stop debconf prompts like tzdata's. Default tz is Etc/UTC.
 export DEBIAN_FRONTEND=noninteractive
 
-# The standalone installers below drop binaries into these dirs; export them
-# now so this script's own "already installed" checks work on rerun, and so
-# `fd` resolves right after being aliased.
+# Standalone installers drop binaries here; put them on PATH so rerun checks
+# and the `fd` alias resolve.
 export PATH="$HOME/.bun/bin:$HOME/.local/bin:$HOME/.local/share/fnm:$PATH"
 
 # One-line wrapper so each category below reads like the macOS script.
@@ -64,10 +60,9 @@ fi
 apt_install postgresql-client   # psql, pg_dump — macOS gets these from libpq
 
 # === neovim (runtime deps) ===
-# Neovim — apt's package is far behind upstream (0.9.x on 24.04 vs 0.10+), so
-# take the latest release. The tarball must stay intact (nvim finds its
-# runtime/ dir relative to the real binary path), so unpack it into
-# ~/.local/share and only symlink the executable into ~/.local/bin.
+# apt's Neovim is too old, so grab the latest release tarball. Keep it intact
+# (nvim locates runtime/ relative to the real binary): unpack to ~/.local/share,
+# symlink only the binary into ~/.local/bin.
 if ! command -v nvim &>/dev/null; then
     echo "==> Installing Neovim..."
     arch="$(uname -m)"; [[ "$arch" == "aarch64" ]] && arch="arm64" || arch="x86_64"
@@ -133,9 +128,8 @@ apt_install time                # /usr/bin/time; macOS gets this as gnu-time
 apt_install sqlite3             # macOS ships /usr/bin/sqlite3
 apt_install xclip               # clipboard provider; macOS has pbcopy
 
-# Note: every project above names CPU architectures differently — arm64,
-# aarch64, x64, x86_64, amd64 — so each block detects `uname -m` its own way.
-# That is upstream's choice, not a pattern worth factoring out.
+# Each block re-detects `uname -m` its own way — upstreams disagree on arch
+# names (arm64 / aarch64 / x64 / x86_64 / amd64). Not worth factoring out.
 #
 # Deliberately not installed:
 #   font-*    — no GUI in the container; see the fonts section above

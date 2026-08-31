@@ -9,7 +9,7 @@ os="$(uname -s)"
 case "$os" in
   Darwin)
     echo "==> macOS detected"
-    "$script_dir/scripts/install-mac.sh"
+    source "$script_dir/scripts/install-mac.sh"
     ;;
   Linux)
     # Linux support is scoped to Ubuntu (matching .devcontainer's base image).
@@ -19,7 +19,7 @@ case "$os" in
       exit 1
     fi
     echo "==> Ubuntu detected"
-    "$script_dir/scripts/install-ubuntu.sh"
+    source "$script_dir/scripts/install-ubuntu.sh"
     ;;
   *)
     echo "Error: unsupported OS: $os" >&2
@@ -27,9 +27,9 @@ case "$os" in
     ;;
 esac
 
-"$script_dir/scripts/install-common.sh"
+source "$script_dir/scripts/install-common.sh"
 
 echo "==> Linking dotfiles..."
-"$script_dir/scripts/symlinks.sh"
+source "$script_dir/scripts/symlinks.sh"
 
 echo "==> Base install complete."

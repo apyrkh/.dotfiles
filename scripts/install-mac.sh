@@ -39,12 +39,9 @@ brew install fx                 # json viewer and processor, https://fx.wtf
 brew install gnu-time           # gtime; the shell's own `time` has no formatting options
 
 # Deliberately not installed:
-#   zsh       — macOS ships zsh 5.9 at /bin/zsh and it is already the login
-#               shell. Homebrew's 5.9.2 is the same release with a packaging
-#               bump, and it can't be a login shell without editing
-#               /etc/shells, so installing it only means `zsh` and the shell
-#               WezTerm starts are two different binaries. Ubuntu still needs
-#               apt_install zsh - that container ships none at all.
+#   zsh       — macOS already ships zsh 5.9 as the login shell; brew's copy is
+#               the same release and can't be a login shell without editing
+#               /etc/shells. (Ubuntu ships none, so install-ubuntu.sh adds it.)
 #   sqlite3   — macOS ships /usr/bin/sqlite3; brew's is keg-only anyway
 #   bun       — scripts/install-common.sh uses bun's own installer, as on Ubuntu
 #   claude    — that cask is the Claude desktop app, not the Claude Code CLI

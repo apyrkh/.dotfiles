@@ -1,7 +1,5 @@
-# Read by every zsh (login, interactive, and scripts), unlike .zprofile which
-# only runs for login shells — non-login shells (VS Code terminals, docker
-# exec, CI) need these tools on PATH too. Because it runs in nested shells as
-# well, keep $path unique so repeated sourcing can't grow it.
+# Read by every zsh (login, non-login, scripts) — VS Code terminals and docker
+# exec need PATH too. `typeset -U` keeps $path from growing on nested shells.
 typeset -U path PATH
 
 if [[ -z "$HOMEBREW_PREFIX" ]]; then
@@ -16,16 +14,14 @@ fi
 
 path=("$HOME/.bun/bin" "$HOME/.local/bin" "$HOME/.local/share/fnm" $path)
 
-# libpq (psql, pg_dump, ...) is keg-only in Homebrew — never symlinked into
-# the main prefix because it conflicts with the full postgresql formula.
-# Use $HOMEBREW_PREFIX from shellenv above: `brew --prefix libpq` would fork a
-# ~50ms subprocess on every single shell start, scripts included.
+# libpq (psql, pg_dump) is keg-only, so add it to PATH by hand. Reuse
+# $HOMEBREW_PREFIX — `brew --prefix libpq` would fork ~50ms on every shell.
 if [[ -d "$HOMEBREW_PREFIX/opt/libpq/bin" ]]; then
   path=("$HOMEBREW_PREFIX/opt/libpq/bin" $path)
 fi
 
-# JetBrains Toolbox shell scripts (goland, webstorm, ...) — only generated when
-# the "Shell scripts" option is enabled in Toolbox, so guard on the directory.
+# JetBrains Toolbox shell scripts (goland, webstorm) — only exist when Toolbox's
+# "Shell scripts" option is on, so guard on the directory.
 toolbox_scripts="$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
 if [[ -d "$toolbox_scripts" ]]; then
   path+=("$toolbox_scripts")

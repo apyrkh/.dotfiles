@@ -165,10 +165,9 @@ return {
         ensure_installed = ensure_installed,
       })
 
-      -- conform.nvim formatters aren't LSP servers, so mason-lspconfig won't
-      -- install them; mason-tool-installer covers the rest of the Mason registry.
-      -- Its own VimEnter auto-install races against this plugin's own lazy
-      -- load (event = BufReadPre/BufNewFile), so trigger it here directly.
+      -- conform.nvim formatters aren't LSP servers (mason-lspconfig skips them),
+      -- and mason-tool-installer's VimEnter auto-install races this plugin's
+      -- lazy load — so call check_install() directly below.
       local mason_tool_installer = require("mason-tool-installer")
       mason_tool_installer.setup({
         ensure_installed = { "eslint_d", "prettierd", "prettier", "pgformatter" },

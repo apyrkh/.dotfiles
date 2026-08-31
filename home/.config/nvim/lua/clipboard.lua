@@ -7,10 +7,8 @@ local function has_graphical_clipboard()
     or (vim.env.DISPLAY ~= nil and has_command("xclip"))
 end
 
--- Fallback for any environment without a direct clipboard tool (SSH,
--- devcontainers, remote tmux, etc.): OSC 52 sends the yank through the
--- terminal escape sequence, so it works as long as the terminal emulator
--- (e.g. WezTerm) supports it, no matter how nvim was reached.
+-- No local clipboard tool (SSH, devcontainer, remote tmux): fall back to OSC 52,
+-- which pushes the yank through the terminal. Needs terminal support (WezTerm has it).
 if vim.fn.has("macunix") == 1 or has_graphical_clipboard() then
   vim.opt.clipboard = "unnamedplus"
 else

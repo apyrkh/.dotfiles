@@ -3,7 +3,7 @@ set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 
-"$script_dir/install-mac-work.sh"
+source "$script_dir/install-mac-work.sh"
 
 if [[ "$(uname -s)" != "Darwin" ]]; then
     echo "==> Skipping home layer: macOS only."

@@ -4,12 +4,8 @@ Personal macOS and Ubuntu development environment. macOS is the primary local ta
 
 ## Deployment
 
-Flat, 3-tier pipeline. `install.sh` is the base entrypoint: it detects macOS or
-Ubuntu, runs `scripts/install-mac.sh` or `scripts/install-ubuntu.sh`, then
-`scripts/install-common.sh` and `scripts/symlinks.sh`. `install-mac-work.sh` runs `install.sh` plus macOS work GUI
-apps/Docker; `install-mac-home.sh` runs `install-mac-work.sh` plus personal apps. The
-`files=()` array in `scripts/symlinks.sh` is the source of truth for managed
-paths — don't duplicate it here.
+Flat, 3-tier pipeline, wired as a cascading `source` chain: each tier sources the one below it in the same shell.
+The `files=()` array in `scripts/symlinks.sh` is the source of truth for managed paths — don't duplicate it here.
 
 ## Structure
 

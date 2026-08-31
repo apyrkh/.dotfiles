@@ -28,8 +28,7 @@ bottom.
 | `./install-mac-work.sh` | `install.sh` + macOS work GUI apps & Docker/Colima. macOS only. |
 | `./install-mac-home.sh` | `install-mac-work.sh` + personal media/gaming apps. macOS only. |
 
-Each tier is a strict superset of the previous one. See **`TOOLS.md`** for the
-full package list per tier.
+Each tier is a strict superset of the previous one — and `source`s the tier below it.
 
 ## Quick start
 
@@ -136,21 +135,17 @@ brew services stop <service>   # Stop a service
 
 ## Dev Container
 
-`postCreateCommand` runs `install.sh` -> `scripts/install-ubuntu.sh` +
-`scripts/symlinks.sh` inside the container.
-
 ```bash
-devcontainer up                  # build & start (uses cwd, no --workspace-folder needed)
+devcontainer up                  # build & start (uses cwd)
 devcontainer exec -- zsh         # shell into the running container
 devcontainer build --no-cache    # rebuild image after editing the Dockerfile
 
 docker ps --filter "label=devcontainer.local_folder"  # find the container
-docker rm -f <container-id>                           # stop & remove it
+docker rm -f <container-id>                            # stop & remove it
 ```
 
 ## Docs
 
-- [Tools per tier](TOOLS.md)
 - [Storage layout](docs/storage.md)
 - [tldr notes](docs/tldr/) — quick usage examples for installed CLI tools
 
