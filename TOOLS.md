@@ -22,10 +22,9 @@ you-should-use
 cmake
 go
 fnm
-bun
 uv
 libpq
-sqlite3
+bun (curl -fsSL https://bun.sh/install | bash)
 
 ### === neovim (runtime deps) ===
 neovim
@@ -35,12 +34,11 @@ fzf
 fd
 ripgrep
 
-### === ai ===
+### === ai === (installed by scripts/install-common.sh on both platforms)
 claude-code (curl -fsSL https://claude.ai/install.sh | bash)
 agy (curl -fsSL https://antigravity.google/cli/install.sh | bash)
-copilot-cli (macOS: brew cask / Ubuntu: bun add --global @github/copilot)
-codex (macOS: brew cask / Ubuntu: bun add --global @openai/codex)
-claude (macOS only — the Claude desktop app, not the CLI)
+copilot-cli (bun add --global @github/copilot)
+codex (bun add --global @openai/codex)
 
 ### === cli ===
 git
@@ -63,7 +61,7 @@ wezterm@nightly
 peon-ping
 cowsay
 fortune
-battery
+battery (menu-bar app that also installs a CLI)
 
 colima
 docker

@@ -73,12 +73,6 @@ if ! fnm exec --using=default node --version &>/dev/null; then
     fnm default lts-latest
 fi
 
-# Bun
-if ! command -v bun &>/dev/null; then
-    echo "==> Installing Bun..."
-    curl -fsSL https://bun.sh/install | bash
-fi
-
 # UV (Python package installer)
 if ! command -v uv &>/dev/null; then
     echo "==> Installing UV..."
@@ -118,18 +112,6 @@ if ! command -v fx &>/dev/null; then
     curl -fsSL "https://github.com/antonmedv/fx/releases/latest/download/fx_linux_${arch}" \
         -o "$HOME/.local/bin/fx"
     chmod +x "$HOME/.local/bin/fx"
-fi
-
-# AI CLIs — macOS gets these as Homebrew casks; on Linux they ship as npm
-# packages, installed globally with bun (already on PATH via ~/.bun/bin).
-if ! command -v copilot &>/dev/null; then
-    echo "==> Installing GitHub Copilot CLI..."
-    bun add --global @github/copilot
-fi
-
-if ! command -v codex &>/dev/null; then
-    echo "==> Installing Codex CLI..."
-    bun add --global @openai/codex
 fi
 
 # Make zsh the login shell so `devcontainer exec` and VS Code terminals land

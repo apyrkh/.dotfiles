@@ -6,7 +6,38 @@ set -euo pipefail
 # ~25 lines in install-mac.sh and install-ubuntu.sh (and drifting apart).
 echo "==> [Common] Installing shell framework & user-local CLIs..."
 
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.bun/bin:$HOME/.local/bin:$PATH"
+
+# Bun — ships its own installer on both platforms, so there is no reason to
+# take it from Homebrew on one and curl on the other. Must come first: the
+# AI CLIs below are npm packages installed with it.
+if ! command -v bun &>/dev/null; then
+    echo "==> Installing Bun..."
+    curl -fsSL https://bun.sh/install | bash
+fi
+
+# AI CLIs. Claude Code and agy ship installers; Copilot and Codex are npm
+# packages. The macOS `claude` cask is the Claude desktop app - a different
+# product, deliberately not installed here.
+if ! command -v claude &>/dev/null; then
+    echo "==> Installing Claude Code..."
+    curl -fsSL https://claude.ai/install.sh | bash
+fi
+
+if ! command -v agy &>/dev/null; then
+    echo "==> Installing AntiGravity CLI (agy)..."
+    curl -fsSL https://antigravity.google/cli/install.sh | bash
+fi
+
+if ! command -v copilot &>/dev/null; then
+    echo "==> Installing GitHub Copilot CLI..."
+    bun add --global @github/copilot
+fi
+
+if ! command -v codex &>/dev/null; then
+    echo "==> Installing Codex CLI..."
+    bun add --global @openai/codex
+fi
 
 # Oh My Zsh + plugins (.zshrc expects these to exist)
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
@@ -27,16 +58,3 @@ for entry in "${zsh_plugins[@]}"; do
     repo="${entry#*|}"
     [[ -d "$plugins_dir/$plugin" ]] || git clone --depth=1 "$repo" "$plugins_dir/$plugin"
 done
-
-# Claude Code CLI — the macOS `claude` cask is the desktop app, a different
-# product; the CLI ships its own installer into ~/.local/bin on both platforms.
-if ! command -v claude &>/dev/null; then
-    echo "==> Installing Claude Code..."
-    curl -fsSL https://claude.ai/install.sh | bash
-fi
-
-# AntiGravity CLI (agy)
-if ! command -v agy &>/dev/null; then
-    echo "==> Installing AntiGravity CLI (agy)..."
-    curl -fsSL https://antigravity.google/cli/install.sh | bash
-fi

@@ -19,10 +19,8 @@ formulae+=(
     cmake
     go
     fnm
-    bun
     uv
     libpq
-    sqlite3
 )
 
 # === neovim (runtime deps) ===
@@ -49,13 +47,6 @@ formulae+=(
 
 casks=(
     font-jetbrains-mono-nerd-font
-)
-
-# === ai === (cask-only, no formula exists for these)
-casks+=(
-    claude
-    copilot-cli
-    codex
 )
 
 brew install "${formulae[@]}"
