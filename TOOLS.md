@@ -12,7 +12,7 @@ installed differently per platform — everything else is identical on both.
 font-jetbrains-mono-nerd-font
 
 ### === shell ===
-zsh
+zsh (macOS: ships at /bin/zsh / Ubuntu: apt, plus chsh)
 oh-my-zsh
 zsh-autosuggestions
 zsh-syntax-highlighting
@@ -44,6 +44,7 @@ codex (bun add --global @openai/codex)
 git
 gh
 lazygit
+git-filter-repo
 tree
 eza
 zoxide
