@@ -31,6 +31,7 @@ brew install ripgrep
 brew install git
 brew install gh                 # GitHub CLI
 brew install lazygit
+brew install git-filter-repo   # rewrite history across all commits (purge a secret, drop refs)
 brew install tree
 brew install eza                # modern ls replacement
 brew install zoxide             # zi

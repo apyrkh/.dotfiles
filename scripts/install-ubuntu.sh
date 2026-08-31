@@ -10,9 +10,9 @@ echo "==> [Linux/DevContainer] Installing Base CLI tools via apt-get & standalon
 # Etc/UTC — the standard choice for containers/CI regardless of where you are.
 export DEBIAN_FRONTEND=noninteractive
 
-# Standalone installers below drop binaries into these dirs; export them now
-# so this script's own "already installed" checks work on rerun, and so `fd`
-# resolves right after being aliased.
+# The standalone installers below drop binaries into these dirs; export them
+# now so this script's own "already installed" checks work on rerun, and so
+# `fd` resolves right after being aliased.
 export PATH="$HOME/.bun/bin:$HOME/.local/bin:$HOME/.local/share/fnm:$PATH"
 
 # One-line wrapper so each category below reads like the macOS script.
@@ -22,56 +22,58 @@ apt_install() {
 
 sudo env DEBIAN_FRONTEND=noninteractive apt-get update -y
 
+# === prerequisites ===
+# macOS has no equivalent section: Homebrew requires the Xcode command line
+# tools, which already provide curl, git and a compiler.
+apt_install ca-certificates
+apt_install curl                # every standalone installer below is `curl | sh`
+apt_install git
+apt_install build-essential     # compiles Treesitter parsers and native modules
+apt_install unzip
+
+# === fonts ===
+# None. The container has no GUI, so the Nerd Font is installed on the macOS
+# host only — your terminal renders the glyphs, not the machine you ssh into.
+
 # === shell ===
 apt_install zsh
+# Make zsh the login shell so `devcontainer exec` and VS Code terminals land
+# in the configured shell instead of bash.
+current_user="$(id -un)"
+if [[ "$(getent passwd "$current_user" | cut -d: -f7)" != "$(command -v zsh)" ]]; then
+    echo "==> Setting zsh as the default shell..."
+    sudo chsh -s "$(command -v zsh)" "$current_user"
+fi
 
 # === dev tools ===
-apt_install build-essential
 apt_install cmake
 apt_install golang-go
 apt_install postgresql-client   # psql, pg_dump — macOS gets these from libpq
 
-# === neovim (runtime deps) ===
-apt_install luarocks
-apt_install fzf
-apt_install fd-find             # binary is "fdfind" here; aliased to "fd" below
-apt_install ripgrep
-
-# === cli ===
-apt_install curl
-apt_install git
-apt_install gh                  # GitHub CLI
-apt_install tree
-apt_install zoxide              # zi
-apt_install time                # /usr/bin/time; macOS gets this as gnu-time
-apt_install unzip
-apt_install sqlite3
-apt_install xclip               # clipboard provider; nvim falls back to OSC 52 without it
-
-# Ubuntu's fd-find package installs the binary as "fdfind" (name clash with
-# an existing package); alias it to "fd" since that's what fzf-lua/nvim expect.
-mkdir -p "$HOME/.local/bin"
-if ! command -v fd &>/dev/null; then
-    ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"
-fi
-
-# === dev tools (apt has these too old, or not at all) ===
-# FNM (Fast Node Manager)
+# fnm — not packaged for Ubuntu; use its own installer
 if ! command -v fnm &>/dev/null; then
     echo "==> Installing FNM..."
     curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
 fi
 
-# UV (Python package installer)
+# uv — not packaged for Ubuntu; use its own installer
 if ! command -v uv &>/dev/null; then
     echo "==> Installing UV..."
     curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
 
-# === neovim (runtime deps, apt has these too old, or not at all) ===
-# Neovim — Ubuntu's apt package is far behind upstream (0.9.x on 24.04 vs.
-# 0.10+ upstream); install the latest release directly instead, like eza/
-# lazygit/tree-sitter-cli below. The tarball must stay intact (nvim finds its
+# === neovim (runtime deps) ===
+apt_install luarocks
+apt_install fzf
+apt_install ripgrep
+apt_install fd-find             # ships the binary as "fdfind" (name clash), aliased below
+mkdir -p "$HOME/.local/bin"
+if ! command -v fd &>/dev/null; then
+    ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"
+fi
+
+# Neovim — apt's package is far behind upstream (0.9.x on 24.04 vs 0.10+), so
+# take the latest release. The tarball must stay intact (nvim finds its
 # runtime/ dir relative to the real binary path), so unpack it into
 # ~/.local/share and only symlink the executable into ~/.local/bin.
 if ! command -v nvim &>/dev/null; then
@@ -84,7 +86,7 @@ if ! command -v nvim &>/dev/null; then
     ln -sf "$HOME/.local/share/nvim-linux-${arch}/bin/nvim" "$HOME/.local/bin/nvim"
 fi
 
-# tree-sitter-cli — not in Ubuntu's default repos; install from upstream release
+# tree-sitter-cli — not in apt; single gzipped binary
 if ! command -v tree-sitter &>/dev/null; then
     echo "==> Installing tree-sitter-cli..."
     arch="$(uname -m)"; [[ "$arch" == "aarch64" ]] && arch="arm64" || arch="x64"
@@ -93,16 +95,16 @@ if ! command -v tree-sitter &>/dev/null; then
     chmod +x "$HOME/.local/bin/tree-sitter"
 fi
 
-# === cli (not in apt) ===
-# eza (modern ls) — not in Ubuntu's default repos; install from upstream release
-if ! command -v eza &>/dev/null; then
-    echo "==> Installing eza..."
-    arch="$(uname -m)"; [[ "$arch" == "aarch64" ]] && arch="aarch64" || arch="x86_64"
-    curl -fsSL "https://github.com/eza-community/eza/releases/latest/download/eza_${arch}-unknown-linux-gnu.tar.gz" \
-        | tar -xz -C "$HOME/.local/bin" ./eza
-fi
+# === cli ===
+apt_install gh                  # GitHub CLI
+apt_install git-filter-repo     # rewrite history across all commits (purge a secret, drop refs)
+apt_install tree
+apt_install zoxide              # zi
+apt_install time                # /usr/bin/time; macOS gets this as gnu-time
+apt_install sqlite3
+apt_install xclip               # clipboard provider; nvim falls back to OSC 52 without it
 
-# lazygit — not in Ubuntu's default repos; install from upstream release
+# lazygit — not in apt; the release URL needs the version number, so look it up
 if ! command -v lazygit &>/dev/null; then
     echo "==> Installing lazygit..."
     arch="$(uname -m)"; [[ "$arch" == "aarch64" ]] && arch="arm64" || arch="x86_64"
@@ -111,7 +113,15 @@ if ! command -v lazygit &>/dev/null; then
         | tar -xz -C "$HOME/.local/bin" lazygit
 fi
 
-# fx (JSON viewer) — not in Ubuntu's default repos; single static binary
+# eza — not in apt; tarball with a single binary inside
+if ! command -v eza &>/dev/null; then
+    echo "==> Installing eza..."
+    arch="$(uname -m)"; [[ "$arch" == "aarch64" ]] && arch="aarch64" || arch="x86_64"
+    curl -fsSL "https://github.com/eza-community/eza/releases/latest/download/eza_${arch}-unknown-linux-gnu.tar.gz" \
+        | tar -xz -C "$HOME/.local/bin" ./eza
+fi
+
+# fx — not in apt; raw static binary, no archive
 if ! command -v fx &>/dev/null; then
     echo "==> Installing fx..."
     arch="$(uname -m)"; [[ "$arch" == "aarch64" ]] && arch="arm64" || arch="amd64"
@@ -120,10 +130,11 @@ if ! command -v fx &>/dev/null; then
     chmod +x "$HOME/.local/bin/fx"
 fi
 
-# Make zsh the login shell so `devcontainer exec` and VS Code terminals land
-# in the configured shell instead of bash.
-current_user="$(id -un)"
-if [[ "$(getent passwd "$current_user" | cut -d: -f7)" != "$(command -v zsh)" ]]; then
-    echo "==> Setting zsh as the default shell..."
-    sudo chsh -s "$(command -v zsh)" "$current_user"
-fi
+# Note: every project above names CPU architectures differently — arm64,
+# aarch64, x64, x86_64, amd64 — so each block detects `uname -m` its own way.
+# That is upstream's choice, not a pattern worth factoring out.
+#
+# Deliberately not installed:
+#   font-*    — no GUI in the container; see the fonts section above
+#   libpq     — apt's postgresql-client covers psql/pg_dump
+#   bun       — scripts/install-common.sh uses bun's own installer, as on macOS
