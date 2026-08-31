@@ -27,7 +27,6 @@ sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y \
     fd-find \
     fzf \
     unzip \
-    neovim \
     cmake \
     luarocks \
     tree \
@@ -41,6 +40,21 @@ sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y \
 mkdir -p "$HOME/.local/bin"
 if ! command -v fd &>/dev/null; then
     ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"
+fi
+
+# Neovim — Ubuntu's apt package is far behind upstream (0.9.x on 24.04 vs.
+# 0.10+ upstream); install the latest release directly instead, like eza/
+# lazygit/tree-sitter-cli below. The tarball must stay intact (nvim finds its
+# runtime/ dir relative to the real binary path), so unpack it into
+# ~/.local/share and only symlink the executable into ~/.local/bin.
+if ! command -v nvim &>/dev/null; then
+    echo "==> Installing Neovim..."
+    arch="$(uname -m)"; [[ "$arch" == "aarch64" ]] && arch="arm64" || arch="x86_64"
+    mkdir -p "$HOME/.local/share"
+    rm -rf "$HOME/.local/share/nvim-linux-${arch}"
+    curl -fsSL "https://github.com/neovim/neovim/releases/latest/download/nvim-linux-${arch}.tar.gz" \
+        | tar -xz -C "$HOME/.local/share"
+    ln -sf "$HOME/.local/share/nvim-linux-${arch}/bin/nvim" "$HOME/.local/bin/nvim"
 fi
 
 # FNM (Fast Node Manager)
