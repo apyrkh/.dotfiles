@@ -48,7 +48,6 @@ fi
 # === dev tools ===
 apt_install cmake
 apt_install golang-go
-apt_install postgresql-client   # psql, pg_dump — macOS gets these from libpq
 
 # fnm — not packaged for Ubuntu; use its own installer
 if ! command -v fnm &>/dev/null; then
@@ -62,16 +61,9 @@ if ! command -v uv &>/dev/null; then
     curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
 
-# === neovim (runtime deps) ===
-apt_install luarocks
-apt_install fzf
-apt_install ripgrep
-apt_install fd-find             # ships the binary as "fdfind" (name clash), aliased below
-mkdir -p "$HOME/.local/bin"
-if ! command -v fd &>/dev/null; then
-    ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"
-fi
+apt_install postgresql-client   # psql, pg_dump — macOS gets these from libpq
 
+# === neovim (runtime deps) ===
 # Neovim — apt's package is far behind upstream (0.9.x on 24.04 vs 0.10+), so
 # take the latest release. The tarball must stay intact (nvim finds its
 # runtime/ dir relative to the real binary path), so unpack it into
@@ -94,16 +86,18 @@ if ! command -v tree-sitter &>/dev/null; then
         | gunzip > "$HOME/.local/bin/tree-sitter"
     chmod +x "$HOME/.local/bin/tree-sitter"
 fi
+apt_install luarocks
+apt_install fzf
+apt_install fd-find             # ships the binary as "fdfind" (name clash), aliased below
+mkdir -p "$HOME/.local/bin"
+if ! command -v fd &>/dev/null; then
+    ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"
+fi
+apt_install ripgrep
 
 # === cli ===
+# git is installed in prerequisites above - the curl installers need it there.
 apt_install gh                  # GitHub CLI
-apt_install git-filter-repo     # rewrite history across all commits (purge a secret, drop refs)
-apt_install tree
-apt_install zoxide              # zi
-apt_install time                # /usr/bin/time; macOS gets this as gnu-time
-apt_install sqlite3
-apt_install xclip               # clipboard provider; nvim falls back to OSC 52 without it
-
 # lazygit — not in apt; the release URL needs the version number, so look it up
 if ! command -v lazygit &>/dev/null; then
     echo "==> Installing lazygit..."
@@ -113,6 +107,8 @@ if ! command -v lazygit &>/dev/null; then
         | tar -xz -C "$HOME/.local/bin" lazygit
 fi
 
+apt_install git-filter-repo     # rewrite history across all commits (purge a secret, drop refs)
+apt_install tree
 # eza — not in apt; tarball with a single binary inside
 if ! command -v eza &>/dev/null; then
     echo "==> Installing eza..."
@@ -121,6 +117,7 @@ if ! command -v eza &>/dev/null; then
         | tar -xz -C "$HOME/.local/bin" ./eza
 fi
 
+apt_install zoxide              # zi
 # fx — not in apt; raw static binary, no archive
 if ! command -v fx &>/dev/null; then
     echo "==> Installing fx..."
@@ -129,6 +126,12 @@ if ! command -v fx &>/dev/null; then
         -o "$HOME/.local/bin/fx"
     chmod +x "$HOME/.local/bin/fx"
 fi
+
+apt_install time                # /usr/bin/time; macOS gets this as gnu-time
+
+# No macOS counterpart - the Mac gets these for free:
+apt_install sqlite3             # macOS ships /usr/bin/sqlite3
+apt_install xclip               # clipboard provider; macOS has pbcopy
 
 # Note: every project above names CPU architectures differently — arm64,
 # aarch64, x64, x86_64, amd64 — so each block detects `uname -m` its own way.
