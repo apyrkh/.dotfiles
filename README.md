@@ -1,8 +1,13 @@
-# .dotfiles
+# dotfiles
 
 > "More signal, less noise."
 
 Cross-platform personal dev environment for macOS and Ubuntu/DevContainers.
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/apyrkh/dotfiles/main/bootstrap.sh | bash
+```
+
 Flat, 3-tier pipeline: **root entrypoints -> `scripts/` -> symlinks**. No
 frameworks, no Brewfile — every script is plain `bash` you can read top to
 bottom.
@@ -33,7 +38,7 @@ Each tier is a strict superset of the previous one — and `source`s the tier be
 ## Quick start
 
 ```bash
-git clone https://github.com/apyrkh/.dotfiles ~/.dotfiles && cd ~/.dotfiles
+git clone https://github.com/apyrkh/dotfiles ~/.dotfiles && cd ~/.dotfiles
 
 ./install.sh           # any machine: CLI tools + symlinks
 ./install-mac-work.sh  # macOS work laptop
