@@ -15,26 +15,38 @@ export DEBIAN_FRONTEND=noninteractive
 # resolves right after being aliased.
 export PATH="$HOME/.bun/bin:$HOME/.local/bin:$HOME/.local/share/fnm:$PATH"
 
+# One-line wrapper so each category below reads like the macOS script.
+apt_install() {
+    sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y "$@"
+}
+
 sudo env DEBIAN_FRONTEND=noninteractive apt-get update -y
-sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    build-essential \
-    curl \
-    git \
-    gh \
-    golang-go \
-    zsh \
-    ripgrep \
-    fd-find \
-    fzf \
-    unzip \
-    cmake \
-    luarocks \
-    tree \
-    sqlite3 \
-    postgresql-client \
-    zoxide \
-    xclip \
-    time
+
+# === shell ===
+apt_install zsh
+
+# === dev tools ===
+apt_install build-essential
+apt_install cmake
+apt_install golang-go
+apt_install postgresql-client   # psql, pg_dump — macOS gets these from libpq
+
+# === neovim (runtime deps) ===
+apt_install luarocks
+apt_install fzf
+apt_install fd-find             # binary is "fdfind" here; aliased to "fd" below
+apt_install ripgrep
+
+# === cli ===
+apt_install curl
+apt_install git
+apt_install gh                  # GitHub CLI
+apt_install tree
+apt_install zoxide              # zi
+apt_install time                # /usr/bin/time; macOS gets this as gnu-time
+apt_install unzip
+apt_install sqlite3
+apt_install xclip               # clipboard provider; nvim falls back to OSC 52 without it
 
 # Ubuntu's fd-find package installs the binary as "fdfind" (name clash with
 # an existing package); alias it to "fd" since that's what fzf-lua/nvim expect.

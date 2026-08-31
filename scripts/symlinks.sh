@@ -23,12 +23,6 @@ files=(
     ".zshrc"
 )
 
-# Paths this repo used to manage. Their symlinks would otherwise dangle
-# forever on machines installed before the file was dropped.
-obsolete=(
-    ".zprofile"
-)
-
 create_backup_dir() {
     if [[ -z "$backup_dir" ]]; then
         backup_dir="$HOME/.dotfiles_backup-$(date +%Y%m%d_%H%M%S)"
@@ -62,14 +56,13 @@ for file in "${files[@]}"; do
     info "Linked: ~/$file"
 done
 
-for file in "${obsolete[@]}"; do
-    target_path="$HOME/$file"
-
-    if [[ -L "$target_path" ]] && [[ "$(readlink "$target_path")" == "$source_home/"* ]]; then
-        rm "$target_path"
-        info "Removed obsolete link: ~/$file"
-    fi
-done
+# ~/.zprofile used to be managed here. Its symlink would dangle forever on
+# machines installed before the file was dropped, and zsh silently skips a
+# dangling profile - which is how Homebrew fell off PATH.
+if [[ -L "$HOME/.zprofile" ]] && [[ "$(readlink "$HOME/.zprofile")" == "$source_home/"* ]]; then
+    rm "$HOME/.zprofile"
+    info "Removed obsolete link: ~/.zprofile"
+fi
 
 if [[ -n "$backup_dir" ]]; then
     info "Backups saved to: $backup_dir"

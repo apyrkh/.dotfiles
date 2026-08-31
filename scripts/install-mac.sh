@@ -9,52 +9,39 @@ if ! command -v brew &>/dev/null; then
     eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
 fi
 
+# === fonts ===
+brew install --cask font-jetbrains-mono-nerd-font
+
 # === shell ===
-formulae=(
-    zsh               # macOS ships zsh 5.9; brew's is newer and gets security fixes
-)
+brew install zsh                # macOS ships zsh 5.9; brew's is newer
 
 # === dev tools ===
-formulae+=(
-    cmake
-    go
-    fnm               # fast Node.js version manager (Rust-based replacement for nvm)
-    uv                # Python package/tool installer
-    libpq             # psql, pg_dump — keg-only, .zshenv puts it on PATH
-)
+brew install cmake
+brew install go
+brew install fnm                # fast Node.js version manager (Rust-based replacement for nvm)
+brew install uv                 # Python package/tool installer
+brew install libpq              # psql, pg_dump — keg-only, .zshenv puts it on PATH
 
 # === neovim (runtime deps) ===
-formulae+=(
-    neovim
-    tree-sitter-cli   # nvim-treesitter's main branch needs it to compile parsers
-    luarocks
-    fzf
-    fd
-    ripgrep
-)
+brew install neovim
+brew install tree-sitter-cli    # nvim-treesitter's main branch needs it to compile parsers
+brew install luarocks
+brew install fzf
+brew install fd
+brew install ripgrep
 
 # === cli ===
-formulae+=(
-    git
-    gh                # GitHub CLI
-    lazygit
-    tree
-    eza               # modern ls replacement
-    zoxide            # zi
-    fx                # json viewer and processor, https://fx.wtf
-    gnu-time          # gtime; the shell's own `time` has no formatting options
-)
-
-# === fonts ===
-casks=(
-    font-jetbrains-mono-nerd-font
-)
+brew install git
+brew install gh                 # GitHub CLI
+brew install lazygit
+brew install tree
+brew install eza                # modern ls replacement
+brew install zoxide             # zi
+brew install fx                 # json viewer and processor, https://fx.wtf
+brew install gnu-time           # gtime; the shell's own `time` has no formatting options
 
 # Deliberately not installed:
 #   sqlite3   — macOS ships /usr/bin/sqlite3; brew's is keg-only anyway
 #   bun       — scripts/install-common.sh uses bun's own installer, as on Ubuntu
 #   claude    — that cask is the Claude desktop app, not the Claude Code CLI
 #   warp      — tried, not kept
-
-brew install "${formulae[@]}"
-brew install --cask "${casks[@]}"

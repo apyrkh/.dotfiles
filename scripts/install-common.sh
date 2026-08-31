@@ -46,15 +46,6 @@ if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
 fi
 
 plugins_dir="$HOME/.oh-my-zsh/custom/plugins"
-# Plain (not associative) array: the default /bin/bash on macOS is 3.2,
-# which has no `declare -A` support.
-zsh_plugins=(
-    "zsh-autosuggestions|https://github.com/zsh-users/zsh-autosuggestions"
-    "zsh-syntax-highlighting|https://github.com/zsh-users/zsh-syntax-highlighting"
-    "you-should-use|https://github.com/MichaelAquilina/zsh-you-should-use"
-)
-for entry in "${zsh_plugins[@]}"; do
-    plugin="${entry%%|*}"
-    repo="${entry#*|}"
-    [[ -d "$plugins_dir/$plugin" ]] || git clone --depth=1 "$repo" "$plugins_dir/$plugin"
-done
+[[ -d "$plugins_dir/zsh-autosuggestions" ]]     || git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions "$plugins_dir/zsh-autosuggestions"
+[[ -d "$plugins_dir/zsh-syntax-highlighting" ]] || git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting "$plugins_dir/zsh-syntax-highlighting"
+[[ -d "$plugins_dir/you-should-use" ]]          || git clone --depth=1 https://github.com/MichaelAquilina/zsh-you-should-use "$plugins_dir/you-should-use"
