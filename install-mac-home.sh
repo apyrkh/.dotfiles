@@ -27,6 +27,7 @@ brew install mtr                # my trace route
 brew install --cask google-drive
 brew install --cask notion
 brew install --cask chatgpt
+brew install --cask opera
 brew install --cask adobe-acrobat-reader
 brew install --cask iina
 brew install --cask obs

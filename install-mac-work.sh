@@ -36,7 +36,6 @@ brew install fortune
 brew install --cask battery             # menu-bar app + CLI: `battery maintain 70-80`
 brew install --cask jetbrains-toolbox   # enable "Shell scripts" to get goland/webstorm on PATH
 brew install --cask google-chrome
-brew install --cask opera
 brew install --cask keepassxc
 brew install --cask appcleaner
 brew install --cask keycastr            # keystroke visualiser
