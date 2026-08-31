@@ -25,11 +25,11 @@ chmod +x "$temporary_dir/bin/brew"
 
 # Pre-seed state so install-common.sh's already-installed checks short-circuit
 # instead of making real network calls (oh-my-zsh, its plugins, bun and the
-# AI CLIs).
+# AI CLIs, and the fnm Node bootstrap).
 mkdir -p "$temporary_dir/home/.oh-my-zsh/custom/plugins/zsh-autosuggestions" \
   "$temporary_dir/home/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" \
   "$temporary_dir/home/.oh-my-zsh/custom/plugins/you-should-use"
-for stub in agy bun claude codex copilot; do
+for stub in agy bun claude codex copilot fnm; do
   printf '#!/usr/bin/env bash\nexit 0\n' > "$temporary_dir/bin/$stub"
   chmod +x "$temporary_dir/bin/$stub"
 done

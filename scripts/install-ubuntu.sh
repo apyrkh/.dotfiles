@@ -55,6 +55,20 @@ if ! command -v fd &>/dev/null; then
     ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"
 fi
 
+# === dev tools (apt has these too old, or not at all) ===
+# FNM (Fast Node Manager)
+if ! command -v fnm &>/dev/null; then
+    echo "==> Installing FNM..."
+    curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
+fi
+
+# UV (Python package installer)
+if ! command -v uv &>/dev/null; then
+    echo "==> Installing UV..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+fi
+
+# === neovim (runtime deps, apt has these too old, or not at all) ===
 # Neovim — Ubuntu's apt package is far behind upstream (0.9.x on 24.04 vs.
 # 0.10+ upstream); install the latest release directly instead, like eza/
 # lazygit/tree-sitter-cli below. The tarball must stay intact (nvim finds its
@@ -70,27 +84,16 @@ if ! command -v nvim &>/dev/null; then
     ln -sf "$HOME/.local/share/nvim-linux-${arch}/bin/nvim" "$HOME/.local/bin/nvim"
 fi
 
-# FNM (Fast Node Manager)
-if ! command -v fnm &>/dev/null; then
-    echo "==> Installing FNM..."
-    curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
+# tree-sitter-cli — not in Ubuntu's default repos; install from upstream release
+if ! command -v tree-sitter &>/dev/null; then
+    echo "==> Installing tree-sitter-cli..."
+    arch="$(uname -m)"; [[ "$arch" == "aarch64" ]] && arch="arm64" || arch="x64"
+    curl -fsSL "https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-${arch}.gz" \
+        | gunzip > "$HOME/.local/bin/tree-sitter"
+    chmod +x "$HOME/.local/bin/tree-sitter"
 fi
 
-# Node.js LTS — fnm alone doesn't ship a runtime, but Neovim tooling (Mason
-# LSP servers/formatters) needs a working node/npm out of the box. .zshrc's
-# `fnm env --use-on-cd` picks up this default automatically in new shells.
-if ! fnm exec --using=default node --version &>/dev/null; then
-    echo "==> Installing Node.js LTS..."
-    fnm install --lts --progress never
-    fnm default lts-latest
-fi
-
-# UV (Python package installer)
-if ! command -v uv &>/dev/null; then
-    echo "==> Installing UV..."
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-fi
-
+# === cli (not in apt) ===
 # eza (modern ls) — not in Ubuntu's default repos; install from upstream release
 if ! command -v eza &>/dev/null; then
     echo "==> Installing eza..."
@@ -106,15 +109,6 @@ if ! command -v lazygit &>/dev/null; then
     lazygit_version="$(curl -fsSL "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | sed -n 's/.*"tag_name": *"v\([^"]*\)".*/\1/p')"
     curl -fsSL "https://github.com/jesseduffield/lazygit/releases/download/v${lazygit_version}/lazygit_${lazygit_version}_linux_${arch}.tar.gz" \
         | tar -xz -C "$HOME/.local/bin" lazygit
-fi
-
-# tree-sitter-cli — not in Ubuntu's default repos; install from upstream release
-if ! command -v tree-sitter &>/dev/null; then
-    echo "==> Installing tree-sitter-cli..."
-    arch="$(uname -m)"; [[ "$arch" == "aarch64" ]] && arch="arm64" || arch="x64"
-    curl -fsSL "https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-${arch}.gz" \
-        | gunzip > "$HOME/.local/bin/tree-sitter"
-    chmod +x "$HOME/.local/bin/tree-sitter"
 fi
 
 # fx (JSON viewer) — not in Ubuntu's default repos; single static binary

@@ -6,7 +6,7 @@ set -euo pipefail
 # ~25 lines in install-mac.sh and install-ubuntu.sh (and drifting apart).
 echo "==> [Common] Installing shell framework & user-local CLIs..."
 
-export PATH="$HOME/.bun/bin:$HOME/.local/bin:$PATH"
+export PATH="$HOME/.bun/bin:$HOME/.local/bin:$HOME/.local/share/fnm:$PATH"
 
 # Bun — ships its own installer on both platforms, so there is no reason to
 # take it from Homebrew on one and curl on the other. Must come first: the
@@ -14,6 +14,15 @@ export PATH="$HOME/.bun/bin:$HOME/.local/bin:$PATH"
 if ! command -v bun &>/dev/null; then
     echo "==> Installing Bun..."
     curl -fsSL https://bun.sh/install | bash
+fi
+
+# Node.js LTS — fnm alone doesn't ship a runtime, but Neovim tooling (Mason
+# LSP servers/formatters) needs a working node/npm out of the box. .zshrc's
+# `fnm env --use-on-cd` picks up this default automatically in new shells.
+if ! fnm exec --using=default node --version &>/dev/null; then
+    echo "==> Installing Node.js LTS..."
+    fnm install --lts --progress never
+    fnm default lts-latest
 fi
 
 # AI CLIs. Claude Code and agy ship installers; Copilot and Codex are npm
