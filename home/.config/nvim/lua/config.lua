@@ -74,7 +74,7 @@ vim.opt.smartcase = true  -- if you include mixed case in your search, assumes y
 
 -- Backspace and clipboard
 vim.opt.backspace = "indent,eol,start"
-vim.opt.clipboard = "unnamedplus"
+require("clipboard")
 vim.opt.mouse = "a"
 
 -- Window splitting

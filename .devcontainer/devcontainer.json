@@ -1,0 +1,8 @@
+{
+  "name": "dotfiles",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "remoteUser": "dev",
+  "postCreateCommand": "bash ${containerWorkspaceFolder}/install.sh"
+}

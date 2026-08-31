@@ -1,76 +1,35 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+set -euo pipefail
 
-# If this script grows beyond symlinking, split it into setup/ with small focused scripts.
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 
-# Colors
-GREEN="\033[0;32m"
-CYAN="\033[0;36m"
-RED="\033[0;31m"
-GRAY="\033[90m"
-NC="\033[0m"
+echo "==> Detecting operating system..."
 
-STATUS_UP_TO_DATE="✓ up-to-date"
-STATUS_LINKED="✓ linked"
-STATUS_MISSING="✖ missing source"
+os="$(uname -s)"
+case "$os" in
+  Darwin)
+    echo "==> macOS detected"
+    source "$script_dir/scripts/install-mac.sh"
+    ;;
+  Linux)
+    # Linux support is scoped to Ubuntu (matching .devcontainer's base image).
+    # Fail loudly here instead of somewhere deep inside an apt-get call.
+    if ! grep -qE '^(ID|ID_LIKE)=.*ubuntu' /etc/os-release 2>/dev/null; then
+      echo "Error: Linux support is Ubuntu-only" >&2
+      exit 1
+    fi
+    echo "==> Ubuntu detected"
+    source "$script_dir/scripts/install-ubuntu.sh"
+    ;;
+  *)
+    echo "Error: unsupported OS: $os" >&2
+    exit 1
+    ;;
+esac
 
-backup_dir="$HOME/.dotfiles_backup-$(date +%Y%m%d_%H%M%S)"
-dotfiles_dir="$HOME/.dotfiles"
-home_dir="$dotfiles_dir/home"
-files=(
-  ".claude/CLAUDE.md"
-  ".claude/skills/bun-performance"
-  ".claude/skills/compress-media"
-  ".claude/statusline.js"
-  ".config/nvim"
-  ".config/wezterm"
-  ".config/zsh"
-  ".gitconfig"
-  ".vimrc"
-  ".zshrc"
-  ".zprofile"
-)
+source "$script_dir/scripts/install-common.sh"
 
-printf "\n=== Installing dotfiles ===\n\n"
+echo "==> Linking dotfiles..."
+source "$script_dir/scripts/symlinks.sh"
 
-for file in "${files[@]}"; do
-  src="$home_dir/$file"
-  dst="$HOME/$file"
-
-  display_src="${src/#$HOME/~}"
-  display_dst="${dst/#$HOME/~}"
-
-  # 1. Missing source
-  if [ ! -e "$src" ]; then
-    printf "${RED}%-50s → %-33s%-10s%s${NC}\n" "$display_src" "$display_dst" "" "$STATUS_MISSING"
-    continue
-  fi
-
-  # 2. Up-to-date
-  # if [ -L "$dst" ] && [ "$(readlink "$dst")" == "$home_dir/.gitconfig" ]; then # for debug purpose
-  if [ -L "$dst" ] && [ "$(readlink "$dst")" == "$src" ]; then
-    printf "%-50s → %-33s%-10s${CYAN}%s${NC}\n" "$display_src" "$display_dst" "" "$STATUS_UP_TO_DATE"
-    continue
-  fi
-
-  # 3. Installation
-  printf "%-50s → %-33s" "$display_src" "$display_dst"
-  mkdir -p "$(dirname "$dst")"
-
-  if [ -e "$dst" ] || [ -L "$dst" ]; then
-    mkdir -p "$backup_dir/$(dirname "$file")"
-    mv "$dst" "$backup_dir/$file"
-    printf "${GRAY}%-10s${NC}" "(backup)"
-  else
-    printf "%-10s" ""
-  fi
-
-  ln -snf "$src" "$dst"
-  printf "${GREEN}%s${NC}\n" "$STATUS_LINKED"
-done
-
-if [ -d "$backup_dir" ]; then
-  printf "\n${GRAY}Backups saved to: %s${NC}\n" "${backup_dir/#$HOME/~}"
-fi
-
-printf "\n=== Completed ===\n\n"
+echo "==> Base install complete."

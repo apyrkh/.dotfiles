@@ -2,30 +2,73 @@
 
 > "More signal, less noise."
 
-## Docs
+Cross-platform personal dev environment for macOS and Ubuntu/DevContainers.
+Flat, 3-tier pipeline: **root entrypoints -> `scripts/` -> symlinks**. No
+frameworks, no Brewfile — every script is plain `bash` you can read top to
+bottom.
 
-- [Storage layout](docs/storage.md)
-- [tldr notes](docs/tldr/) — quick usage examples for installed CLI tools/packages
+## Architecture
 
----
-
-## Setup
-
-### Dotfiles
-
-> [!IMPORTANT]
-> Make sure you have installed `git`.
-
-```bash
-git clone https://github.com/apyrkh/.dotfiles ~/.dotfiles
-
-cd ~/.dotfiles
-cat install.sh  # Review the script before running
-
-./install.sh
+```text
+.
+├── install.sh                 # Tier 1: base CLI layer (any machine)
+├── install-mac-work.sh        # Tier 2: install.sh + macOS work GUI apps & Docker
+├── install-mac-home.sh        # Tier 3: install-mac-work.sh + personal media/gaming apps
+├── scripts/
+│   ├── install-mac.sh         # brew install: CLI tools & runtimes
+│   ├── install-ubuntu.sh      # apt-get + curl installers (DevContainers/Ubuntu)
+│   ├── install-common.sh      # platform-independent: oh-my-zsh, claude, agy
+│   └── symlinks.sh            # symlinks zsh, neovim, wezterm, git config into $HOME
+└── home/                      # tracked dotfiles/config that get symlinked
 ```
 
-### Git
+| Script | Does |
+| --- | --- |
+| `./install.sh` | Detects OS (macOS / Ubuntu), runs `scripts/install-mac.sh` or `scripts/install-ubuntu.sh`, then `scripts/install-common.sh` and `scripts/symlinks.sh`. Any machine, incl. DevContainers/CI. |
+| `./install-mac-work.sh` | `install.sh` + macOS work GUI apps & Docker/Colima. macOS only. |
+| `./install-mac-home.sh` | `install-mac-work.sh` + personal media/gaming apps. macOS only. |
+
+Each tier is a strict superset of the previous one — and `source`s the tier below it.
+
+## Quick start
+
+```bash
+git clone https://github.com/apyrkh/.dotfiles ~/.dotfiles && cd ~/.dotfiles
+
+./install.sh           # any machine: CLI tools + symlinks
+./install-mac-work.sh  # macOS work laptop
+./install-mac-home.sh  # macOS personal machine
+```
+
+All scripts use `set -euo pipefail` and are safe to re-run. `symlinks.sh`
+backs up any conflicting file once to `~/.dotfiles_backup-<timestamp>`, and
+removes symlinks for paths this repo no longer manages.
+
+Linux support is scoped to Ubuntu — `install.sh` refuses to run on other
+distributions rather than failing halfway through an `apt-get` call.
+
+## First run
+
+Everything below needs a human — logins, or a one-time setup command the
+installer can't do for you.
+
+```bash
+claude          # /login on first run
+copilot         # /login on first run
+codex login
+gh auth login
+
+peon-ping-setup           # https://www.peonping.com
+peon trainer on
+
+battery maintain 70-80    # keep the charge in a band
+battery maintain stop
+```
+
+In JetBrains Toolbox, enable **Shell scripts** to get `goland` / `webstorm` on
+`PATH` — `.zshenv` picks the directory up automatically once it exists.
+
+## Git
 
 ```bash
 ssh-keygen -t ed25519 -C "your_email@example.com" -f ~/.ssh/id_ed25519_personal
@@ -36,23 +79,29 @@ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 ssh-add ~/.ssh/id_rsa
 ```
 
-```bash
-cat <<EOF >> ~/.gitconfig.local
+```gitconfig
+# ~/.gitconfig.local (untracked)
 [user]
   name = <NAME>
   email = <EMAIL>
-EOF
 ```
 
-### Homebrew
+## Claude Code
+
+`symlinks.sh` deploys `~/.claude/CLAUDE.md`, `statusline.js`, and tracked
+skills. Two things stay machine-specific and untracked:
+
+```json
+// ~/.claude/settings.json
+{ "statusLine": { "type": "command", "command": "node /Users/<USER>/.claude/statusline.js" } }
+```
 
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-brew bundle --file Brewfile
-# brew bundle --file Brewfile.personal  # @TODO: not yet created
-# brew bundle --file Brewfile.work      # @TODO: not yet created
+# ~/.claude.json (MCP servers)
+claude mcp add --transport http --scope user context7 https://mcp.context7.com/mcp
 ```
+
+## Homebrew
 
 <details>
     <summary>Brew Cheat Sheet</summary>
@@ -65,12 +114,6 @@ brew upgrade <package>         # Upgrade a specific package
 brew uninstall <package>       # Uninstall a package
 brew cleanup                   # Remove outdated versions
 
-brew bundle dump               # Generate a Brewfile from current system
-brew bundle install            # Install everything from Brewfile
-brew bundle check --verbose    # Check what is missing from Brewfile
-brew bundle cleanup            # Show what would be removed (not in Brewfile)
-brew bundle cleanup --force    # Remove all not listed in Brewfile
-
 brew tap                       # List tapped repositories
 brew tap <user/repo>           # Add (tap) a third-party repository
 brew untap <user/repo>         # Remove (untap) a tapped repository
@@ -80,7 +123,9 @@ brew config                    # Show Homebrew system configuration
 brew outdated                  # List outdated packages
 brew list                      # List installed formulae
 brew list --cask               # List installed casks (GUI apps)
+brew leaves --installed-on-request  # Top-level packages you asked for
 brew missing                   # List formulae with missing dependencies
+brew uses --installed <pkg>    # What depends on a package
 
 brew services list             # Show background services managed by Homebrew
 brew services start <service>  # Start a background service
@@ -88,86 +133,23 @@ brew services stop <service>   # Stop a service
 ```
 </details>
 
-### Oh My Zsh
+## Dev Container
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+devcontainer up                             # build & start (uses cwd)
+devcontainer up --remove-existing-container  # force a clean create
+devcontainer exec zsh                       # shell into the running container
+devcontainer build --no-cache               # rebuild image after editing the Dockerfile
 
-# Install plugins
-git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-git clone --depth=1 https://github.com/MichaelAquilina/zsh-you-should-use ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/you-should-use
-
-# Apply changes
-source ~/.zshrc
-
-# Default shell
-chsh -s $(which zsh)
-echo $SHELL
+docker ps --filter "label=devcontainer.local_folder"  # find the container
+docker rm -f <container-id>                            # stop & remove it
 ```
 
-### Claude Code
+## Docs
 
-`install.sh` deploys `~/.claude/CLAUDE.md`, `statusline.js`, tracked agents, and tracked skills.
-
-The statusline needs one manual step, because `~/.claude/settings.json` is machine-specific and not tracked:
-
-```json
-{ "statusLine": { "type": "command", "command": "node /Users/<USER>/.claude/statusline.js" } }
-```
-
-MCP servers (`~/.claude.json`) aren't tracked either — add manually:
-
-```bash
-claude mcp add --transport http --scope user context7 https://mcp.context7.com/mcp
-```
-
----
-
-## Dev Tools
-
-```bash
-claude  # /login on first run
-copilot  # /login on first run
-codex login
-gh auth login
-
-# Node (LTS)
-fnm install --lts
-fnm default lts-latest
-
-# Bun
-curl -fsSL https://bun.sh/install | bash
-
-# Claude Code
-curl -fsSL https://claude.ai/install.sh | bash
-
-# Serena Agent (per-project, run init in repos where you want it)
-# https://oraios.github.io/serena
-curl -LsSf https://astral.sh/uv/install.sh | sh
-uv tool install -p 3.13 serena-agent  # 3.13: serena's minimum supported version
-serena init
-
-## maintenance
-uv tool upgrade serena-agent
-uv tool uninstall serena-agent
-
-# peonping
-# https://www.peonping.com
-brew install PeonPing/tap/peon-ping
-peon-ping-setup
-peon trainer on
-
-# battery
-curl -s https://raw.githubusercontent.com/actuallymentor/battery/main/setup.sh | bash
-
-battery maintain 70-80
-battery maintain stop
-```
-
----
+- [Storage layout](docs/storage.md)
+- [tldr notes](docs/tldr/) — quick usage examples for installed CLI tools
 
 ## Misc
 
-<!-- TODO: move to docs/ -->
 - Make file executable: `chmod +x FILENAME`

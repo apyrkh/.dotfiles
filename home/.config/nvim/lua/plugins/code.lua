@@ -150,6 +150,7 @@ return {
     dependencies = {
       "mason-org/mason.nvim",
       "mason-org/mason-lspconfig.nvim",
+      "WhoIsSethDaniel/mason-tool-installer.nvim",
       "saghen/blink.cmp",
       "b0o/schemastore.nvim",
     },
@@ -163,6 +164,15 @@ return {
       require("mason-lspconfig").setup({
         ensure_installed = ensure_installed,
       })
+
+      -- conform.nvim formatters aren't LSP servers (mason-lspconfig skips them),
+      -- and mason-tool-installer's VimEnter auto-install races this plugin's
+      -- lazy load — so call check_install() directly below.
+      local mason_tool_installer = require("mason-tool-installer")
+      mason_tool_installer.setup({
+        ensure_installed = { "eslint_d", "prettierd", "prettier", "pgformatter" },
+      })
+      mason_tool_installer.check_install()
 
       for server, opts in pairs(lsp_config) do
         opts.capabilities = require("blink.cmp").get_lsp_capabilities(opts.capabilities)

@@ -14,13 +14,16 @@ ZSH_THEME="half-life" # current
 # - zsh-autosuggestions
 # - zsh-syntax-highlighting
 plugins=(
-  chucknorris
   gitfast                   # completion for git
   history                   # command line history
   you-should-use
   zsh-autosuggestions
   zsh-syntax-highlighting
 )
+
+if (( $+commands[cowsay] && $+commands[fortune] )); then
+  plugins=(chucknorris "${plugins[@]}")
+fi
 
 zstyle ":omz:update" mode auto
 zstyle ":omz:update" frequency 7
@@ -39,12 +42,25 @@ export DISABLE_UNTRACKED_FILES_DIRTY="true" # speed up prompt by ignoring untrac
 
 # === TOOLS INIT ===
 command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
-eval "$(fnm env --use-on-cd)"
+command -v fnm >/dev/null && eval "$(fnm env --use-on-cd)"
 
 # === ALIASES ===
 alias ll="eza -l --group-directories-first --icons"
 alias lla="ll -a"
-cpwd() { pwd | pbcopy; echo "Copied to clipboard"; }
+cpwd() {
+  if command -v pbcopy >/dev/null; then
+    pwd | pbcopy
+  elif command -v wl-copy >/dev/null; then
+    pwd | wl-copy
+  elif command -v xclip >/dev/null; then
+    pwd | xclip -selection clipboard
+  else
+    echo "No clipboard provider is available" >&2
+    return 1
+  fi
+
+  echo "Copied to clipboard"
+}
 
 alias v="nvim"
 vv() {
@@ -58,7 +74,6 @@ vv() {
 # }
 
 # === CUSTOM SCRIPTS ===
-path=("$HOME/.jsvu/bin" $path)
 source ~/.config/zsh/scripts/timed.zsh  # time wrapper with formatted output (timed)
 
 # === LOCAL OVERRIDES ===
