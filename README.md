@@ -48,11 +48,36 @@ removes symlinks for paths this repo no longer manages.
 Linux support is scoped to Ubuntu — `install.sh` refuses to run on other
 distributions rather than failing halfway through an `apt-get` call.
 
+## First run
+
+Everything below needs a human — logins, or a one-time setup command the
+installer can't do for you.
+
+```bash
+claude          # /login on first run
+copilot         # /login on first run
+codex login
+gh auth login
+
+peon-ping-setup           # https://www.peonping.com
+peon trainer on
+
+battery maintain 70-80    # keep the charge in a band
+battery maintain stop
+```
+
+In JetBrains Toolbox, enable **Shell scripts** to get `goland` / `webstorm` on
+`PATH` — `.zshenv` picks the directory up automatically once it exists.
+
 ## Git
 
 ```bash
 ssh-keygen -t ed25519 -C "your_email@example.com" -f ~/.ssh/id_ed25519_personal
 ssh-add ~/.ssh/id_ed25519_personal
+
+# legacy RSA key (if needed)
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+ssh-add ~/.ssh/id_rsa
 ```
 
 ```gitconfig
@@ -77,6 +102,38 @@ skills. Two things stay machine-specific and untracked:
 claude mcp add --transport http --scope user context7 https://mcp.context7.com/mcp
 ```
 
+## Homebrew
+
+<details>
+    <summary>Brew Cheat Sheet</summary>
+
+```sh
+brew install <package>         # Install a package
+brew upgrade                   # Upgrade all packages
+brew upgrade <package>         # Upgrade a specific package
+
+brew uninstall <package>       # Uninstall a package
+brew cleanup                   # Remove outdated versions
+
+brew tap                       # List tapped repositories
+brew tap <user/repo>           # Add (tap) a third-party repository
+brew untap <user/repo>         # Remove (untap) a tapped repository
+
+brew doctor                    # Check system for potential issues
+brew config                    # Show Homebrew system configuration
+brew outdated                  # List outdated packages
+brew list                      # List installed formulae
+brew list --cask               # List installed casks (GUI apps)
+brew leaves --installed-on-request  # Top-level packages you asked for
+brew missing                   # List formulae with missing dependencies
+brew uses --installed <pkg>    # What depends on a package
+
+brew services list             # Show background services managed by Homebrew
+brew services start <service>  # Start a background service
+brew services stop <service>   # Stop a service
+```
+</details>
+
 ## Dev Container
 
 `postCreateCommand` runs `install.sh` -> `scripts/install-ubuntu.sh` +
@@ -90,3 +147,13 @@ devcontainer build --no-cache    # rebuild image after editing the Dockerfile
 docker ps --filter "label=devcontainer.local_folder"  # find the container
 docker rm -f <container-id>                           # stop & remove it
 ```
+
+## Docs
+
+- [Tools per tier](TOOLS.md)
+- [Storage layout](docs/storage.md)
+- [tldr notes](docs/tldr/) — quick usage examples for installed CLI tools
+
+## Misc
+
+- Make file executable: `chmod +x FILENAME`

@@ -12,16 +12,22 @@ fi
 
 echo "==> [macOS/Home] Installing personal media & gaming apps..."
 
+# === media processing ===
 formulae=(
-    ffmpeg
-    ghostscript
-    pngquant
-    jpegoptim
-    webp
-    libheif
-    mtr
+    ffmpeg            # video/audio processing
+    ghostscript       # pdf processing
+    pngquant          # lossy png compression
+    jpegoptim         # jpeg compression
+    webp              # cwebp/dwebp; was a transitive dep, now explicit
+    libheif           # heic decoding (iphone photos)
 )
 
+# === cli ===
+formulae+=(
+    mtr               # my trace route
+)
+
+# === apps ===
 casks=(
     google-drive
     notion
@@ -30,8 +36,12 @@ casks=(
     iina
     obs
     upscayl
-    openmtp
-    balenaetcher
+    openmtp           # android-file-transfer
+    balenaetcher      # flash OS images to SD cards & USB drives
+)
+
+# === fun / misc ===
+casks+=(
     battle-net
     steam
     discord
@@ -39,6 +49,12 @@ casks=(
     whatsapp
     zoom
 )
+
+# Deliberately not installed:
+#   blackhole-2ch      — macOS virtual audio loopback driver, install by hand
+#   mongodb-community  — was tapped from mongodb/brew; not used any more
+#   mongodb-compass    — same
+#   paintbrush         — removed 2026-08-31
 
 brew install "${formulae[@]}"
 brew install --cask "${casks[@]}"

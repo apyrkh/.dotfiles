@@ -12,25 +12,35 @@ fi
 
 echo "==> [macOS/Work] Installing GUI apps & Docker..."
 
+# === containers ===
 formulae=(
-    peon-ping
-    cowsay
-    fortune
-    colima
+    colima            # container runtime for macOS, alternative to docker desktop
     docker
-    docker-buildx
-    docker-compose
+    docker-buildx     # `docker build` (BuildKit) — see the cli-plugins links below
+    docker-compose    # `docker compose`
 )
 
+# === fun / misc ===
+formulae+=(
+    peon-ping         # https://www.peonping.com — run `peon-ping-setup` once
+    cowsay
+    fortune
+)
+
+# === terminal ===
 casks=(
-    "wezterm@nightly"
-    battery
-    jetbrains-toolbox
+    "wezterm@nightly" # using nightly deliberately; switch to "wezterm" for stable
+)
+
+# === apps ===
+casks+=(
+    battery           # menu-bar app + CLI: `battery maintain 70-80`
+    jetbrains-toolbox # enable "Shell scripts" in it to get goland/webstorm on PATH
     google-chrome
     opera
     keepassxc
     appcleaner
-    keycastr
+    keycastr          # keystroke visualiser
     "logi-options+"
 )
 
