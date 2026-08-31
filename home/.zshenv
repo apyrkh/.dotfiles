@@ -23,3 +23,11 @@ path=("$HOME/.bun/bin" "$HOME/.local/bin" "$HOME/.local/share/fnm" $path)
 if [[ -d "$HOMEBREW_PREFIX/opt/libpq/bin" ]]; then
   path=("$HOMEBREW_PREFIX/opt/libpq/bin" $path)
 fi
+
+# JetBrains Toolbox shell scripts (goland, webstorm, ...) — only generated when
+# the "Shell scripts" option is enabled in Toolbox, so guard on the directory.
+toolbox_scripts="$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
+if [[ -d "$toolbox_scripts" ]]; then
+  path+=("$toolbox_scripts")
+fi
+unset toolbox_scripts
