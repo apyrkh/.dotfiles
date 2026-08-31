@@ -12,7 +12,13 @@ case "$os" in
     "$script_dir/scripts/install-mac.sh"
     ;;
   Linux)
-    echo "==> Linux detected"
+    # Linux support is scoped to Ubuntu (matching .devcontainer's base image).
+    # Fail loudly here instead of somewhere deep inside an apt-get call.
+    if ! grep -qE '^(ID|ID_LIKE)=.*ubuntu' /etc/os-release 2>/dev/null; then
+      echo "Error: Linux support is Ubuntu-only" >&2
+      exit 1
+    fi
+    echo "==> Ubuntu detected"
     "$script_dir/scripts/install-ubuntu.sh"
     ;;
   *)
@@ -20,6 +26,8 @@ case "$os" in
     exit 1
     ;;
 esac
+
+"$script_dir/scripts/install-common.sh"
 
 echo "==> Linking dotfiles..."
 "$script_dir/scripts/symlinks.sh"

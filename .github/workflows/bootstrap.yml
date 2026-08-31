@@ -1,11 +1,21 @@
 name: Bootstrap
 
+# Only the provisioning pipeline is worth a full container build. Editing the
+# Neovim config or docs happens often and can't break install.sh, so those
+# paths are ignored; use "Run workflow" to check them on demand.
 on:
   pull_request:
+    paths-ignore:
+      - "home/.config/nvim/**"
+      - "docs/**"
+      - "**.md"
   push:
     branches:
       - main
-      - refactor/dual-platform-bootstrap
+    paths-ignore:
+      - "home/.config/nvim/**"
+      - "docs/**"
+      - "**.md"
   workflow_dispatch:
 
 jobs:
@@ -17,8 +27,9 @@ jobs:
       - run: docker build -f tests/docker/Dockerfile .
 
   macos:
+    name: macOS
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - run: bash -n install.sh scripts/*.sh tests/mac-smoke.sh
+      - run: bash -n install.sh install-mac-work.sh install-mac-home.sh scripts/*.sh tests/mac-smoke.sh
       - run: bash tests/mac-smoke.sh

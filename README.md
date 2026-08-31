@@ -17,13 +17,14 @@ bottom.
 ├── scripts/
 │   ├── install-mac.sh         # brew install: CLI tools & runtimes
 │   ├── install-ubuntu.sh      # apt-get + curl installers (DevContainers/Ubuntu)
+│   ├── install-common.sh      # platform-independent: oh-my-zsh, claude, agy
 │   └── symlinks.sh            # symlinks zsh, neovim, wezterm, git config into $HOME
 └── home/                      # tracked dotfiles/config that get symlinked
 ```
 
 | Script | Does |
 | --- | --- |
-| `./install.sh` | Detects OS (`Darwin`/`Linux`), runs `scripts/install-mac.sh` or `scripts/install-ubuntu.sh`, then `scripts/symlinks.sh`. Any machine, incl. DevContainers/CI. |
+| `./install.sh` | Detects OS (macOS / Ubuntu), runs `scripts/install-mac.sh` or `scripts/install-ubuntu.sh`, then `scripts/install-common.sh` and `scripts/symlinks.sh`. Any machine, incl. DevContainers/CI. |
 | `./install-mac-work.sh` | `install.sh` + macOS work GUI apps & Docker/Colima. macOS only. |
 | `./install-mac-home.sh` | `install-mac-work.sh` + personal media/gaming apps. macOS only. |
 
@@ -41,7 +42,11 @@ git clone https://github.com/apyrkh/.dotfiles ~/.dotfiles && cd ~/.dotfiles
 ```
 
 All scripts use `set -euo pipefail` and are safe to re-run. `symlinks.sh`
-backs up any conflicting file once to `~/.dotfiles_backup-<timestamp>`.
+backs up any conflicting file once to `~/.dotfiles_backup-<timestamp>`, and
+removes symlinks for paths this repo no longer manages.
+
+Linux support is scoped to Ubuntu — `install.sh` refuses to run on other
+distributions rather than failing halfway through an `apt-get` call.
 
 ## Git
 

@@ -60,29 +60,3 @@ casks+=(
 
 brew install "${formulae[@]}"
 brew install --cask "${casks[@]}"
-
-# Oh My Zsh + plugins
-if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
-    echo "==> Installing Oh My Zsh..."
-    RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-fi
-
-plugins_dir="$HOME/.oh-my-zsh/custom/plugins"
-# Plain (not associative) array: the default /bin/bash on macOS is 3.2,
-# which has no `declare -A` support.
-zsh_plugins=(
-    "zsh-autosuggestions|https://github.com/zsh-users/zsh-autosuggestions"
-    "zsh-syntax-highlighting|https://github.com/zsh-users/zsh-syntax-highlighting"
-    "you-should-use|https://github.com/MichaelAquilina/zsh-you-should-use"
-)
-for entry in "${zsh_plugins[@]}"; do
-    plugin="${entry%%|*}"
-    repo="${entry#*|}"
-    [[ -d "$plugins_dir/$plugin" ]] || git clone --depth=1 "$repo" "$plugins_dir/$plugin"
-done
-
-# AntiGravity CLI (agy)
-if ! command -v agy &>/dev/null; then
-    echo "==> Installing AntiGravity CLI (agy)..."
-    curl -fsSL https://antigravity.google/cli/install.sh | bash
-fi

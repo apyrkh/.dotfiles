@@ -23,15 +23,17 @@ esac
 EOF
 chmod +x "$temporary_dir/bin/brew"
 
-# Pre-seed state so install-mac.sh's already-installed checks short-circuit
-# instead of making real network calls (oh-my-zsh, its plugins, agy).
+# Pre-seed state so install-common.sh's already-installed checks short-circuit
+# instead of making real network calls (oh-my-zsh, its plugins, claude, agy).
 mkdir -p "$temporary_dir/home/.oh-my-zsh/custom/plugins/zsh-autosuggestions" \
   "$temporary_dir/home/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" \
   "$temporary_dir/home/.oh-my-zsh/custom/plugins/you-should-use"
-printf '#!/usr/bin/env bash\nexit 0\n' > "$temporary_dir/bin/agy"
-chmod +x "$temporary_dir/bin/agy"
+for stub in agy claude; do
+  printf '#!/usr/bin/env bash\nexit 0\n' > "$temporary_dir/bin/$stub"
+  chmod +x "$temporary_dir/bin/$stub"
+done
 
-echo "== Verifying install.sh dispatches to install-mac.sh and symlinks.sh =="
+echo "== Verifying install.sh dispatches to install-mac.sh, install-common.sh and symlinks.sh =="
 HOME="$temporary_dir/home" BREW_LOG="$brew_log" PATH="$temporary_dir/bin:$PATH" \
   "$dotfiles_dir/install.sh"
 
@@ -39,5 +41,6 @@ grep -Fq "install --cask font-jetbrains-mono-nerd-font" "$brew_log"
 [[ -L "$temporary_dir/home/.config/nvim" ]]
 [[ -L "$temporary_dir/home/.zshrc" ]]
 [[ -L "$temporary_dir/home/.gitconfig" ]]
+[[ -L "$temporary_dir/home/.zshenv" ]]
 
 echo "mac-smoke: OK"

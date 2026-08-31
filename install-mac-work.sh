@@ -38,26 +38,13 @@ brew tap peonping/tap
 brew install "${formulae[@]}"
 brew install --cask "${casks[@]}"
 
-# docker-buildx is a CLI plugin, not auto-discovered by `docker` unless its
-# Homebrew path is registered in ~/.docker/config.json — without this, every
+# docker-buildx/docker-compose are CLI plugins: `docker` only finds them under
+# ~/.docker/cli-plugins, not in Homebrew's prefix. Without these links every
 # `docker build` silently falls back to the deprecated legacy (non-BuildKit)
-# builder.
-docker_config="$HOME/.docker/config.json"
-buildx_dir="$(brew --prefix)/lib/docker/cli-plugins"
-mkdir -p "$(dirname "$docker_config")"
-[[ -f "$docker_config" ]] || echo '{}' > "$docker_config"
-python3 -c "
-import json
-path = '$docker_config'
-buildx_dir = '$buildx_dir'
-with open(path) as f:
-    cfg = json.load(f)
-dirs = cfg.setdefault('cliPluginsExtraDirs', [])
-if buildx_dir not in dirs:
-    dirs.append(buildx_dir)
-with open(path, 'w') as f:
-    json.dump(cfg, f, indent='\t')
-    f.write('\n')
-"
+# builder and `docker compose` is missing entirely.
+mkdir -p "$HOME/.docker/cli-plugins"
+for plugin in docker-buildx docker-compose; do
+    ln -sfn "$(brew --prefix)/lib/docker/cli-plugins/$plugin" "$HOME/.docker/cli-plugins/$plugin"
+done
 
 echo "==> Work install complete."

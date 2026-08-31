@@ -23,6 +23,12 @@ files=(
     ".zshrc"
 )
 
+# Paths this repo used to manage. Their symlinks would otherwise dangle
+# forever on machines installed before the file was dropped.
+obsolete=(
+    ".zprofile"
+)
+
 create_backup_dir() {
     if [[ -z "$backup_dir" ]]; then
         backup_dir="$HOME/.dotfiles_backup-$(date +%Y%m%d_%H%M%S)"
@@ -54,6 +60,15 @@ for file in "${files[@]}"; do
 
     ln -s "$source_path" "$target_path"
     info "Linked: ~/$file"
+done
+
+for file in "${obsolete[@]}"; do
+    target_path="$HOME/$file"
+
+    if [[ -L "$target_path" ]] && [[ "$(readlink "$target_path")" == "$source_home/"* ]]; then
+        rm "$target_path"
+        info "Removed obsolete link: ~/$file"
+    fi
 done
 
 if [[ -n "$backup_dir" ]]; then

@@ -33,7 +33,8 @@ sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y \
     sqlite3 \
     postgresql-client \
     zoxide \
-    xclip
+    xclip \
+    time
 
 # Ubuntu's fd-find package installs the binary as "fdfind" (name clash with
 # an existing package); alias it to "fd" since that's what fzf-lua/nvim expect.
@@ -110,27 +111,31 @@ if ! command -v tree-sitter &>/dev/null; then
     chmod +x "$HOME/.local/bin/tree-sitter"
 fi
 
-# AntiGravity CLI (agy)
-if ! command -v agy &>/dev/null; then
-    echo "==> Installing AntiGravity CLI (agy)..."
-    curl -fsSL https://antigravity.google/cli/install.sh | bash
+# fx (JSON viewer) — not in Ubuntu's default repos; single static binary
+if ! command -v fx &>/dev/null; then
+    echo "==> Installing fx..."
+    arch="$(uname -m)"; [[ "$arch" == "aarch64" ]] && arch="arm64" || arch="amd64"
+    curl -fsSL "https://github.com/antonmedv/fx/releases/latest/download/fx_linux_${arch}" \
+        -o "$HOME/.local/bin/fx"
+    chmod +x "$HOME/.local/bin/fx"
 fi
 
-# Oh My Zsh + plugins (.zshrc expects these to exist)
-if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
-    echo "==> Installing Oh My Zsh..."
-    RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# AI CLIs — macOS gets these as Homebrew casks; on Linux they ship as npm
+# packages, installed globally with bun (already on PATH via ~/.bun/bin).
+if ! command -v copilot &>/dev/null; then
+    echo "==> Installing GitHub Copilot CLI..."
+    bun add --global @github/copilot
 fi
 
-plugins_dir="$HOME/.oh-my-zsh/custom/plugins"
-# Plain (not associative) array for portability across shells/bash versions.
-zsh_plugins=(
-    "zsh-autosuggestions|https://github.com/zsh-users/zsh-autosuggestions"
-    "zsh-syntax-highlighting|https://github.com/zsh-users/zsh-syntax-highlighting"
-    "you-should-use|https://github.com/MichaelAquilina/zsh-you-should-use"
-)
-for entry in "${zsh_plugins[@]}"; do
-    plugin="${entry%%|*}"
-    repo="${entry#*|}"
-    [[ -d "$plugins_dir/$plugin" ]] || git clone --depth=1 "$repo" "$plugins_dir/$plugin"
-done
+if ! command -v codex &>/dev/null; then
+    echo "==> Installing Codex CLI..."
+    bun add --global @openai/codex
+fi
+
+# Make zsh the login shell so `devcontainer exec` and VS Code terminals land
+# in the configured shell instead of bash.
+current_user="$(id -un)"
+if [[ "$(getent passwd "$current_user" | cut -d: -f7)" != "$(command -v zsh)" ]]; then
+    echo "==> Setting zsh as the default shell..."
+    sudo chsh -s "$(command -v zsh)" "$current_user"
+fi

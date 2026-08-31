@@ -28,9 +28,21 @@ printf 'existing vim configuration\n' > "$home_dir/.vimrc"
 # test runs in plain bash, so export it explicitly before checking commands.
 export PATH="$home_dir/.bun/bin:$home_dir/.local/bin:$home_dir/.local/share/fnm:$PATH"
 
-for command in bash bun curl eza fd fdfind fzf gcc gh git go lazygit nvim rg tree-sitter uv zoxide zsh; do
+# fnm installs Node under its own prefix; the `default` alias is what
+# `fnm env --use-on-cd` resolves to in a real shell.
+export PATH="$home_dir/.local/share/fnm/aliases/default/bin:$PATH"
+
+for command in bash bun claude codex copilot curl eza fd fdfind fx fzf gcc gh git go \
+  lazygit node nvim rg tree-sitter uv zoxide zsh; do
   assert_command "$command"
 done
+
+# `time` is a shell keyword, so command -v can't prove GNU time is installed.
+[[ -x /usr/bin/time ]] ||
+  { printf 'Expected GNU time at /usr/bin/time\n' >&2; exit 1; }
+
+[[ "$(getent passwd "$(id -un)" | cut -d: -f7)" == "$(command -v zsh)" ]] ||
+  { printf 'Expected zsh to be the default shell\n' >&2; exit 1; }
 
 [[ -x "$home_dir/.local/share/fnm/fnm" ]] || command -v fnm >/dev/null 2>&1
 [[ -d "$home_dir/.oh-my-zsh" ]]
@@ -48,6 +60,26 @@ backups=("$home_dir"/.dotfiles_backup-*)
 [[ "${#backups[@]}" -eq 1 ]]
 [[ -f "${backups[0]}/.vimrc" ]]
 [[ "$(cat "${backups[0]}/.vimrc")" == "existing vim configuration" ]]
+
+# Neovim: nvim-treesitter's main branch compiles parsers with the tree-sitter
+# CLI in the background, and `Lazy! sync` exits 0 even when a parser build
+# fails — so wait for the compiled .so files and assert they landed.
+echo "linux-smoke: syncing Neovim plugins..."
+timeout 900 nvim --headless "+Lazy! sync" +qa
+
+parsers=(lua bash json typescript)
+wanted="$(printf '"%s",' "${parsers[@]}")"
+timeout 900 nvim --headless -c "lua vim.wait(600000, function()
+  for _, parser in ipairs({${wanted%,}}) do
+    if #vim.api.nvim_get_runtime_file('parser/' .. parser .. '.so', true) == 0 then return false end
+  end
+  return true
+end, 2000)" -c "qa"
+
+for parser in "${parsers[@]}"; do
+  [[ -f "$home_dir/.local/share/nvim/site/parser/$parser.so" ]] ||
+    { printf 'Treesitter parser was not compiled: %s\n' "$parser" >&2; exit 1; }
+done
 
 # Rerunning is safe: no duplicate backups, links stay put.
 "$dotfiles_dir/install.sh"

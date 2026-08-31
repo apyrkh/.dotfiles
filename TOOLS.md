@@ -1,6 +1,13 @@
 # Tools
 
+Package names live in the install scripts; this file is the human-readable
+index of what each tier gives you. Anything marked *(macOS)* / *(Ubuntu)* is
+installed differently per platform — everything else is identical on both.
+
 ## Base Level
+
+`install.sh` — `scripts/install-mac.sh` or `scripts/install-ubuntu.sh`, then
+`scripts/install-common.sh`.
 
 font-jetbrains-mono-nerd-font
 
@@ -29,10 +36,11 @@ fd
 ripgrep
 
 ### === ai ===
-claude
-copilot-cli
-codex
+claude-code (curl -fsSL https://claude.ai/install.sh | bash)
 agy (curl -fsSL https://antigravity.google/cli/install.sh | bash)
+copilot-cli (macOS: brew cask / Ubuntu: bun add --global @github/copilot)
+codex (macOS: brew cask / Ubuntu: bun add --global @openai/codex)
+claude (macOS only — the Claude desktop app, not the CLI)
 
 ### === cli ===
 git
@@ -42,11 +50,13 @@ tree
 eza
 zoxide
 fx
-gnu-time
+gnu-time (macOS: `gtime` / Ubuntu: apt `time`, `/usr/bin/time`)
 
 ---
 
 ## Work Level
+
+`install-mac-work.sh` — macOS only.
 
 wezterm@nightly
 
@@ -69,6 +79,8 @@ logi-options+
 ---
 
 ## Home Level
+
+`install-mac-home.sh` — macOS only.
 google-drive
 notion
 chatgpt
