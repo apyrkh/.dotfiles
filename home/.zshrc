@@ -35,6 +35,7 @@ source $ZSH/oh-my-zsh.sh
 setopt NO_BEEP
 setopt HIST_IGNORE_ALL_DUPS
 setopt SHARE_HISTORY
+setopt COMBINING_CHARS  # correct combining-char display; was set by /etc/zshrc
 
 # === USER CONFIGURATION ===
 export EDITOR="nvim"
@@ -43,6 +44,7 @@ export DISABLE_UNTRACKED_FILES_DIRTY="true" # speed up prompt by ignoring untrac
 # === TOOLS INIT ===
 command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 command -v fnm >/dev/null && eval "$(fnm env --use-on-cd)"
+[ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"  # bun completions
 
 # === ALIASES ===
 alias ll="eza -l --group-directories-first --icons"
